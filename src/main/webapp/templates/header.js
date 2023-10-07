@@ -14,7 +14,7 @@ document.write(`
     <span class="navbar-toggler-icon"></span>
 </button>
 <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-right col-md-4 offset-md-4 mb-2">
+    <ul class="nav justify-content-center">
         <li class="nav-item">
             <a class="nav-link" href="../../pages/home/index.html">&nbsp;Página Principal&nbsp;</a>
         </li>

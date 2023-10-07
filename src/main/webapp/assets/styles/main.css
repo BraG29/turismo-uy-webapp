@@ -1,3 +1,9 @@
+body {
+    min-height: 400px;
+    margin-bottom: 100px;
+    clear: both;
+ }
+
 .imagenSeleccionable {
 	object-fit: cover;
 	width:80px;
