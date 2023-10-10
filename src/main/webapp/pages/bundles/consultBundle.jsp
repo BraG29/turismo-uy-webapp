@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,17 +24,17 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Disfrutar Rocha</h5>
-                        <p class="card-text">Actividades para hacer en familia y disfrutar arte y gastronomía</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
+                        <p class="card-text">Actividades para hacer en familia y disfrutar arte y gastronomÃ­a</p>
+                        <a href="#" class="btn btn-primary">Ver mÃ¡s</a>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Un día en Colonia</h5>
-                        <p class="card-text">Paseos por el casco histórico y se puede terminar con Almuerzo en la Plaza de Toros</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
+                        <h5 class="card-title">Un dÃ­a en Colonia</h5>
+                        <p class="card-text">Paseos por el casco histÃ³rico y se puede terminar con Almuerzo en la Plaza de Toros</p>
+                        <a href="#" class="btn btn-primary">Ver mÃ¡s</a>
                     </div>
                 </div>
             </div>
@@ -41,8 +42,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Valle Del Lunarejo</h5>
-                        <p class="card-text">Visite un área protegida con un paisaje natural hermoso</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
+                        <p class="card-text">Visite un Ã¡rea protegida con un paisaje natural hermoso</p>
+                        <a href="#" class="btn btn-primary">Ver mÃ¡s</a>
                     </div>
                 </div>
             </div>
