@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
 <body onload="currentTime()">
     <div class="">
         <script src="../../templates/header.js"></script>
-        <h1> Inscripción a Salidas</h1>      
+        <h1> Registrar Actividades</h1>      
         <script src="../../templates/footer.js"></script>
     </div>
 </body>
