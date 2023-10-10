@@ -16,11 +16,49 @@
 </head>
 
 <body onload="currentTime()">
-    <div class="">
-        <script src="../../templates/header.js"></script>
-        <h1> Registrar Salidas</h1>      
-        <script src="../../templates/footer.js"></script>
-    </div>
+	<main class="form-signin w-50 m-auto container-fluid">
+	    <div class="">
+	        <script src="../../templates/header.js"></script>
+	        <h1> Registrar salida</h1>      
+	        <script src="../../templates/footer.js"></script>
+	    </div>
+	    
+	    <form action="" method="post">
+    		<div class="input-group">
+                    <span class="input-group-text"> Nombre: </span>
+                    <input id="username" type="text" class="form-control" placeholder="Ej: Recorrida rambla" required>
+             </div> 
+	    	
+	    	<div class="input-group">
+                    <span class="input-group-text"> Cupos (personas): </span>
+                    <input id="maxTourist" type="number" class="form-control" placeholder="Ej: 20" required>
+             </div>
+            
+            <div class="input-group">
+                    <span class="input-group-text"> Nombre: </span>
+                    <input id="username" type="text" class="form-control" placeholder="Ej: Recorrida rambla" required>
+             </div>
+             
+             
+	    	<div class="input-group">
+                    <span class="input-group-text">Horario de salida: </span>
+                    <input id="departureSchedule" type="datetime-local" class="form-control" placeholder="Ej: FerTorr123" required>
+             </div>
+	    
+	    
+	       <div class="input-group">
+	     	<span class="input-group-text">Fecha de creación:</span>
+	        <input id="uploadDate" type="date" class="form-control" placeholder="Ej: 10/10/2023" required>
+	    	</div>
+	    	<br>
+	    
+	     	<label for="imagen">Selecciona una imagen:</label>
+        	<input type="file" id="imagen" name="imagen">
+ 
+	    </form>
+
+    </main>
+    
 </body>
 
 </html>

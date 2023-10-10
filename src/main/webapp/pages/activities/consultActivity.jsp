@@ -36,14 +36,14 @@
                 <li class="list-group-item">Lavalleja</li>
                 <li class="list-group-item">Maldonado</li>
                 <li class="list-group-item">Montevideo</li>
-                <li class="list-group-item">PaysandÃº</li>
-                <li class="list-group-item">RÃ­o Negro</li>
+                <li class="list-group-item">Paysandu</li>
+                <li class="list-group-item">Ri­o Negro</li>
                 <li class="list-group-item">Rivera</li>
                 <li class="list-group-item">Rocha</li>
                 <li class="list-group-item">Salto</li>
-                <li class="list-group-item">San JosÃ©</li>
+                <li class="list-group-item">San Jose©</li>
                 <li class="list-group-item">Soriano</li>
-                <li class="list-group-item">TacuarembÃ³</li>
+                <li class="list-group-item">Tacuarembo³</li>
                 <li class="list-group-item">Treinta y Tres</li>
             </ul>
         </div>
