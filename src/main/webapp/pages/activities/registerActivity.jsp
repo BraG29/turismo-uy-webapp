@@ -61,22 +61,45 @@
 	    </div>
 	    <br>
 	    
-	     <div class="input-group">
-	     	<span class="input-group-text">Ciudad:</span>
-	        <input id="department" type="text" class="form-control" placeholder="Ej: Mercedes" required>
-	        
-	    </div>
+	    <div>
+             <span> Seleccione el departamento de la actividad:</span>
+             <select id="department" class="form-select" aria-label="Default select example" required>
+	  
+	  		<option value="artigas"> Artigas </option>
+	  		<option value="artigas"> Canelones </option>
+	  		<option value="artigas"> Cerro Largo </option>
+	  		<option value="artigas"> Colonia </option>
+	  		<option value="artigas"> Durazno </option>
+	  		<option value="artigas"> Flores </option>
+	  		<option value="artigas"> Florida </option>
+	  		<option value="artigas"> Lavalleja </option>
+	  		<option value="artigas" selected> Maldonado </option>
+	  		<option value="artigas"> Montevideo </option>
+	  		<option value="artigas"> Paysandú </option>
+	  		<option value="artigas"> Río Negro </option>
+	  		<option value="artigas"> Rivera </option>
+	  		<option value="artigas"> Rocha </option>
+	  		<option value="artigas"> Salto </option>
+	  		<option value="artigas"> San José </option>
+	  		<option value="artigas"> Soriano </option>
+	  		<option value="artigas"> Tacuarembó </option>
+	  		<option value="artigas"> Treinta y tres </option>
+	  		
+			</select>
+        </div>
 	    <br>
 	    
 	     <div class="input-group">
-	     	<span class="input-group-text">Departamento:</span>
-	        <input id="firstName" type="text" class="form-control" placeholder="Ej: Florida" required>
+	     	<span class="input-group-text">Ciudad:</span>
+	        <input id="city" type="text" class="form-control" placeholder="Ej: Mercedes" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div>
-             <select id="categories" class="form-select" aria-label="Ej: Recorridos">
+	     <h3> Listar categorias (ver como cargar para seleccionar mas de una)</h1>
+	     	<span >Seleccione categoría/s:</span>
+             <select id="categories" class="form-select" aria-label="Ej: Recorridos" required>
 	  			<option value="gastronomy"> Gastronomía </option>
 	  			<option value="Beaches" selected> Playas </option>
 			</select>
@@ -86,9 +109,10 @@
           <label for="imagen">Selecciona una imagen:</label>
         	<input type="file" id="imagen" name="imagen">
         	<br>
-          
-          <button class="w-100 btn btn-lg btn-primary" type="submit">Crear actividad</button>   
-	    </form>
+        	
+             <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
+             
+	    </form> 
 	  </main>  
      
      <script src="../../templates/footer.js"></script>

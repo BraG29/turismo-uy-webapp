@@ -29,22 +29,35 @@
                     <input id="username" type="text" class="form-control" placeholder="Ej: Recorrida rambla" required>
              </div> 
 	    	
+	    	<br>
+	    	
 	    	<div class="input-group">
                     <span class="input-group-text"> Cupos (personas): </span>
                     <input id="maxTourist" type="number" class="form-control" placeholder="Ej: 20" required>
              </div>
+            
+            <br>
             
             <div class="input-group">
                     <span class="input-group-text"> Nombre: </span>
                     <input id="username" type="text" class="form-control" placeholder="Ej: Recorrida rambla" required>
              </div>
              
+             <br>
              
 	    	<div class="input-group">
                     <span class="input-group-text">Horario de salida: </span>
-                    <input id="departureSchedule" type="datetime-local" class="form-control" placeholder="Ej: FerTorr123" required>
+                    <input id="departureSchedule" type="datetime-local" class="form-control" placeholder="Ej: 10/10/2023 - 15:00" required>
              </div>
 	    
+	    	<br>
+	    
+	   		 <div class="input-group">
+                    <span class="input-group-text">Lugar: </span>
+                    <input id="place" type="text" class="form-control" placeholder="Ej: Club deportivo union" required>
+             </div>
+	    
+	    	<br>
 	    
 	       <div class="input-group">
 	     	<span class="input-group-text">Fecha de creación:</span>
@@ -54,7 +67,11 @@
 	    
 	     	<label for="imagen">Selecciona una imagen:</label>
         	<input type="file" id="imagen" name="imagen">
- 
+ 			
+ 			<br>
+ 			
+ 			<input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear salida"/>
+ 			
 	    </form>
 
     </main>
