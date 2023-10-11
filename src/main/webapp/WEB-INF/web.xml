@@ -8,7 +8,7 @@
   	<servlet-name>LoginServlet</servlet-name>
   	<display-name>LoginServlet</display-name>
   	<description></description>
-  	<servlet-class>uy.turismo.webapp.servlets.LoginServlet</servlet-class>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletLogin</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>ServletRegister</servlet-name>

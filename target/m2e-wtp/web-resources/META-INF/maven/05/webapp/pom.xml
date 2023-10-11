@@ -21,6 +21,13 @@
 	</properties>
 
 	<dependencies>
+		
+		<dependency>
+			<groupId>05</groupId>
+			<artifactId>servidor-central</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

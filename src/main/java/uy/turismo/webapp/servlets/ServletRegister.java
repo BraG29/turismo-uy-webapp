@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
+import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
+import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+
 /**
  * Servlet implementation class ServletRegister
  */
@@ -35,8 +40,26 @@ public class ServletRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
+    		DtUser userData = new DtProvider(
+    				null,
+    				request.getParameter("firstName"),
+    				request.getParameter("nickname"),
+    				request.getParameter("email"),
+    				request.getParameter("lastName"),
+    				null,
+    				null,
+    				request.getParameter("web"),
+    				request.getParameter("description"),
+    				null,
+    				request.getParameter("password")
+ 
+    				); 
+    		
+    		IController controller = ControllerFactory.getIController();
+    		controller.registerUser(userData);
+    	}
+
 	}
 
 }
