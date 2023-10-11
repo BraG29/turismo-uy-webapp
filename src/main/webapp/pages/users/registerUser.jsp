@@ -19,13 +19,16 @@
     <div class="">
         <script src="../../templates/header.js"></script>
         <main class="form-signin w-50 m-auto container-fluid">
-            <form action="registerUser" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+        
+            <form action="registerUser" method="post" enctype="multipart/form-data" accept-charset="UTF-8" onsubmit="return validation()">
                 <h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
                
                <div>
+                <span> Tipo de usuario:</span>
                 <select id="userType" onchange="showFields()"  class="form-select" aria-label="Default select example">
-				  <option value="tourist"> Turista </option>
-				  <option value="provider" selected> Proveedor </option>
+				  
+				  <option value="tourist" selected> Turista </option>
+				  <option value="provider"> Proveedor </option>
 				</select>
                </div>
                	<br>
@@ -71,8 +74,8 @@
 	         			<input id="description" type="text" class="form-control" required>
 	           		</div>
 	           		
-	           		
-	           			<br>         
+	           		<br>
+	           			         
 	               	<div  class="input-group">
 	               		<span class="input-group-text"> Página web: </span>
 	         			<input id="web" type="text" class="form-control" placeholder="www.sitioweb.com">
@@ -80,7 +83,8 @@
 				</div>       
            		    
              		             
-                <div id="touristCountry" style="display:none;">
+                <div id="touristCountry">
+                <span> Seleccione su pais:</span>
                 <select>
 					<option value="AF">Afganistán</option>
 					<option value="AL">Albania</option>
@@ -323,7 +327,11 @@
                 <label for="imagen">Selecciona una imagen:</label>
         		<input type="file" id="imagen" name="imagen">
                 
-                <button onclick="showFields();"  class="w-100 btn btn-lg btn-primary" type="submit">Crear cuenta</button>
+                <br>
+                
+                <input onclick="showFields();" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear cuenta"/>
+                
+               
             </form>
             <a href="../home/login.html">Volver al inicio de sesión</a>
         </main>
@@ -347,7 +355,19 @@
                      }
                  }
 
-           		 
+           		 function validation(){
+	           		 var password = document.getElementById("password").value;
+	           		 var confirm_password = document.getElementById("confirmPassword").value;
+	           		 
+	           		 if (password !== confirm_password){
+	           			 
+	           			 alert("Las contraseñas no coinciden intente nuevamente");
+	           			 return false; 
+	           		 }
+           			
+	           		 return true;
+           		 }
+  		 
        </script>
     </div>
     
