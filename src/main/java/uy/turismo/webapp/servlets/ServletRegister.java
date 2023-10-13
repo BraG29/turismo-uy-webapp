@@ -40,25 +40,28 @@ public class ServletRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
-    		DtUser userData = new DtProvider(
-    				null,
-    				request.getParameter("firstName"),
-    				request.getParameter("nickname"),
-    				request.getParameter("email"),
-    				request.getParameter("lastName"),
-    				null,
-    				null,
-    				request.getParameter("web"),
-    				request.getParameter("description"),
-    				null,
-    				request.getParameter("password")
- 
-    				); 
-    		
-    		IController controller = ControllerFactory.getIController();
-    		controller.registerUser(userData);
-    	}
+		String email = request.getParameter("email");
+		System.out.println();
+		
+//    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
+//    		DtUser userData = new DtProvider(
+//    				null,
+//    				request.getParameter("firstName"),
+//    				request.getParameter("nickname"),
+//    				request.getParameter("email"),
+//    				request.getParameter("lastName"),
+//    				null,
+//    				null,
+//    				request.getParameter("web"),
+//    				request.getParameter("description"),
+//    				null,
+//    				request.getParameter("password")
+// 
+//    				); 
+//    		
+//    		IController controller = ControllerFactory.getIController();
+//    		controller.registerUser(userData);
+//    	}
 
 	}
 

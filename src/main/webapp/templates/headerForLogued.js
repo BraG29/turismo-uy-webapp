@@ -1,11 +1,12 @@
+
 document.write(`
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="media">
         <div class="media-body">
             <div class="mt-0 mb-1">
-                <img class="ml-3" src="../../assets/images/generic_user.png" alt="Usuario Generico"
+                <img class="ml-3" src="${userImage}" alt="Usuario Generico"
                     width="48px">
-                <span>Nombre del Usuario</span>
+                <span> ${userName} </span>
             </div>
         </div>
     </div>
@@ -16,14 +17,14 @@ document.write(`
     <div class="collapse navbar-collapse" id="navbarNav">            
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/home/index.html">
+                <a class="nav-link" href="pages/home/index.html">
                     <button class="btn btn-outline-success">
                         &nbsp;Página Principal&nbsp;
                     </button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/activities/consultActivity.html">
+                <a class="nav-link" href="pages/activities/consultActivity.html">
                     <button class="btn btn-outline-success">
                         &nbsp;Actividades&nbsp;
                     </button>

@@ -25,9 +25,7 @@
 		<main class="form-signin w-50 m-auto container-fluid">
 			<h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
 
-			<form action="<%= request.getContextPath() %>/register" method="post"
-				enctype="multipart/form-data" accept-charset="UTF-8"
-				onsubmit="return validation()">
+			<form action="ServletRegister" method="post" accept-charset="UTF-8" onsubmit="return validation()">
 
 				<span> Tipo de usuario:</span> <select id="userType"
 					onchange="showFields()" class="form-select"
@@ -37,15 +35,15 @@
 					<option value="provider">Proveedor</option>
 				</select> <br>
 
-
-				<div class="input-group">
+<!--
+				<div cassets/scripts/jquery3.5.1.min.jslass="cassets/scripts/jquery3.5.1.min.jslass">
 					<span class="input-group-text">Nombre:</span> <input id="firstName"
 						type="text" class="form-control" placeholder="Ej: Fernando"
 						required> <span class="input-group-text">Apellido:</span>
 					<input id="lastName" type="text" class="form-control"
 						placeholder="Ej: Torres" required>
 				</div>
-
+-->
 				<br>
 				<div class="input-group">
 					<span class="input-group-text"> Nombre de usuario: </span> <input

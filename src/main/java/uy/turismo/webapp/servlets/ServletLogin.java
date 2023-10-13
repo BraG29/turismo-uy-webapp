@@ -1,17 +1,27 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(
-		name = "ServletLogin",
-		urlPatterns = {"/login"},
-		loadOnStartup = 0
-		)
+import com.mysql.cj.Session;
+
+import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
+import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
+import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+
+@WebServlet("/login")
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,8 +45,54 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String email = request.getParameter("loginUserEmailInput");
+		String password = request.getParameter("loginUserPasswordInput");
+		IController cotroller = ControllerFactory.getIController();
+		DtUser user = cotroller.checkCredentials(email, password);
+		
+        if (user != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute(
+            		"userName", 
+            		String.format("%s %s", user.getName(), user.getLastName()));
+            
+            String image = saveImage(user.getImage(), user.getNickname());
+            session.setAttribute("userImage", image);
+            
+            if(user instanceof DtTourist) {
+                session.setAttribute("userType", "tourist");
+                
+            }else {
+                session.setAttribute("userType", "provider");
+                
+            }
+            
+        	request.getRequestDispatcher("pages/home/index.jsp")
+        	.forward(request, response); // Página de bienvenida
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login"); // Redireccionar a la página de inicio de sesión si las credenciales son incorrectas
+        }
+    }
+	
+	private String saveImage(BufferedImage image, String imageName) {
+		String imageFullName = imageName + ".png";
+		InputStream inputStram = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
+		Properties properties = new Properties();
+		String imagePath = null;
+		
+		try {
+			properties.load(inputStram);
+			imagePath = properties.getProperty("imagesDirPath").concat("user/");
+			File saveFile = new File(imagePath + imageFullName);
+			if(!saveFile.exists()) {
+				ImageIO.write(image, "png", saveFile);
+			}
+			
+		} catch (Exception e) {
+			System.err.println("Error al guardar la imagen: " + e.getMessage());
+		}
+		
+		return "assets/images/user/" + imageFullName;
 	}
 
 }

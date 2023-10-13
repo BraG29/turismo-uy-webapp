@@ -16,8 +16,8 @@ document.write(`
                 </a>
             </li>    
             <li class="ms-3">
-                <a class="text-muted" href="https://github.com/BraG29/turismo-uy-desktop">
-                    <img src="../../assets/images/flight.png" width="48px">
+                <a class="text-muted" href="https://github.com/BraG29/turismo-uy-webapp">
+                    <img src="assets/images/github_sign.png" width="48px">
                 </a>
             </li>
         </ul>
