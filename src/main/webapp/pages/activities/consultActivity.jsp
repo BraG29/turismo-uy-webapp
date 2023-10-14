@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../assets/styles/main.css">
     <script src="../../assets/scripts/jquery3.5.1.min.js"></script>
     <script src="../../assets/scripts/bootstrap4.5.2.min.js"></script>
+    <script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
     <script src="../../assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="../../assets/images/star.ico" type="image/png">
     <title>Turismo.UY</title>
@@ -17,7 +18,7 @@
 
 <body onload="currentTime()">
     <div class="">
-        <script src="../../templates/header.js"></script>
+        <jsp:include page="../../templates/header.jsp"/>
         <h1> Consultar Actividades</h1>
 
 
@@ -49,7 +50,7 @@
         </div>
 
         <a href="registerActivity.html"> Hacia registrar Actividad</a>
-        <script src="../../templates/footer.js"></script>
+        <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 

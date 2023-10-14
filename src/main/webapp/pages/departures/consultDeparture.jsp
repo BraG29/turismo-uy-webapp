@@ -10,19 +10,18 @@
     <link rel="stylesheet" href="../../assets/styles/main.css">
     <script src="../../assets/scripts/jquery3.5.1.min.js"></script>
     <script src="../../assets/scripts/bootstrap4.5.2.min.js"></script>
+    <script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
     <script src="../../assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="../../assets/images/star.ico" type="image/png">
     <title>Turismo.UY</title>
 </head>
 
 <body onload="currentTime()">
-    <div class="">
-        <script src="../../templates/header.js"></script>
-        <h1>PÃ¡gina de consultas de las Salidas turÃ­sticas</h1>
-        <a href="inscriptionDeparture.html"> Inscripcion a salida</a>
-        <a href="registerDeparture.html"> Registrar salida</a>
-        <script src="../../templates/footer.js"></script>
-    </div>
+    <jsp:include page="../../templates/header.jsp"/>
+    <h1>Página de consultas de las Salidas turísticas</h1>
+    <a href="inscriptionDeparture.jsp"> Inscripcion a salida</a>
+    <a href="registerDeparture.jsp"> Registrar salida</a>
+    <jsp:include page="../../templates/footer.jsp" />
 </body>
 
 </html>

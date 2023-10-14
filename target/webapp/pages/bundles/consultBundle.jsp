@@ -17,7 +17,7 @@
 
 <body onload="currentTime()">
     <div class="">
-        <script src="../../templates/header.js"></script>
+        <jsp:include page="../../templates/header.jsp"/>
         <h1> Consultar Paquetes</h1>
         <div class="row">
             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <script src="../../templates/footer.js"></script>
+        <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 
