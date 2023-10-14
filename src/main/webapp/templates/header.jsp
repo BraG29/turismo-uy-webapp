@@ -19,7 +19,7 @@
 		if(userName != null){
 			
 	%>
-		    <script src="templates/headerForLogued.js"></script>
+		    <script src="templates/headerForLogged.js"></script>
 	<% 
 	 	
 		}else {

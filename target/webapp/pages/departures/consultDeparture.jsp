@@ -17,11 +17,11 @@
 
 <body onload="currentTime()">
     <div class="">
-        <script src="../../templates/header.js"></script>
+        <jsp:include page="../../templates/header.jsp"/>
         <h1>PÃ¡gina de consultas de las Salidas turÃ­sticas</h1>
         <a href="inscriptionDeparture.html"> Inscripcion a salida</a>
         <a href="registerDeparture.html"> Registrar salida</a>
-        <script src="../../templates/footer.js"></script>
+        <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 

@@ -19,12 +19,14 @@
 <link rel="stylesheet" href="assets/styles/main.css">
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+<script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 <title>Turismo.UY</title>
 </head>
 
 <body>
+	<script src="templates/header.js"></script>
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-md-4">
@@ -49,9 +51,7 @@
 			</div>
 		</div>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+	<script src="templates/footer.js"></script>
 </body>
 
 </html>

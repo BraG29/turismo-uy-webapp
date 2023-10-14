@@ -18,11 +18,11 @@
 
 <body onload="currentTime()">
     <div class="">
-        <script src="../../templates/header.js"></script>
+        <jsp:include page="../../templates/header.jsp"/>
         <h1> Consultar Usuarios</h1>
         <a href="registerUser.html">Hacia registro</a>
         <a href="modifyUser.html">Hacia modificar</a>
-        <script src="../../templates/footer.js"></script>
+        <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 

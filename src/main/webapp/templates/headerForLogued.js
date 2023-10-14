@@ -17,35 +17,35 @@ document.write(`
     <div class="collapse navbar-collapse" id="navbarNav">            
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="pages/home/index.html">
+                <a class="nav-link" href="pages/home/index.jsp">
                     <button class="btn btn-outline-success">
                         &nbsp;Página Principal&nbsp;
                     </button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/activities/consultActivity.html">
+                <a class="nav-link" href="pages/activities/consultActivity.jsp">
                     <button class="btn btn-outline-success">
                         &nbsp;Actividades&nbsp;
                     </button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/bundles/consultBundle.html">
+                <a class="nav-link" href="../../pages/bundles/consultBundle.jsp">
                     <button class="btn btn-outline-success">
                         &nbsp;Paquetes&nbsp;
                     </button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/departures/consultDeparture.html">
+                <a class="nav-link" href="../../pages/departures/consultDeparture.jsp">
                     <button class="btn btn-outline-success">
                         &nbsp;Salidas Turísticas&nbsp;
                     </button>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/users/consultUser.html">
+                <a class="nav-link" href="../../pages/users/consultUser.jsp">
                     <button class="btn btn-outline-success">
                         Usuarios
                     </button>

@@ -17,7 +17,7 @@
 		if(userName != null){
 			
 	%>
-		    <script src="templates/footerForLogued.js"></script>
+		    <script src="templates/footerForLogged.js"></script>
 	<% 
 	 	
 		}else {
