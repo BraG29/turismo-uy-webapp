@@ -21,7 +21,7 @@
 	<div class="">
 		<script src="templates/header.js"></script>
 		<main class="form-signin w-50 m-auto container-fluid">
-			<form action="ServletLogin" method="post" accept-charset="UTF-8">
+			<form action=" <%= request.getContextPath() %>/login" method="post" accept-charset="UTF-8">
 				<h1 class="h3 mb-3 fw-normal pt-3">Iniciar Sesión</h1>
 
 				<div class="form-floating my-3">
