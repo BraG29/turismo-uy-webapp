@@ -21,7 +21,6 @@ import uy.turismos.servidorcentral.logic.enums.ActivityState;
 /**
  * Servlet implementation class ServletRegisterActivity
  */
-@WebServlet("/registerActivity")
 public class ServletRegisterActivity extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,8 +37,8 @@ public class ServletRegisterActivity extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		//doGet(request, response);
+		request.getRequestDispatcher("pages/activities/registerActivity.jsp")
+		.forward(request, response);
 	}
 
 	/**
