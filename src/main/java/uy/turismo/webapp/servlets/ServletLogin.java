@@ -22,7 +22,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import uy.turismo.webapp.functions.Functions;
 
-@WebServlet("/login")
+//@WebServlet("/login")
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,6 +42,7 @@ public class ServletLogin extends HttpServlet {
 			.forward(request, response);
 	}
 
+//	Tomcat 2 - 0 ElPiche
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -49,7 +50,9 @@ public class ServletLogin extends HttpServlet {
 		String email = request.getParameter("loginUserEmailInput");
 		String password = request.getParameter("loginUserPasswordInput");
 		IController cotroller = ControllerFactory.getIController();
+		
 		DtUser user = cotroller.checkCredentials(email, password);
+		
 		
         if (user != null) {
             HttpSession session = request.getSession();
