@@ -1,96 +1,108 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+	
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro usuarios</title>
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+<script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
-<title>Turismo.UY</title>
 </head>
 
-<body onload="currentTime()">
-	<div class="">
-		<script src="templates/header.js"></script>
-		<main class="form-signin w-50 m-auto container-fluid">
-			<h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
-
-			<form action="ServletRegister" method="post" accept-charset="UTF-8" onsubmit="return validation()">
-
-				<span> Tipo de usuario:</span> <select id="userType"
-					onchange="showFields()" class="form-select"
-					aria-label="Default select example">
-
-					<option value="tourist" selected>Turista</option>
-					<option value="provider">Proveedor</option>
-				</select> <br>
-
-<!--
-				<div cassets/scripts/jquery3.5.1.min.jslass="cassets/scripts/jquery3.5.1.min.jslass">
-					<span class="input-group-text">Nombre:</span> <input id="firstName"
-						type="text" class="form-control" placeholder="Ej: Fernando"
-						required> <span class="input-group-text">Apellido:</span>
-					<input id="lastName" type="text" class="form-control"
-						placeholder="Ej: Torres" required>
-				</div>
--->
-				<br>
-				<div class="input-group">
-					<span class="input-group-text"> Nombre de usuario: </span> <input
-						id="username" type="text" class="form-control"
-						placeholder="Ej: FerTorr123" required>
-				</div>
-
-				<br>
-				<div class="input-group">
-					<span class="input-group-text"> Correo electrónico: </span> <input
-						id="email" type="email" class="form-control"
-						placeholder="Ej: fertorres@gmail.com" required>
-				</div>
-
-				<br>
-				<div class="input-group">
-					<span class="input-group-text"> Contraseña: </span> <input
-						id="password" type="password" class="form-control" required>
-				</div>
-
-				<br>
-				<div class="input-group">
-					<span class="input-group-text"> Confirme contraseña: </span> <input
-						id="confirmPassword" type="password" class="form-control" required>
-				</div>
+<body>
+<div class="">
+	<main class="form-signin w-50 m-auto container-fluid">
+	<h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
+	
+	<form action="<%= request.getContextPath() %>/register" method="post"
+				enctype="multipart/form-data" accept-charset="UTF-8"
+				onsubmit="return validation()">
+	
+		<span> Tipo de usuario: </span>
+		
+        <select name="userType" id="userType" onchange="showFields()" class="form-select form-select-lg mb-3" required>
+            <option value="nothing" selected> - </option>
+            <option value="tourist"> Turista </option>
+            <option value="provider"> Proveedor </option>
+        </select>
 
 
-
-				<br>
-				<div id="providerData" style="display: none;">
-					<div class="input-group">
-						<span class="input-group-text"> Descripción: </span> <input
-							id="description" type="text" class="form-control" required>
-					</div>
-
-					<br>
-
-					<div class="input-group">
-						<span class="input-group-text"> Página web: </span> <input
-							id="web" type="text" class="form-control"
-							placeholder="www.sitioweb.com">
-					</div>
-				</div>
+		<div class="input-group">
+	        <span class="input-group-text"> Nombre: </span>
+	        <input class="form-control" name="firstName" id="firstName" type="text"  required/>
+        </div>
+        <br>
 
 
-				<div id="touristCountry">
-					<span> Seleccione su pais:</span> <select>
+		<div class="input-group">
+			<span class="input-group-text"> Apellido: </span>
+	        <input class="form-control" name="lastName" id="lastName" type="text" required/>		
+		</div>
+        <br>
+
+
+        <div class="input-group">
+			<span class="input-group-text"> Nombre de usuario: </span>
+	        <input class="form-control" name="nickname" id="nickname" type="text" required/>		
+		</div>
+        <br>
+
+
+		<div class="input-group">
+			<span class="input-group-text"> Fecha de nacimiento: </span>
+	        <input class="form-control" name="birthDate"  id="birthDate" type="date" required/>		
+		</div>
+        <br>
+		
+		<div class="input-group">
+			<span class="input-group-text"> E-Mail: </span>
+	        <input class="form-control" name="email" id="email" type="email" required/>		
+		</div>
+        <br>
+		
+		<div class="input-group">
+		<span class="input-group-text">Contraseña: </span>
+	        <input class="form-control" name="password" id="password" type="password" required/>		
+		</div>
+        <br>
+        
+        
+        <div class="input-group">
+			<span class="input-group-text">Confirmar contraseña: </span>
+	        <input class="form-control" name="confirmPassword" id="confirmPassword" type="password" required/>		
+		</div>
+        
+        <br>
+         
+		<div id = "providerData" class="input-group" style="display: none;">
+			<div class="input-group">
+		        <span class="input-group-text">Descripción: </span>
+		        <input class="form-control" name="description" id="description" type="text"/>
+		        </div>			
+			<br>
+			<div class="input-group">
+		         <span class="input-group-text">Página web: </span>
+		        <input class="form-control" name="web" id="web" type="text"/>
+		        
+	        </div>
+		</div>
+
+        <br>
+        
+		<div id="touristCountryDIV" style="display: none;">
+			<span> Seleccione su pais:</span> <select name="touristCountry" id="touristCountry">
+						<option value="" selected> Selección </option>
 						<option value="AF">Afganistán</option>
 						<option value="AL">Albania</option>
 						<option value="DE">Alemania</option>
@@ -316,7 +328,7 @@
 						<option value="TV">Tuvalu</option>
 						<option value="UA">Ucrania</option>
 						<option value="UG">Uganda</option>
-						<option value="UY" selected>Uruguay</option>
+						<option value="UY" >Uruguay</option>
 						<option value="UZ">Uzbekistán</option>
 						<option value="VU">Vanuatu</option>
 						<option value="VE">Venezuela</option>
@@ -326,32 +338,35 @@
 						<option value="ZM">Zambia</option>
 						<option value="ZW">Zimbabue</option>
 					</select>
-				</div>
-
-				<label for="imagen">Selecciona una imagen:</label> <input
-					type="file" id="imagen" name="imagen"> <br> <input
-					onclick="showFields();" class="w-100 btn btn-lg btn-primary"
-					type="submit" value="Crear cuenta" />
-
-
-			</form>
-			<a href="../home/login.html">Volver al inicio de sesión</a>
-		</main>
-		<script src="templates/footer.js"></script>
-
+		</div>
+		
+		<br>
+			
+		<label>Sube una foto de perfil:</label> 
+		<input name="image" type="file" id="image"> 
+		
+		<br>
+		
+		<input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear usuario"/>
+        <br>
+        
+	</form>
+	</main>
+	
 		<script>
+			//funcionando
 			function showFields() {
-				var tipoUsuario = document.getElementById("userType").value;
+				var userType = document.getElementById("userType").value;
 				var providerDataVar = document.getElementById("providerData");
-				var touristDataVar = document.getElementById("touristCountry");
+				var touristDataVar = document.getElementById("touristCountryDIV");
 
-				if (tipoUsuario === "provider") {
+				if (userType  === "provider") {// Si tipo de usuario es provedor ocultar campos de turista
 					providerDataVar.style.display = "block";
 					touristDataVar.style.display = "none";
-				} else if (tipoUsuario === "tourist") {
+				} else if (userType  === "tourist") {// Si tipo de usuario es turista ocultar campos de provedor
 					providerDataVar.style.display = "none";
 					touristDataVar.style.display = "block";
-				} else {
+				} else {//ocultar ambos campos
 					providerDataVar.style.display = "none";
 					touristDataVar.style.display = "none";
 				}
@@ -361,15 +376,45 @@
 				var password = document.getElementById("password").value;
 				var confirm_password = document
 						.getElementById("confirmPassword").value;
-
+				
+						//control de confirmacion de contraseña funcionando
 				if (password !== confirm_password) {
 
 					alert("Las contraseñas no coinciden intente nuevamente");
 					return false;
 				}
+				
+				//control de usuario, elegir Provedor o Turista. //funcionando
+				var typeUser = document.getElementById("userType").value;
 
+				if(typeUser === "nothing"){ 
+					alert("Seleccione un usuario");
+					return false;
+				}
+
+				//control campo vacio: si el usuario proveedor deja su campo obligatorio vacío.
+				
+				if(typeUser === "provider"){
+					var providerDescription = document.getElementById("description").value;
+					if(providerDescription === ""){
+						alert("Debes proporcionar una descripcíon");
+						return false;
+					}
+				} 
+
+				//control campo vacio turista: si el usuario turista no selecciona un pais.
+				if(typeUser === "tourist"){ 
+					var touristCtry = document.getElementById("touristCountry").value;
+					if(touristCtry === ""){
+						alert("Debes seleccionar un país");
+						return false;
+					}
+				}
 				return true;
+
+				
 			}
+
 		</script>
 	</div>
 </body>
