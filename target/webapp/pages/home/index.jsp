@@ -15,9 +15,12 @@
     <title>Turismo.UY</title>
 </head>
 
+
 <body onload="currentTime()">
     <div class="">
-        <script src="templates/header.js"></script>
+    
+		<jsp:include page="../../templates/header.jsp" />
+		
         <h1> Página Principal</h1>
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,7 +48,7 @@
                 <li class="list-group-item">Treinta y Tres</li>
             </ul>
         </div>
-        <a href="<%= request.getContextPath() %>/login">Hacia login</a>
+        
 
         <script src="templates/footer.js"></script>
     </div>
