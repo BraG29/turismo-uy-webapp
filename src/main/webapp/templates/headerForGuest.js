@@ -22,7 +22,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/activities/consultActivity.html">
+                <a class="nav-link" href="pages/activities/consultActivity.jsp">
                     <button class="btn btn-outline-success">
                         &nbsp;Actividades&nbsp;
                     </button>

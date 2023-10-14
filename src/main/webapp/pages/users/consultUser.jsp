@@ -1,10 +1,20 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
 	DtUser userData = (DtUser) request.getAttribute("userData");
+
 	String imagePath = (String) request.getAttribute("imagePath");
+
+	String fullUserName = String.format("%s %s", userData.getName(), userData.getLastName());
+	
+	// Formateo de la fecha de tipo: dd/MM/yyyy
+	DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM 'de' yyyy");
+
+	// Saco la fecha ya formateada como se explico antes
+	String birthDateStr = userData.getBirthDate().format(format);
 %>
 
 
@@ -25,16 +35,23 @@
 </head>
 
 <body>
+
+	<jsp:include page="../../templates/header.jsp" />
+
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="card">
-					<img src="<%= imagePath %>" class="card-img-top"
+					<img src="<%=imagePath%>" class="card-img-top"
 						alt="Foto de perfil">
 					<div class="card-body">
-						<h5 class="card-title"><%= session.getAttribute("userName") %></h5>
-						<p class="card-text">Correo Electrónico: <%= userData.getEmail() %></p>
-						<p class="card-text">Nickname: <%= userData.getNickname() %></p>
+						<h5 class="card-title"><%= fullUserName %> </h5>
+						<p class="card-text">
+							Correo Electrónico:
+							<%=userData.getEmail()%></p>
+						<p class="card-text">
+							Nickname:
+							<%=userData.getNickname()%></p>
 					</div>
 				</div>
 			</div>
@@ -42,8 +59,7 @@
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Información del Perfil</h5>
-						<p class="card-text">Aquí puedes agregar más detalles sobre el
-							usuario.</p>
+						<p class="card-text">Fecha de Nacimiento: <%= birthDateStr %></p>
 					</div>
 				</div>
 			</div>
@@ -52,6 +68,10 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+
+
+	<jsp:include page="../../templates/footer.jsp" />
+
 </body>
 
 </html>
