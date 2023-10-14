@@ -24,7 +24,7 @@
 	        <script src="../../templates/footer.js"></script>
 	    </div>
 	    
-	    <form method="post">
+	    <form action="<%= request.getContextPath() %>/registerActivity" method="post">
 	    
 	    <div class="input-group">
 	     	<span class="input-group-text">Nombre:</span>
@@ -110,9 +110,9 @@
         	<input type="file" id="imagen" name="imagen">
         	<br>
         	
-             <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
+             <input  href="login.html" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
              
-	    </form> 
+	    </form>
 	  </main>  
      
      <script src="../../templates/footer.js"></script>

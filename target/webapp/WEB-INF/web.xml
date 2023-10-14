@@ -8,13 +8,19 @@
   	<servlet-name>LoginServlet</servlet-name>
   	<display-name>LoginServlet</display-name>
   	<description></description>
-  	<servlet-class>uy.turismo.webapp.servlets.LoginServlet</servlet-class>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletLogin</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>ServletRegister</servlet-name>
   	<display-name>ServletRegister</display-name>
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletRegister</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletRegisterActivity</servlet-name>
+  	<display-name>ServletRegisterActivity</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletRegisterActivity</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>LoginServlet</servlet-name>
@@ -23,6 +29,10 @@
   <servlet-mapping>
   	<servlet-name>ServletRegister</servlet-name>
   	<url-pattern>/ServletRegister</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletRegisterActivity</servlet-name>
+  	<url-pattern>/ServletRegisterActivity</url-pattern>
   </servlet-mapping>
   
   
