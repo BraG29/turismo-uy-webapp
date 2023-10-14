@@ -20,6 +20,7 @@ import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+import uy.turismo.webapp.functions.Functions;
 
 @WebServlet("/login")
 public class ServletLogin extends HttpServlet {
@@ -52,11 +53,14 @@ public class ServletLogin extends HttpServlet {
 		
         if (user != null) {
             HttpSession session = request.getSession();
+            session.setAttribute("userId", user.getId());
             session.setAttribute(
             		"userName", 
             		String.format("%s %s", user.getName(), user.getLastName()));
             
-            String image = saveImage(user.getImage(), user.getNickname());
+            //Genero el input Stream aqui porque no podia hacerlo en la operacion 'seveImage' ya que es 'static'
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
+            String image = Functions.saveImage(user.getImage(), user.getNickname(), inputStream);
             session.setAttribute("userImage", image);
             
             if(user instanceof DtTourist) {
@@ -73,26 +77,5 @@ public class ServletLogin extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/login"); // Redireccionar a la página de inicio de sesión si las credenciales son incorrectas
         }
     }
-	
-	private String saveImage(BufferedImage image, String imageName) {
-		String imageFullName = imageName + ".png";
-		InputStream inputStram = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
-		Properties properties = new Properties();
-		String imagePath = null;
-		
-		try {
-			properties.load(inputStram);
-			imagePath = properties.getProperty("imagesDirPath").concat("user/");
-			File saveFile = new File(imagePath + imageFullName);
-			if(!saveFile.exists()) {
-				ImageIO.write(image, "png", saveFile);
-			}
-			
-		} catch (Exception e) {
-			System.err.println("Error al guardar la imagen: " + e.getMessage());
-		}
-		
-		return "assets/images/user/" + imageFullName;
-	}
 
 }

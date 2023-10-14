@@ -51,7 +51,7 @@
         </div>
         
 
-        <script src="templates/footer.js"></script>
+		<jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 

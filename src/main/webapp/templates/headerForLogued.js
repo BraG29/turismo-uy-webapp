@@ -6,7 +6,7 @@ document.write(`
             <div class="mt-0 mb-1">
                 <img class="ml-3" src="${userImage}" alt="Usuario Generico"
                     width="48px">
-                <span> ${userName} </span>
+                <a href="${contextPath}/profile?id=${userId}"> <span> ${userName} </span> </a>
             </div>
         </div>
     </div>

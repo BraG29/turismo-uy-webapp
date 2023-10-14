@@ -22,17 +22,27 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletProfile</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletLogout</servlet-name>
+  	<display-name>ServletLogout</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletLogout</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
-  	<url-pattern>/ServletLogin</url-pattern>
+  	<url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ServletRegister</servlet-name>
-  	<url-pattern>/ServletRegister</url-pattern>
+  	<url-pattern>/register</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>ServletProfile</servlet-name>
   	<url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletLogout</servlet-name>
+  	<url-pattern>/logout</url-pattern>
   </servlet-mapping>
   
   

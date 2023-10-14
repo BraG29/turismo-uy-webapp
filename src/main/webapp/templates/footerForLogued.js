@@ -9,7 +9,7 @@ document.write(`
         </div>
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex" style="width:fit-content">
             <li class"ms-3">
-                <a class="nav-link" href="../../pages/home/login.html">
+                <a class="nav-link" href="${contextPath}/logout">
                     <button class="btn btn-outline-danger btn-sm">
                         Cerrar Sesión
                     </button>

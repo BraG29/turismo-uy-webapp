@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+	Long userId = (Long) session.getAttribute("userId");
 	String userName = (String) session.getAttribute("userName");
 	String userImage = (String) session.getAttribute("userImage");
 	String contextPath = request.getContextPath();
 %>
 <html>
 	<script>
+		var userId = <%= userId %>;
 		var userName = '<%= userName %>';
 		var userImage = '<%= userImage %>';
 		var contextPath = '<%= contextPath %>';
