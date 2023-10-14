@@ -6,7 +6,6 @@
 	String contextPath = request.getContextPath();
 %>
 
-	
 <script>
 	var contextPath = '<%= contextPath %>';
 </script>
@@ -15,7 +14,7 @@
 	if(userName != null){
 		
 %>
-	    <script src="templates/footerForLogued.js"></script>
+	    <script src="templates/footerForLogged.js"></script>
 <% 
  	
 	}else {

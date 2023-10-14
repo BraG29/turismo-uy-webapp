@@ -18,9 +18,9 @@
 <body onload="currentTime()">
 	<main class="form-signin w-50 m-auto container-fluid">
 	    <div class="">
-	        <script src="../../templates/header.js"></script>
+	        <jsp:include page="../../templates/header.jsp"/>
 	        <h1> Registrar salida</h1>      
-	        <script src="../../templates/footer.js"></script>
+	        <jsp:include page="../../templates/footer.jsp" />
 	    </div>
 	    
 	    <form action="" method="post">

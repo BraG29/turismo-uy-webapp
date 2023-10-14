@@ -17,7 +17,7 @@
 
 <body onload="currentTime()">
     <div class="">
-        <script src="../../templates/header.js"></script>
+        <jsp:include page="../../templates/header.jsp"/>
         <h1> Consultar Actividades</h1>
 
 
@@ -49,7 +49,7 @@
         </div>
 
         <a href="registerActivity.html"> Hacia registrar Actividad</a>
-        <script src="../../templates/footer.js"></script>
+        <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>
 
