@@ -45,7 +45,7 @@ public class ServletRegisterActivity extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*
 		Long id = null;
 		String name = request.getParameter("activityName");
 		String description = request.getParameter("description");
@@ -83,7 +83,7 @@ public class ServletRegisterActivity extends HttpServlet {
 														null,
 														null);
 		controller.registeTouristicActivity(DTA);
-		
+		*/
 	}
 
 }

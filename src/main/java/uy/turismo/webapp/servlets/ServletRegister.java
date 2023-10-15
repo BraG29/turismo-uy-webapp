@@ -1,14 +1,19 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
@@ -19,7 +24,8 @@ import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 /**
  * Servlet implementation class ServletRegister
  */
-//@WebServlet("/register")
+@WebServlet
+@MultipartConfig(location="/tmp", fileSizeThreshold=0, maxFileSize=5242880, maxRequestSize=20971520)
 public class ServletRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -52,10 +58,8 @@ public class ServletRegister extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		String birthDateStr = request.getParameter("birthDate");
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		
+		String birthDateStr = request.getParameter("birthDate");		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	
 		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
 		
 		//provider
@@ -65,7 +69,14 @@ public class ServletRegister extends HttpServlet {
 		//tourist
 		String country = request.getParameter("touristCountry");
 		
+		
+		
     	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
+
+    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+    		InputStream fileContent = filePart.getInputStream();
+    		BufferedImage image = ImageIO.read(fileContent);
+    		
     		DtUser userData = new DtProvider(
     				null,
     				name,
@@ -73,7 +84,7 @@ public class ServletRegister extends HttpServlet {
     				email,
     				lastName,
     				birthDate,
-    				null,
+    				image,
     				web,
     				description,
     				null,
@@ -83,6 +94,11 @@ public class ServletRegister extends HttpServlet {
     		IController controller = ControllerFactory.getIController();
     		controller.registerUser(userData);
     	}else {
+    		
+    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+    		InputStream fileContent = filePart.getInputStream();
+    		BufferedImage image = ImageIO.read(fileContent);
+    		
     		DtUser userData =  new DtTourist(
     				null,
     				name,
@@ -90,7 +106,7 @@ public class ServletRegister extends HttpServlet {
     				email,
     				lastName,
     				birthDate,
-    				null,
+    				image,
     				country,
     				null,
     				password
