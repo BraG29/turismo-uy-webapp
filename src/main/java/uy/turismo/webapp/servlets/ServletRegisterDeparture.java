@@ -1,15 +1,21 @@
 package uy.turismo.webapp.servlets;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
 
+import uy.turismo.servidorcentral.logic.controller.Controller;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
@@ -21,39 +27,54 @@ public class RegisterDeparture extends HttpServlet {
 
     public ServletRegisterDeparture() {
         super();
-        // TODO Auto-generated constructor stub
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.getRequestDispatcher("pages/departures/consultDeparture.jsp")
 			.forward(request, response);
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		
-		String name = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String nickname = request.getParameter("nickname");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");	
-		String birthDateStr = request.getParameter("birthDate");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);		
 
-		DtUser userData = new DtProvider(
-				null,
-				name,
-				nickname,
-				email,
-				lastName,
-				birthDate,
-				null,
-				web,
-				description,
-				null,
-				password
+
+	protected List<String> getActivityForDeparture(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+        List<String> list = new ArrayList<String>();
+		
+        list.add("Thing1");
+        list.add("Thing2");
+        list.add("Thing3");
+        return list;
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String nameActivity = request.getParameter("nameActivity");
+		String nameDeparture = request.getParameter("nameDeparture");
+
+		String dateString = request.getParameter("startingDate");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate startingDate = LocalDate.parse(dateString, formatter);
+
+		int hour = Integer.parseInt(request.getParameter("hour")); // TOOD: ¿¿Aca se envia todo junto con la fecha o es un campo separado ???
+		int maxTourists = Integer.parseInt(request.getParameter("maxTourists"));
+		String place = request.getParameter("place");
+		String localDate =  myFormatObj.format(LocalDate.now()).toString(); // TOOD: Aca verificar si se pone como String o como Date
+
+		ImageIO image = request.getParameter("image"); // TODO: Aca hay que poner el path hacia la imagen. Pls no enviar la imagen hacia la BD
+			// Como miercoles se recoge la extension a la imagen
+			// assets/images/" + nameDeparture + "extension
+
+		DtTouristicDeparture departureData = new DtTouristicDeparture(
+				nameActivity,
+				nameDeparture,
+				startingDate,
+				hour,
+				maxTourists,
+				place,
+				localDate,
+				image
 				); 
 		
 		IController controller = ControllerFactory.getIController();
-		controller.registerUser(userData);
+		controller.registerDeparture(departureData);
 	}
 }
