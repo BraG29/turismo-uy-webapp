@@ -6,9 +6,18 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Turismo.UY</title>
+<title>Registro usuarios</title>
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/scripts/jquery3.5.1.min.js"></script>
+<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+<script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+<script src="assets/scripts/clock.js" type="text/javascript"></script>
+<link rel="icon" href="assets/images/star.ico" type="image/png">
 </head>
 
 <body>
@@ -16,7 +25,6 @@
 	<main class="form-signin w-50 m-auto container-fluid">
 	<h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
 	
-	<!-- action="<%= request.getContextPath() %>/register" -->
 	<form action="<%= request.getContextPath() %>/register" method="post"
 				enctype="multipart/form-data" accept-charset="UTF-8"
 				onsubmit="return validation()">
@@ -28,6 +36,7 @@
             <option value="tourist"> Turista </option>
             <option value="provider"> Proveedor </option>
         </select>
+
 
 		<div class="input-group">
 	        <span class="input-group-text"> Nombre: </span>
@@ -334,7 +343,7 @@
 		<br>
 			
 		<label>Sube una foto de perfil:</label> 
-		<input type="file" id="image"> 
+		<input name="image" type="file" id="image"> 
 		
 		<br>
 		
@@ -378,16 +387,10 @@
 				//control de usuario, elegir Provedor o Turista. //funcionando
 				var typeUser = document.getElementById("userType").value;
 
-				
-				
-				
-
-
 				if(typeUser === "nothing"){ 
 					alert("Seleccione un usuario");
 					return false;
 				}
-
 
 				//control campo vacio: si el usuario proveedor deja su campo obligatorio vacío.
 				
@@ -398,7 +401,6 @@
 						return false;
 					}
 				} 
-
 
 				//control campo vacio turista: si el usuario turista no selecciona un pais.
 				if(typeUser === "tourist"){ 
@@ -417,4 +419,3 @@
 	</div>
 </body>
 </html>
-	

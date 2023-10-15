@@ -10,26 +10,20 @@
     <link rel="stylesheet" href="../../assets/styles/main.css">
     <script src="../../assets/scripts/jquery3.5.1.min.js"></script>
     <script src="../../assets/scripts/bootstrap4.5.2.min.js"></script>
+    <script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
     <script src="../../assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="../../assets/images/star.ico" type="image/png">
     <title>Turismo.UY</title>
 </head>
 
 <body onload="currentTime()">
-
+	<jsp:include page="../../templates/header.jsp"/>
 	<main class="form-signin w-50 m-auto container-fluid">
-	    <div class="">
-	        <jsp:include page="../../templates/header.jsp"/>
-	        <h1> Registrar actividad</h1>      
-	        <jsp:include page="../../templates/footer.jsp" />
-	    </div>
-	    
-	    <form method="post">
-	    
+
+ 			<form action="<%= request.getContextPath() %>/registerActivity" method="post">	
 	    <div class="input-group">
 	     	<span class="input-group-text">Nombre:</span>
 	        <input id="activityName" type="text" class="form-control" placeholder="Ej: Degusta" required>
-	        
 	    </div>
 	    <br>
 	    
@@ -42,48 +36,49 @@
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Duración (hrs):</span>
-	        <input id="duration" type="number" class="form-control" placeholder="Ej: 3" required>
+	        <input id="duration" type="number" class="form-control" placeholder="Ej: 3" name="duration" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Costo:</span>
-	        <input id="cost" type="number" class="form-control" placeholder="Ej: $500" required>
+	        <input id="cost" type="number" class="form-control" placeholder="Ej: $500" name="cost" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Fecha de creación:</span>
-	        <input id="uploadDate" type="date" class="form-control" placeholder="Ej: 10/10/2023" required>
+	        <input id="uploadDate" type="date" class="form-control" placeholder="Ej: 10/10/2023" name="uploadDate" required>
 	        
 	    </div>
 	    <br>
 	    
 	    <div>
              <span> Seleccione el departamento de la actividad:</span>
-             <select id="department" class="form-select" aria-label="Default select example" required>
+             <select id="department" class="form-select" aria-label="Default select example" name="department" required>
 	  
-	  		<option value="artigas"> Artigas </option>
-	  		<option value="artigas"> Canelones </option>
-	  		<option value="artigas"> Cerro Largo </option>
-	  		<option value="artigas"> Colonia </option>
-	  		<option value="artigas"> Durazno </option>
-	  		<option value="artigas"> Flores </option>
-	  		<option value="artigas"> Florida </option>
-	  		<option value="artigas"> Lavalleja </option>
-	  		<option value="artigas" selected> Maldonado </option>
-	  		<option value="artigas"> Montevideo </option>
-	  		<option value="artigas"> Paysandú </option>
-	  		<option value="artigas"> Río Negro </option>
-	  		<option value="artigas"> Rivera </option>
-	  		<option value="artigas"> Rocha </option>
-	  		<option value="artigas"> Salto </option>
-	  		<option value="artigas"> San José </option>
-	  		<option value="artigas"> Soriano </option>
-	  		<option value="artigas"> Tacuarembó </option>
-	  		<option value="artigas"> Treinta y tres </option>
+	  		<option value="1"> Canelones </option>
+	  		<option value="2"> Maldonado </option>
+	  		<option value="3"> Rocha </option>
+	  		<option value="4"> Treinta y Tres </option>
+	  		<option value="5" selected> Cerro Largo </option>
+	  		<option value="6"> Rivera </option>
+	  		<option value="7"> Artigas </option>
+	  		<option value="8"> Salto </option>
+	  		<option value="9" > Paysandú </option>
+	  		<option value="10"> Rió Negro </option>
+	  		<option value="11"> Soriano </option>
+	  		<option value="12"> Colonia </option>
+	  		<option value="13"> San José </option>
+	  		<option value="14"> Flores </option>
+	  		<option value="15"> Florida </option>
+	  		<option value="16"> Lavalleja </option>
+	  		<option value="17"> Durazno </option>
+	  		<option value="18"> Tacuarembó </option>
+	  		<option value="19"> Montevideo </option>
+	  		
 	  		
 			</select>
         </div>
@@ -110,9 +105,9 @@
         	<input type="file" id="imagen" name="imagen">
         	<br>
         	
-             <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
+             <input  href="login.html" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
              
-	    </form> 
+	    </form>
 	  </main>  
      
      <jsp:include page="../../templates/footer.jsp" />
