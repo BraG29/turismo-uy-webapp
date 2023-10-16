@@ -1,1 +1,9 @@
+<<<<<<< HEAD
+=======
+uy/turismo/webapp/servlets/ServletProfile.class
+uy/turismo/webapp/servlets/ServletRegister.class
+uy/turismo/webapp/functions/Functions.class
+uy/turismo/webapp/servlets/ServletRegisterActivity.class
+uy/turismo/webapp/servlets/ServletLogin.class
+>>>>>>> 3e1ffeeb3ac15332f2ce5aefaf16a14bba0ee7cc
 uy/turismo/webapp/servlets/ServletLogout.class

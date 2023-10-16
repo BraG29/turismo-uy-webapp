@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 /home/prog-app/eclipse-workspace/webapp/src/main/java/uy/turismo/webapp/functions/Functions.java
 /home/prog-app/eclipse-workspace/webapp/src/main/java/uy/turismo/webapp/servlets/ServletLogin.java
 /home/prog-app/eclipse-workspace/webapp/src/main/java/uy/turismo/webapp/servlets/ServletLogout.java
 /home/prog-app/eclipse-workspace/webapp/src/main/java/uy/turismo/webapp/servlets/ServletProfile.java
 /home/prog-app/eclipse-workspace/webapp/src/main/java/uy/turismo/webapp/servlets/ServletRegister.java
+=======
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/servlets/ServletProfile.java
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/servlets/ServletRegister.java
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/servlets/ServletRegisterActivity.java
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/servlets/ServletLogout.java
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/functions/Functions.java
+/home/prog-app/Documentos/GitHub/turismo-uy-webapp/src/main/java/uy/turismo/webapp/servlets/ServletLogin.java
+>>>>>>> 3e1ffeeb3ac15332f2ce5aefaf16a14bba0ee7cc
