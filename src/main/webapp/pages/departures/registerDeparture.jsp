@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List"%>
-<%@ page import="logic.datatypes.DtDepartment"%>
-<%@ page import="logic.datatypes.DtTouristicActivity"%>
-<%@ page import="logic.datatypes.DtTouristicDeparture"%>
+<!--
+%@ // page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+%@ // page import="java.util.List"%>
+%@ // page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+%@ // page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
+%@ // page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +32,10 @@
         cantidad máxima
         imagen.
         fecha actual.-->
+        
+        
+        <!-- 
+        
         <form action="getActivityForDeparture" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
             <div class="input-group">
                 <label class="input-group-text" for="department"> Departamento</label>
@@ -62,11 +67,11 @@
         <hr>
         <form action="registerDeparture" method="POST" enctype="multipart/form-data" accept-charset="UTF-8">
             <div class="form-check">
-                <% List<?> varActConfirmadas = (List<?>) request.getAttribute("actividadesAsociadas"); %>
-                <% for ( Object index: varActConfirmadas ) { %>
+                % //List<?> varActConfirmadas = (List<?>) request.getAttribute("actividadesAsociadas"); %>
+                % //for ( Object index: varActConfirmadas ) { %>
 
                     <script type="text/javascript">
-                        var myObject = <%= the string output by the JSON library %>;
+                        var myObject = %= //the string output by the JSON library %>;
                     </script>
 
                  // Esto de actividades/actividad tiene que ir a alguna parte para rescatar el nombre
@@ -77,12 +82,12 @@
                  // Hay que acordarse que estas son las actividades confirmadas en un departamento
                  // Primero se lista, luego podemos hacer las confirmadas
 
-                    <%String laActividad = request.getContextPath()%>/actividades?actividad=<%=((DtTouristicActivity)index).getNombre()%>
-                    <input class="form-check-input" type="radio" name="nameActivity" id="nameActivity" value="<%=laActividad %>">
+                    %//String laActividad = request.getContextPath()%>/actividades?actividad=%=//((DtTouristicActivity)index).getNombre()%>
+                    <input class="form-check-input" type="radio" name="nameActivity" id="nameActivity" value="%=//laActividad %>">
                     <label class="form-check-label" for="nameActivity">
-                        <%=laActividad %>
+                        %=//laActividad %>
                     </label>
-                <% } %>
+                %// } %>
             </div>
             <br>
             <div class="input-group">
@@ -122,3 +127,4 @@
 </body>
 
 </html>
+ -->
