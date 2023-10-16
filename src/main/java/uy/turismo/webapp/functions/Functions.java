@@ -14,26 +14,31 @@ public class Functions {
 	 * @param image Imagen a guardar
 	 * @param imageName Nombre de la imagen sin extension
 	 * @param inputStram Stream del archivo .properties
+	 * @para dir Directorio especifico de la entidad que es guarda la imagen ej: "user/" o "activity/"
 	 * @return Ruta de la imagen
 	 */
-	public static String saveImage(BufferedImage image, String imageName, InputStream inputStream) {
+	public static String saveImage(BufferedImage image, String imageName, InputStream inputStream, String dir) {
 		String imageFullName = imageName + ".png";
 		Properties properties = new Properties();
 		String imagePath = null;
 		
 		try {
 			properties.load(inputStream);
-			imagePath = properties.getProperty("imagesDirPath").concat("user/");
+				
+			
+			imagePath = properties.getProperty("imagesDirPath").concat(dir);
 			File saveFile = new File(imagePath + imageFullName);
 			if(!saveFile.exists()) {
 				ImageIO.write(image, "png", saveFile);
 			}
 			
 		} catch (Exception e) {
+			properties.clear();
 			System.err.println("Error al guardar la imagen: " + e.getMessage());
 		}
 		
-		return "assets/images/user/" + imageFullName;
+		properties.clear();
+		return "assets/images/" + dir + imageFullName;
 	}
 	
 }

@@ -2,17 +2,26 @@ package uy.turismo.webapp.servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
 
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
+import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import uy.turismo.webapp.functions.Functions;
+import uy.turismos.servidorcentral.logic.enums.ActivityState;
 
 /**
  * Servlet implementation class ServletProfile
@@ -34,11 +43,38 @@ public class ServletProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IController controller = ControllerFactory.getIController();
 		
+		
 		Long userId = Long.parseLong(request.getParameter("id"));
 		DtUser userData = controller.getUserData(userId);
+		
+		
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
-        String imagePath = Functions.saveImage(userData.getImage(), userData.getNickname() , inputStream);
+//        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
+        String imagePath = Functions.saveImage(
+        		userData.getImage(),
+        		userData.getNickname(),
+        		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+        		"user/");
+        
+        
+        if(userData instanceof DtProvider) {
+        	DtProvider providerData = (DtProvider) userData;
+        	if(providerData.getTouristicActivities() != null) {
+        		
+    			Map<Long, String> activityImages = new HashMap<Long, String>();
+    			
+    			for(DtTouristicActivity activity : providerData.getTouristicActivities()) {
+    				String activityImagePath = Functions.saveImage(
+    						activity.getImage(),
+    						activity.getName(),
+    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+    						"activity/");
+    				activityImages.put(activity.getId(), activityImagePath);
+    			}
+    				
+    			request.setAttribute("activityImages", activityImages);
+        	}
+        }
 		
 		request.setAttribute("userData", userData);
 		request.setAttribute("imagePath", imagePath);
