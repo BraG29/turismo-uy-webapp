@@ -49,7 +49,7 @@
             </ul>
         </div>
 
-        <a href="registerActivity.html"> Hacia registrar Actividad</a>
+        <a href=<%= request.getContextPath() %>/registerActivity method="get"> Hacia registrar Actividad</a>
         <jsp:include page="../../templates/footer.jsp" />
     </div>
 </body>

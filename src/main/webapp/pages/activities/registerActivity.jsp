@@ -1,4 +1,17 @@
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
+<%@page import="java.util.List"%>
+
+
+<%
+	List<DtProvider> providers = (List<DtProvider>) request.getAttribute("providers");
+	List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categories");
+
+%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,16 +33,16 @@
 	<jsp:include page="../../templates/header.jsp"/>
 	<main class="form-signin w-50 m-auto container-fluid">
 
- 			<form action="<%= request.getContextPath() %>/registerActivity" method="post">	
+ 			<form action="<%= request.getContextPath() %>/registerActivity" enctype="multipart/form-data" method="post">	
 	    <div class="input-group">
 	     	<span class="input-group-text">Nombre:</span>
-	        <input id="activityName" type="text" class="form-control" placeholder="Ej: Degusta" required>
+	        <input id="activityName" type="text" class="form-control" placeholder="Ej: Degusta" name="activityName" required>
 	    </div>
 	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Descripción:</span>
-	        <input id="description" type="text" class="form-control" placeholder="Ej: Degusta comidas" required>
+	        <input id="description" type="text" class="form-control" placeholder="Ej: Degusta comidas" name="description" required>
 	        
 	    </div>
 	    <br>
@@ -83,20 +96,32 @@
 			</select>
         </div>
 	    <br>
+	     <div>
+             <span> Seleccione el proveedor:</span>
+             <select id="provider" class="form-select" aria-label="Default select example" name="provider" required>
+             		
+             		<% for(DtProvider provider : providers){%>
+             			<option value=<%=provider.getId()%>> <%= provider.getNickname() %></option>
+             		<%}%>
+             	
+			</select>
+			
+        </div>
+	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Ciudad:</span>
-	        <input id="city" type="text" class="form-control" placeholder="Ej: Mercedes" required>
+	        <input id="city" type="text" class="form-control" placeholder="Ej: Mercedes" name="city" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div>
-	     <h3> Listar categorias (ver como cargar para seleccionar mas de una)</h1>
 	     	<span >Seleccione categoría/s:</span>
-             <select id="categories" class="form-select" aria-label="Ej: Recorridos" required>
-	  			<option value="gastronomy"> Gastronomía </option>
-	  			<option value="Beaches" selected> Playas </option>
+             <select id="categories" class="form-select" aria-label="Ej: Recorridos" name="categories" multiple required>
+             	<% for(DtCategory category : categories){%>
+             			<option value=<%=category.getId()%>> <%= category.getName() %></option>
+             		<%}%>
 			</select>
           </div>
           <br>
