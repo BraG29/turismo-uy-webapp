@@ -1,0 +1,41 @@
+@charset "UTF-8";
+/**{
+	margin: 0%;
+	padding: 0%;
+	box-sizing: border-box;
+	font-family: sans-serif;
+}
+
+body{
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	min-height: 100vh;
+}
+
+.container{
+	border: solid 1px rgb(black);
+}
+
+table{
+	
+	color: white;
+	font-size: 14%;
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+th{
+	padding: 10px 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+
+td{
+	padding: 15px;
+	border-bottom: solid 1px rgb(gray);
+}
+*/

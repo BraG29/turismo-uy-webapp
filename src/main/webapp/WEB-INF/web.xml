@@ -40,6 +40,12 @@
   	<servlet-class>uy.turismo.webapp.servlets.ServletRegisterActivity</servlet-class>
 
   </servlet>
+  <servlet>
+  	<servlet-name>ServletUserList</servlet-name>
+  	<display-name>ServletUserList</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletUserList</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
@@ -60,6 +66,10 @@
   <servlet-mapping>
   	<servlet-name>ServletRegisterActivity</servlet-name>
   	<url-pattern>/registerActivity</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletUserList</servlet-name>
+  	<url-pattern>/ServletUserList</url-pattern>
   </servlet-mapping>
   
 

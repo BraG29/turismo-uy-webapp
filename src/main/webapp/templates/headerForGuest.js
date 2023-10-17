@@ -43,7 +43,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/users/consultUser.jsp">
+                <a class="nav-link" href="../../pages/users/UserList.jsp">
                     <button class="btn btn-outline-success">
                         Usuarios
                     </button>
