@@ -127,7 +127,7 @@
           <br>
           
           <label for="imagen">Selecciona una imagen:</label>
-        	<input type="file" accept="image/*" id="imagen" name="imagen">
+        	<input type="file" accept="image/*" id="imagen" name="image">
         	<br>
         	
              <input  href="login.html" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear actividad"/>
