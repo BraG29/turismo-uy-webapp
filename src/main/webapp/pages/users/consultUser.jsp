@@ -1,3 +1,7 @@
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtInscription"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
 <%@page import="java.util.Map"%>
@@ -148,21 +152,89 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 						</div>
 					</div>
 					<%
-					%>
-					<%
 					} else {
-					DtTourist toursitData = (DtTourist) userData;
+						DtTourist toursitData = (DtTourist) userData;
 					%>
-					<p class="card-text">
-						Nacionalidad:
-						<%=toursitData.getNationality()%></p>
+						<p class="card-text">
+							Nacionalidad:
+							<%=toursitData.getNationality()%></p>
 
 					<% 
-					}
-					
+						List<DtTouristicDeparture> departuresToPrint = toursitData.getDepartures();
+						List<DtPurchase> purchasesToPrint = toursitData.getPurchases();
+						List<DtInscription> inscriptions = toursitData.getInscriptions();
+						
+						Map<Long, String> departureImages = (Map<Long, String>) request.getAttribute("departureImages");
+						Map<Long, String> bundleImages = (Map<Long, String>) request.getAttribute("bundleImages");
+						
+						
+						if(departuresToPrint != null){
+							%>
+							<div class="container">
+								<h4 class="card-text">Salidas:</h4>
+								<ul class="list-group custom-list">
+								<%
+								for (int i = 0; i < departuresToPrint.size(); i++) {
+									DtInscription inscription = inscriptions.get(i);
+									String inscriptionDateStr = inscription.getInscriptionDate().format(format);
+ 								%>
+									<li class="list-group-item">
+										<div class="media">
+											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
+												class="mr-3" style="width: 100px;"> 
+											<div class="media-body">
+												<p> <b> <%= departuresToPrint.get(i).getName() %> </b> </p>
+												<% if(userInSession){ %>
+												
+													Fecha de inscripción: <%= inscriptionDateStr %> <br>
+													Costo total: <%= inscription.getTotalCost() %> <br>
+													Cantidad de Turistas: <%= inscription.getTouristAmount() %>
+												<% }%>
+											</div>
+										</div>
+									</li>
+								<%
+								}
+								%>
+								</ul>
+							</div>
+					<%
+							}
+							if(userInSession){
+								if(purchasesToPrint != null){
+									%>
+									<div class="container">
+										<h4 class="card-text">Paquetes:</h4>
+										<ul class="list-group custom-list">
+										<%
+										for (DtPurchase purchase : purchasesToPrint) {
+											DtTouristicBundle bundle = purchase.getBundle();
+											String purchaseDateStr = purchase.getPurchaseDate().format(format);
+											String expireDateStr = purchase.getExpireDate().format(format);
+		 								%>
+											<li class="list-group-item">
+												<div class="media">
+													<img src="<%= bundleImages.get(bundle.getId()) %>"
+														class="mr-3" style="width: 100px;"> 
+													<div class="media-body">
+														<p> <b> <%= bundle.getName() %> </b> </p>
+															Fecha de compra: <%= purchaseDateStr %> <br>
+															Fecha de vencimiento: <%= expireDateStr %> <br>
+															Costo total: <%= purchase.getTotalCost() %> <br>
+															Cantidad de Turistas: <%= purchase.getTouristAmount() %> <br>
+													</div>
+												</div>
+											</li>
+										<%
+										}
+										%>
+										</ul>
+									</div>
+								<%
+								}
+							}
+						}
 					%>
-
-
 				</div>
 			</div>
 		</div>
@@ -170,8 +242,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
 
 	<jsp:include page="../../templates/footer.jsp" />
