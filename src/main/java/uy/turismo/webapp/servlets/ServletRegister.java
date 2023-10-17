@@ -109,7 +109,9 @@ public class ServletRegister extends HttpServlet {
     				image,
     				country,
     				null,
-    				password
+    				password,
+    				null,
+    				null
     				);
     		
     		IController controller = ControllerFactory.getIController();

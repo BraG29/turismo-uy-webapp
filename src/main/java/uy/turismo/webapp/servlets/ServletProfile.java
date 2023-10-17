@@ -18,7 +18,10 @@ import com.mysql.cj.Session;
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
+import uy.turismo.servidorcentral.logic.datatypes.DtPurchase;
+import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import uy.turismo.webapp.functions.Functions;
 import uy.turismos.servidorcentral.logic.enums.ActivityState;
@@ -74,6 +77,41 @@ public class ServletProfile extends HttpServlet {
     				
     			request.setAttribute("activityImages", activityImages);
         	}
+        }else {
+        	DtTourist touristData = (DtTourist) userData;
+        	if(touristData.getDepartures() != null) {
+        		
+    			Map<Long, String> departureImages = new HashMap<Long, String>();
+    			
+    			for(DtTouristicDeparture departure : touristData.getDepartures()) {
+    				String activityImagePath = Functions.saveImage(
+    						departure.getImage(),
+    						departure.getName(),
+    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+    						"departure/");
+    				departureImages.put(departure.getId(), activityImagePath);
+    			}
+    				
+    			request.setAttribute("departureImages", departureImages);
+        	}
+        	if(touristData.getPurchases() != null) {
+        		
+    			Map<Long, String> bundleImages = new HashMap<Long, String>();
+    			
+    			for(DtPurchase purchase : touristData.getPurchases()) {
+    				String bundleImagePath = Functions.saveImage(
+    						purchase.getBundle().getImage(),
+    						purchase.getBundle().getName(),
+    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+    						"bundle/");
+    				bundleImages.put(purchase.getBundle().getId(), bundleImagePath);
+    			}
+    				
+    			request.setAttribute("bundleImages", bundleImages);
+        	}
+        	
+        	
+        	
         }
 		
 		request.setAttribute("userData", userData);
