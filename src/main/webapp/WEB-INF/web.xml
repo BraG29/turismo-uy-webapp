@@ -47,6 +47,12 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletUserList</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletBundleList</servlet-name>
+  	<display-name>ServletBundleList</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletBundleList</servlet-class>
+  </servlet>
   
   <servlet>
   	<servlet-name>ServletConsultActivity</servlet-name>
@@ -82,6 +88,10 @@
   <servlet-mapping>
   	<servlet-name>ServletUserList</servlet-name>
   	<url-pattern>/ServletUserList</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletBundleList</servlet-name>
+  	<url-pattern>/ServletBundleList</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
