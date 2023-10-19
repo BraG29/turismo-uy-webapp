@@ -45,8 +45,6 @@ public class ServletRegisterActivity extends HttpServlet {
 		List<DtProvider> providers = controller.getListProvider();
 		List<DtCategory> categories = controller.getListCategory();
 		
-		System.out.println(categories.get(0).getName());
-		
 		request.setAttribute("providers",providers);
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("pages/activities/registerActivity.jsp")
@@ -65,7 +63,7 @@ public class ServletRegisterActivity extends HttpServlet {
 		Double cost = Double.parseDouble(request.getParameter("cost"));
 		String city = request.getParameter("city");
 
-		Part filePart = request.getPart("imagen"); // "imagen" debe coincidir con el atributo name del campo en tu formulario
+		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);		
 		
@@ -78,7 +76,6 @@ public class ServletRegisterActivity extends HttpServlet {
 		DtProvider provider = new DtProvider(Long.parseLong((String) request.getParameter("provider")), "", "", null);
 		DtDepartment department = new DtDepartment(Long.parseLong(request.getParameter("department")));
 		
-		//DtCategory category = new DtCategory(Long.parseLong((String) request.getParameter("categories")));
 		String[] arrayCategories = request.getParameterValues("categories");
 		List<DtCategory> categoriesList = new ArrayList<DtCategory>();
 		
