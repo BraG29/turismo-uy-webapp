@@ -46,7 +46,6 @@ public class ServletProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		IController controller = ControllerFactory.getIController();
 		
-		
 		Long userId = Long.parseLong(request.getParameter("id"));
 		DtUser userData = controller.getUserData(userId);
 		
