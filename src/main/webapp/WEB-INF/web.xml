@@ -46,6 +46,12 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletUserList</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletUpdateUser</servlet-name>
+  	<display-name>ServletUpdateUser</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletUpdateUser</servlet-class>
+  </servlet>
   
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
@@ -70,6 +76,10 @@
   <servlet-mapping>
   	<servlet-name>ServletUserList</servlet-name>
   	<url-pattern>/ServletUserList</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletUpdateUser</servlet-name>
+  	<url-pattern>/updateuser</url-pattern>
   </servlet-mapping>
   
 

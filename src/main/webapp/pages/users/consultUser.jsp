@@ -73,6 +73,18 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							<%=userData.getNickname()%></p>
 					</div>
 				</div>
+				<div align="right">
+					<% if(userInSession){ 
+						session.setAttribute("imagePath", imagePath);
+					%>
+		                <a  href="<%= request.getContextPath() %>/updateuser?id=<%= userData.getId() %>">
+		                    <button class="btn btn-info">
+		                        &nbsp;Modificar Perfil&nbsp;
+		                    </button>
+		                </a>
+					<%} %>
+				
+				</div>
 			</div>
 			<div class="col-md-8">
 				<div class="card">
@@ -238,6 +250,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 				</div>
 			</div>
 		</div>
+		
 	</div>
 
 

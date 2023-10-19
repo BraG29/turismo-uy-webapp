@@ -28,9 +28,10 @@ public class Functions {
 			
 			imagePath = properties.getProperty("imagesDirPath").concat(dir);
 			File saveFile = new File(imagePath + imageFullName);
-			if(!saveFile.exists()) {
-				ImageIO.write(image, "png", saveFile);
+			if(saveFile.exists()) {
+				saveFile.delete();
 			}
+			ImageIO.write(image, "png", saveFile);
 			
 		} catch (Exception e) {
 			properties.clear();
