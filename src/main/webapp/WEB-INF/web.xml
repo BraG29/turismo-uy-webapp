@@ -3,120 +3,132 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<display-name>Archetype Created Web Application</display-name>
+  <display-name>Archetype Created Web Application</display-name>
+  
+  <servlet>
+  	<servlet-name>ServletLogin</servlet-name>
+  	<display-name>ServletLogin</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletLogin</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ServletRegister</servlet-name>
+  	<display-name>ServletRegister</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletRegister</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ServletProfile</servlet-name>
+  	<display-name>ServletProfile</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletProfile</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ServletLogout</servlet-name>
+  	<display-name>ServletLogout</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletLogout</servlet-class>
+  </servlet>
+  
+  
+  <servlet>
+  	<servlet-name>ServletRegisterActivity</servlet-name>
+  	<display-name>ServletRegisterActivity</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletRegisterActivity</servlet-class>
 
-	<servlet>
-		<servlet-name>ServletLogin</servlet-name>
-		<display-name>ServletLogin</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletLogin</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>ServletRegister</servlet-name>
-		<display-name>ServletRegister</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletRegister</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>ServletProfile</servlet-name>
-		<display-name>ServletProfile</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletProfile</servlet-class>
-	</servlet>
-
-	<servlet>
-		<servlet-name>ServletLogout</servlet-name>
-		<display-name>ServletLogout</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletLogout</servlet-class>
-	</servlet>
-
-
-	<servlet>
-		<servlet-name>ServletRegisterActivity</servlet-name>
-		<display-name>ServletRegisterActivity</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletRegisterActivity</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>ServletUserList</servlet-name>
-		<display-name>ServletUserList</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletUserList</servlet-class>
-	</servlet>
-
-	<servlet>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletUserList</servlet-name>
+  	<display-name>ServletUserList</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletUserList</servlet-class>
+  </servlet>
+  
+  <servlet>
 		<servlet-name>ServletUpdateUser</servlet-name>
 		<display-name>ServletUpdateUser</display-name>
 		<description></description>
 		<servlet-class>uy.turismo.webapp.servlets.ServletUpdateUser</servlet-class>
 	</servlet>
-
+	
 	<servlet>
 		<servlet-name>ServletBundleList</servlet-name>
 		<display-name>ServletBundleList</display-name>
 		<description></description>
 		<servlet-class>uy.turismo.webapp.servlets.ServletBundleList</servlet-class>
 	</servlet>
-
-	<servlet>
-		<servlet-name>ServletConsultActivity</servlet-name>
-		<display-name>ServletConsultActivity</display-name>
-		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletConsultActivity</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ServletLogin</servlet-name>
-		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>ServletRegister</servlet-name>
-		<url-pattern>/register</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>ServletProfile</servlet-name>
-		<url-pattern>/profile</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>ServletLogout</servlet-name>
-		<url-pattern>/logout</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>ServletRegisterActivity</servlet-name>
-		<url-pattern>/registerActivity</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>ServletUserList</servlet-name>
-		<url-pattern>/ServletUserList</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ServletConsultActivity</servlet-name>
+  	<display-name>ServletConsultActivity</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletConsultActivity</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletShowActivity</servlet-name>
+  	<display-name>ServletShowActivity</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletShowActivity</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletLogin</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletRegister</servlet-name>
+  	<url-pattern>/register</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletProfile</servlet-name>
+  	<url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletLogout</servlet-name>
+  	<url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletRegisterActivity</servlet-name>
+  	<url-pattern>/registerActivity</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletUserList</servlet-name>
+  	<url-pattern>/ServletUserList</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
 		<servlet-name>ServletUpdateUser</servlet-name>
 		<url-pattern>/updateuser</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet-mapping>
 		<servlet-name>ServletBundleList</servlet-name>
 		<url-pattern>/ServletBundleList</url-pattern>
 	</servlet-mapping>
+	
+  
+  <servlet-mapping>
+  	<servlet-name>ServletConsultActivity</servlet-name>
+  	<url-pattern>/consultActivity</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ServletShowActivity</servlet-name>
+  	<url-pattern>/showActivity</url-pattern>
+  </servlet-mapping>
+  
 
-	<servlet-mapping>
-		<servlet-name>ServletConsultActivity</servlet-name>
-		<url-pattern>/consultActivity</url-pattern>
-	</servlet-mapping>
-
-
-
-	<welcome-file-list>
-		<welcome-file>/pages/home/index.jsp</welcome-file>
-	</welcome-file-list>
+  
+  <welcome-file-list>
+        <welcome-file>/pages/home/index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
