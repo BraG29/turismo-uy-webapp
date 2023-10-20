@@ -68,11 +68,19 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletConsultActivity</servlet-class>
   </servlet>
+ 
   <servlet>
   	<servlet-name>ServletShowActivity</servlet-name>
   	<display-name>ServletShowActivity</display-name>
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletShowActivity</servlet-class>
+	</servlet>
+	
+	<servlet>
+  	<servlet-name>ServletBundleProfile</servlet-name>
+  	<display-name>ServletBundleProfile</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletBundleProfile</servlet-class>
   </servlet>
   
   <servlet-mapping>
@@ -102,7 +110,7 @@
   
   <servlet-mapping>
   	<servlet-name>ServletUserList</servlet-name>
-  	<url-pattern>/ServletUserList</url-pattern>
+  	<url-pattern>/userList</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
@@ -115,10 +123,19 @@
 		<url-pattern>/ServletBundleList</url-pattern>
 	</servlet-mapping>
 	
+	<servlet-mapping>	
+  	<servlet-name>ServletBundleList</servlet-name>
+  	<url-pattern>/bundleList</url-pattern>
+  </servlet-mapping>
+
   
   <servlet-mapping>
   	<servlet-name>ServletConsultActivity</servlet-name>
   	<url-pattern>/consultActivity</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletBundleProfile</servlet-name>
+  	<url-pattern>/bundleProfile</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
@@ -127,7 +144,6 @@
   </servlet-mapping>
   
 
-  
   <welcome-file-list>
         <welcome-file>/pages/home/index.jsp</welcome-file>
     </welcome-file-list>

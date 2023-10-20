@@ -21,7 +21,6 @@
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
@@ -57,7 +56,7 @@
 </style>
 
 </head>
-<body>
+<body onload="currentTime()">
 <jsp:include page="../../templates/header.jsp" />
 
 <div class="">
@@ -100,21 +99,19 @@
 			<img class="bundle-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
 			<div class="bundle-info">
 			<span class="bundle-name"> Nombre:
-				<a href="<%= request.getContextPath() %>/profile?id=<%=bundle.getId()%>">
+				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
 				<%= bundle.getName() %>
 				</a>
 			</span>				 
 			 </div>
 			 </li> 
 			
-		
-		
-		
+
 		<% }else{ %>
 		<li class="user-item">
 			<p>No se encontró la imagen.</p>
 			<span class="user-nickname">
-				<a href="<%= request.getContextPath() %>/profile?id=<%=bundle.getId()%>">
+				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
 				<%= bundle.getName()%>  
 				</a>
 			</span>	
@@ -135,10 +132,6 @@
 	</ul>
 	</main>
 </div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
 <jsp:include page="../../templates/footer.jsp" />
 

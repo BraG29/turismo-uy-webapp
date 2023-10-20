@@ -31,7 +31,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/bundles/BundleList.jsp">
+                <a class="nav-link" href="${contextPath}/bundleList">
                     <button class="btn btn-outline-success">
                         &nbsp;Paquetes&nbsp;
                     </button>
@@ -45,7 +45,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/users/UserList.jsp">
+                <a class="nav-link" href="${contextPath}/userList">
                     <button class="btn btn-outline-success">
                         &nbsp;Usuarios&nbsp;
                     </button>

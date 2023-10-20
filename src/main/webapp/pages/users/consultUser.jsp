@@ -43,13 +43,12 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<!-- <script src="assets/scripts/bootstrap4.5.2.min.js"></script> -->
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
+
 <title>Turismo.UY</title>
 </head>
 
