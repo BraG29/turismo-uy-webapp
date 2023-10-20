@@ -133,6 +133,8 @@ public class ServletUpdateUser extends HttpServlet {
 		IController controller = ControllerFactory.getIController();
 		controller.updateUser(modifiedUser);
 		
+		
+		
 		response.sendRedirect(request.getContextPath() + request.getServletPath() + "?id=" + userData.getId());
 	}
 }
