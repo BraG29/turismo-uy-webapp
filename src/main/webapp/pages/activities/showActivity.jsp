@@ -1,11 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
+<%@page  import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
+	String activityImagePath = (String) request.getAttribute("activityImagePath");
+%>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Card with Bootstrap</title>
+    <title><%=activityToShow.getName() %></title>
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
      <style>
@@ -36,43 +47,43 @@
         <div class="row">
             <div class="col-md-8 offset-md-2" style="margin-left: -28%;">
                 <div class="card">
-                	<h5 class="card-title">Card Title</h5>
-                    <img src="assets/images/activity/Quemar el arbol aureo.png" class="card-img-top" alt="Image" style="width:25em;  border-radius: 5%; margin-left: 3%;" >
+                	<h5 class="card-title"><%= activityToShow.getName() %></h5>
+                    <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="width:25em;  border-radius: 5%; margin-left: 3%;" >
                     <div class="card-body">
-                        <p class="card-text">Descripción: </p>
-                        <p class="card-text">Departamento: </p>
-                        <p class="card-text">Ciudad: </p>
-                        <p class="card-text">Fecha de alta: </p>
-                        <p class="card-text">Duración:  HRs</p>
-                        <p class="card-text">Costo por turista: </p> 
-                        <p class="card-text">Proveedor:</p>
+                        <p class="card-text">Descripción: <%= activityToShow.getDescription()%></p>
+                        <p class="card-text">Departamento: <%= activityToShow.getDepartment().getName() %></p>
+                        <p class="card-text">Ciudad:<%= activityToShow.getCity() %> </p>
+                        <p class="card-text">Fecha de alta: <%= activityToShow.getUploadDate() %></p>
+                        <p class="card-text">Duración: <%= activityToShow.getDuration() %> HRs</p>
+                        <p class="card-text">Costo por turista:<%= activityToShow.getCostPerTourist()%>$ </p> 
+                        <p class="card-text">Proveedor:<%= activityToShow.getProvider().getNickname() %></p>
                     </div>
                 </div>
             </div>
             <div  class="col-md-4">
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
-            		<li class="list-group-item">Item 1</li>
-                    <li class="list-group-item">Item 2</li>
-                    <li class="list-group-item">Item 3</li>
+            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
+            		<li class="list-group-item"><%= bundle.getName() %></li>
+            	<%}%>
                 </ul>
                 <br>
                 <br>
                 
                 <h5 class="card-text">Salidas: </h5>
             	<ul class="list-group custom-list-group">
-            		<li class="list-group-item list-item-pink">Item 1</li>
-                    <li class="list-group-item list-item-pink">Item 2</li>
-                    <li class="list-group-item list-item-pink">Item 3</li>
+            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
+            		<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
+            	<%}%>
                 </ul>
                 <br>
                 <br>
                 
                 <h5 class="card-text">Categorias: </h5>
             	<ul class="list-group custom-list-group">
-            		<li class="list-group-item list-item-yellow">Item 1</li>
-                    <li class="list-group-item list-item-yellow">Item 2</li>
-                    <li class="list-group-item list-item-yellow">Item 3</li>
+            	<%for(DtCategory category : activityToShow.getCategories()){%>
+            		<li class="list-group-item list-item-yellow"><%= category.getName() %></li>
+            	<%}%>
                 </ul>
             </div>
         </div>

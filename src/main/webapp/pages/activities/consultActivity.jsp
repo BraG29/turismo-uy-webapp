@@ -2,8 +2,6 @@
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
@@ -129,7 +127,7 @@
 								<div class="card" style="align-items: center;">
 									<img src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="width:15em; margin-top: 1em; margin-left: 3%; border-radius: 5%; ">
 									<div class="card-body">
-										<a href="<%= request.getContextPath() %>/showActivity?activityId="<%= activity.getId()%> >
+										<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">
 											<h5 class="card-title"> <%= activity.getName() %> </h5>
 										</a>
 										<p class="card-text"> <%= activity.getDescription() %></p>
