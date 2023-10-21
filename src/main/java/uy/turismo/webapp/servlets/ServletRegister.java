@@ -116,7 +116,7 @@ public class ServletRegister extends HttpServlet {
     		
     		IController controller = ControllerFactory.getIController();
     		controller.registerUser(userData);
-    		
+    		response.sendRedirect(request.getContextPath() + "/login");
     	}
 
 	}
