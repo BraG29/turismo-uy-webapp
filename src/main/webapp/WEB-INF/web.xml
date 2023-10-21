@@ -83,6 +83,14 @@
   	<servlet-class>uy.turismo.webapp.servlets.ServletBundleProfile</servlet-class>
   </servlet>
   
+	<servlet>
+		<servlet-name>ServletRegisterDeparture</servlet-name>
+		<display-name>ServletRegisterDeparture</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletRegisterDeparture</servlet-class>
+  	</servlet>
+  
+  
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
   	<url-pattern>/login</url-pattern>
@@ -143,6 +151,10 @@
   	<url-pattern>/showActivity</url-pattern>
   </servlet-mapping>
   
+	<servlet-mapping>
+  	  <servlet-name>ServletRegisterDeparture</servlet-name>
+  	  <url-pattern>/registerDeparture</url-pattern>
+  	</servlet-mapping>
 
   <welcome-file-list>
         <welcome-file>/pages/home/index.jsp</welcome-file>
