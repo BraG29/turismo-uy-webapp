@@ -39,7 +39,7 @@
 		}
     </style>
 </head>
-<body>
+<body onload="currentTime()">
 <jsp:include page="../../templates/header.jsp" />
     <div class="container mt-5">
      

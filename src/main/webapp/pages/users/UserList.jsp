@@ -1,7 +1,7 @@
-<%@page import="java.io.InputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@page import="java.io.InputStream"%>
 <%@page import="java.util.List" %>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
 <%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
@@ -11,8 +11,9 @@
 <%@ page import="java.util.Base64" %>
 <%@ page import="javax.imageio.ImageIO" %>
 <%@page import="uy.turismo.webapp.functions.Functions" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,15 +21,13 @@
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
-<!-- <script src="assets/scripts/bootstrap4.5.2.min.js"></script> -->
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 
-<title> Lista de usuarios</title>
+<title> Lista de usuarios </title>
 
 <style>
 	 .user-list {
@@ -65,7 +64,7 @@
 </style>
 
 </head>
-<body>
+<body onload="currentTime()">
 
 <jsp:include page="../../templates/header.jsp" />
 
@@ -138,11 +137,9 @@
 		</main>
 </div>
 
-<footer>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-	<jsp:include page="../../templates/footer.jsp" />
-</footer>
+<jsp:include page="../../templates/footer.jsp" />
+
+
 
 </body>
 </html>

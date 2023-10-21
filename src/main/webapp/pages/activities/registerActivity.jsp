@@ -96,7 +96,7 @@
 			</select>
         </div>
 	    <br>
-	     <div>
+	    <%--  <div>
              <span> Seleccione el proveedor:</span>
              <select id="provider" class="form-select" aria-label="Default select example" name="provider" required>
              		
@@ -106,7 +106,7 @@
              	
 			</select>
 			
-        </div>
+        </div> --%>
 	    <br>
 	    
 	     <div class="input-group">
