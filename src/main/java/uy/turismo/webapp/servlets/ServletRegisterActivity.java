@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import uy.turismo.servidorcentral.logic.controller.Controller;
@@ -42,10 +43,8 @@ public class ServletRegisterActivity extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		IController controller = ControllerFactory.getIController();
-		List<DtProvider> providers = controller.getListProvider();
 		List<DtCategory> categories = controller.getListCategory();
 		
-		request.setAttribute("providers",providers);
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("pages/activities/registerActivity.jsp")
 		.forward(request, response);
@@ -57,6 +56,7 @@ public class ServletRegisterActivity extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Long id = null;
+		HttpSession session = request.getSession();
 		String name = request.getParameter("activityName");
 		String description = request.getParameter("description");
 		Double duration = Double.parseDouble(request.getParameter("duration"));
@@ -73,7 +73,7 @@ public class ServletRegisterActivity extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
 		
-		DtProvider provider = new DtProvider(Long.parseLong((String) request.getParameter("provider")), "", "", null);
+		DtProvider provider = new DtProvider( (Long) session.getAttribute("userId"), "", "", null);
 		DtDepartment department = new DtDepartment(Long.parseLong(request.getParameter("department")));
 		
 		String[] arrayCategories = request.getParameterValues("categories");

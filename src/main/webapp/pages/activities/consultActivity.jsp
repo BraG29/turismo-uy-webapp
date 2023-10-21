@@ -12,6 +12,7 @@
 
 <%@page import="java.util.List"%>
 <%
+	String userType = (String) session.getAttribute("userType");
 	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) session.getAttribute("activityStated");
 	List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
 
@@ -61,7 +62,7 @@
 	<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 	<script src="assets/scripts/clock.js" type="text/javascript"></script>
  	<link rel="icon" href="assets/images/star.ico" type="image/png">
-	<title>Image Boxes with ComboBox</title>
+	<title>Consultar Actividad</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
 	<style>
@@ -89,7 +90,11 @@
 							<option value="option2">Departamento</option>
 							<option value="option3">Categoria</option>
 						</select>
-						<a href="<%= request.getContextPath() %>/registerActivity" method="get"> Hacia registrar Actividad</a>
+						<%if(userType != null){
+							if(userType.equals("provider")){ %>
+								<a href="<%= request.getContextPath() %>/registerActivity" method="get"> Hacia registrar Actividad</a>
+							<%}
+						}%>
 						<button type="submit" class="btn btn-primary">Buscar actividad</button>
 					
 				</div>

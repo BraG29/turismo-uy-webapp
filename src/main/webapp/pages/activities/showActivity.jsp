@@ -9,8 +9,6 @@
 	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,53 +40,67 @@
     </style>
 </head>
 <body>
+<jsp:include page="../../templates/header.jsp" />
     <div class="container mt-5">
      
         <div class="row">
             <div class="col-md-8 offset-md-2" style="margin-left: -28%;">
                 <div class="card">
-                	<h5 class="card-title"><%= activityToShow.getName() %></h5>
+                	<h3 class="card-title"><%= activityToShow.getName() %></h5>
                     <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="width:25em;  border-radius: 5%; margin-left: 3%;" >
                     <div class="card-body">
                         <p class="card-text">Descripción: <%= activityToShow.getDescription()%></p>
                         <p class="card-text">Departamento: <%= activityToShow.getDepartment().getName() %></p>
-                        <p class="card-text">Ciudad:<%= activityToShow.getCity() %> </p>
+                        <p class="card-text">Ciudad: <%= activityToShow.getCity() %> </p>
                         <p class="card-text">Fecha de alta: <%= activityToShow.getUploadDate() %></p>
                         <p class="card-text">Duración: <%= activityToShow.getDuration() %> HRs</p>
-                        <p class="card-text">Costo por turista:<%= activityToShow.getCostPerTourist()%>$ </p> 
-                        <p class="card-text">Proveedor:<%= activityToShow.getProvider().getNickname() %></p>
+                        <p class="card-text">Costo por turista: <%= activityToShow.getCostPerTourist()%>$ </p> 
+                        <p class="card-text">Proveedor: <%= activityToShow.getProvider().getNickname() %></p>
                     </div>
                 </div>
             </div>
             <div  class="col-md-4">
+             <%if(!activityToShow.getBundles().isEmpty()){ %>
+            
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
             	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
-            		<li class="list-group-item"><%= bundle.getName() %></li>
-            	<%}%>
+            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
+            			<li class="list-group-item"><%= bundle.getName() %></li>
+            		</a>
+            		<%}%>
+            	<%} %>
                 </ul>
                 <br>
                 <br>
                 
+                <%if(!activityToShow.getDepartures().isEmpty()){ %>
                 <h5 class="card-text">Salidas: </h5>
             	<ul class="list-group custom-list-group">
             	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
             		<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
+            		<%}%>
             	<%}%>
                 </ul>
                 <br>
                 <br>
-                
+                <%if(!activityToShow.getCategories().isEmpty()){ %>
                 <h5 class="card-text">Categorias: </h5>
             	<ul class="list-group custom-list-group">
             	<%for(DtCategory category : activityToShow.getCategories()){%>
             		<li class="list-group-item list-item-yellow"><%= category.getName() %></li>
-            	<%}%>
+            		<%}%>
+            	<%} %>
                 </ul>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
-
+<jsp:include page="../../templates/footer.jsp" />
     <!-- Add Bootstrap JS and jQuery scripts (optional) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
