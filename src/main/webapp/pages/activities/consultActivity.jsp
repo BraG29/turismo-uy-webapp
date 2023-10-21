@@ -83,6 +83,7 @@
 			<div class="col-md-3 bg-light p-3 left-panel">
 				<h4>Filter Options</h4>
 				<div class="form-group">
+				
 					<form action="" method="get">
 						<label for="selectOptions">Select an Option:</label>
 						<select class="form-control" id="selectOptions" name="selectControl">
@@ -90,11 +91,7 @@
 							<option value="option2">Departamento</option>
 							<option value="option3">Categoria</option>
 						</select>
-						<%if(userType != null){
-							if(userType.equals("provider")){ %>
-								<a href="<%= request.getContextPath() %>/registerActivity" method="get"> Hacia registrar Actividad</a>
-							<%}
-						}%>
+						
 						<button type="submit" class="btn btn-primary">Buscar actividad</button>
 					
 				</div>
@@ -121,7 +118,15 @@
 						</form>
 						
 					</div>
+					<%if(userType != null){
+							if(userType.equals("provider")){ %>
+								<a href="<%= request.getContextPath() %>/registerActivity" method="get">
+									<button class="btn btn-primary" >Dar de alta Actividad</button>
+								</a>
+							<%}
+						}%>
 				</div>
+				
 			</div>
 			<!-- Center Area -->
 			<div class="col-md-9">
