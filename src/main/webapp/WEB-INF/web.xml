@@ -89,8 +89,28 @@
 		<description></description>
 		<servlet-class>uy.turismo.webapp.servlets.ServletRegisterDeparture</servlet-class>
   	</servlet>
-  
-  
+
+	<servlet>
+		<servlet-name>ServletConsultDeparture</servlet-name>
+		<display-name>ServletConsultDeparture</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletConsultDeparture</servlet-class>
+  	</servlet>
+
+	<servlet>
+		<servlet-name>ServletInscriptionDeparture</servlet-name>
+		<display-name>ServletInscriptionDeparture</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletInscriptionDeparture</servlet-class>
+  	</servlet>
+
+	<servlet>
+		<servlet-name>ServletShowDeparture</servlet-name>
+		<display-name>ServletShowDeparture</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletShowDeparture</servlet-class>
+  	</servlet>
+
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
   	<url-pattern>/login</url-pattern>
@@ -155,6 +175,21 @@
   	  <servlet-name>ServletRegisterDeparture</servlet-name>
   	  <url-pattern>/registerDeparture</url-pattern>
   	</servlet-mapping>
+	
+	<servlet-mapping>
+  	  <servlet-name>ServletConsultDeparture</servlet-name>
+  	  <url-pattern>/consultDeparture</url-pattern>
+  	</servlet-mapping>
+
+	<servlet-mapping>
+  	  <servlet-name>ServletInscriptionDeparture</servlet-name>
+  	  <url-pattern>/inscriptionDeparture</url-pattern>
+  	</servlet-mapping>
+
+	<servlet-mapping>
+  	  <servlet-name>ServletShowDeparture</servlet-name>
+  	  <url-pattern>/showDeparture</url-pattern>
+    </servlet-mapping>
 
   <welcome-file-list>
         <welcome-file>/pages/home/index.jsp</welcome-file>
