@@ -1,110 +1,109 @@
+<%@page import="java.awt.image.BufferedImage"%>
+<%@ page import="java.io.ByteArrayOutputStream"%>
+<%@ page import="java.util.Base64"%>
+<%@ page import="javax.imageio.ImageIO"%>
+<%@page import="uy.turismo.webapp.functions.Functions"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
 <%@page  import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
-	String activityImagePath = (String) request.getAttribute("activityImagePath");
+	
+	//departureProfile
+	
+	IController controller = ControllerFactory.getIController();
+
+	Long departureId = (Long) request.getAttribute("departureId"); //id que me viene desde el servlet
+	
+	DtTouristicDeparture departure  = controller.getTouristicDepartureData(departureId);
+	
+
+	String name = departure.getName();
+	
+	String place = departure.getPlace();
+	
+	Integer touristAmount = departure.getMaxTourist();
+	
+	LocalDate uploadDate = departure.getUploadDate();
+	
+	LocalDateTime departureDate = departure.getDepartureDateTime();
+	
+	
+	BufferedImage departureImage = departure.getImage();
+    
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    String format = "jpeg"; // Formato predeterminado es JPEG
+
+    // Determina el formato de la imagen
+    if (departureImage.getTransparency() == BufferedImage.OPAQUE) {
+        format = "png";
+    }
+
+    ImageIO.write(departureImage, format, baos);
+    byte[] bytes = baos.toByteArray();
+    String base64Image = Base64.getEncoder().encodeToString(bytes);
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=activityToShow.getName() %></title>
-    <!-- Add Bootstrap CSS link -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title><%=name%></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
      <style>
-     	.custom-list-group {
-            background-color: #c7ecee; /* Slight sky-blue background color */
-            padding: 0; /* Remove default padding */
+     
+		 .image {
+            width:25em;
+            border-radius: 5%;
         }
-        .list-group-item {
-        	background-color: #c7ecee;
-            padding: 1px 10px; /* Adjust spacing between list items */
-        }
-        .list-item-pink {
-        	background-color: #ffc0cb;
-            padding: 1px 10px; /* Adjust spacing between list items */
-        }
-        .list-item-yellow {
-    		background-color: #ffffcc; /* Slight yellow background color */
-		}
-        
-        p{
-    		line-height: 0.8; /* You can adjust the value as needed for tighter or looser spacing */
-		}
+
+		
     </style>
 </head>
 <body onload="currentTime()">
 <jsp:include page="../../templates/header.jsp" />
-    <div class="container mt-5">
-     
-        <div class="row">
-            <div class="col-md-8 offset-md-2" style="margin-left: -28%;">
-                <div class="card">
-                	<h3 class="card-title"><%= activityToShow.getName() %></h5>
-                    <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="width:25em;  border-radius: 5%; margin-left: 3%;" >
-                    <div class="card-body">
-                        <p class="card-text">Descripción: <%= activityToShow.getDescription()%></p>
-                        <p class="card-text">Departamento: <%= activityToShow.getDepartment().getName() %></p>
-                        <p class="card-text">Ciudad: <%= activityToShow.getCity() %> </p>
-                        <p class="card-text">Fecha de alta: <%= activityToShow.getUploadDate() %></p>
-                        <p class="card-text">Duración: <%= activityToShow.getDuration() %> HRs</p>
-                        <p class="card-text">Costo por turista: <%= activityToShow.getCostPerTourist()%>$ </p> 
-                        <p class="card-text">Proveedor: <%= activityToShow.getProvider().getNickname() %></p>
-                    </div>
-                </div>
-            </div>
-            <div  class="col-md-4">
-             <%if(!activityToShow.getBundles().isEmpty()){ %>
-            
-            	<h5 class="card-text">Paquetes: </h5>
-            	<ul class="list-group custom-list-group">
-            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
-            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
-            			<li class="list-group-item"><%= bundle.getName() %></li>
-            		</a>
-            		<%}%>
-            	<%} %>
-                </ul>
-                <br>
-                <br>
-                
-                <%if(!activityToShow.getDepartures().isEmpty()){ %>
-                <h5 class="card-text">Salidas: </h5>
-            	<ul class="list-group custom-list-group">
-            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
-            		<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
-            		<%}%>
-            	<%}%>
-                </ul>
-                <br>
-                <br>
-                <%if(!activityToShow.getCategories().isEmpty()){ %>
-                <h5 class="card-text">Categorias: </h5>
-            	<ul class="list-group custom-list-group">
-            	<%for(DtCategory category : activityToShow.getCategories()){%>
-            		<li class="list-group-item list-item-yellow"><%= category.getName() %></li>
-            		<%}%>
-            	<%} %>
-                </ul>
-            </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
+    
+			    
+			  <!--   <div style="align-items: center;">
+					<div class="card text-center" style="width: 18rem; border: solid 0; text-align: left; margin-left: 40% ">
+					  		<img class="image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+						  	<div class="card-body">
+							   	<p class="card-text"> Lugar: <%=place%></p>
+								<p class="card-text"> Cupos disponibles: <%=touristAmount%></p>
+								<p class="card-text"> Fecha de salida: <%=departureDate%></p>
+						  </div>
+					</div>
+			    </div> -->
+			    
+			    
+		    <div class="card text-center">
+		    
+				  <div class="card-header">
+				   <h2> <%= name %> </h2>
+				  </div>
+				  
+				  <div class="card-body">
+				    <img class="image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+				    <p class="card-text"> Lugar: <%=place%></p>
+					<p class="card-text"> Cupos disponibles: <%=touristAmount%></p>
+					<p class="card-text"> Fecha de salida: <%=departureDate%></p>
+				  </div>
+			</div>
+	
+	
+		
+	
+    
 <jsp:include page="../../templates/footer.jsp" />
     <!-- Add Bootstrap JS and jQuery scripts (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 
