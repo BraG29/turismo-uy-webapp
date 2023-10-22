@@ -81,11 +81,11 @@
 		<div class="row">
 			<!-- Left Panel -->
 			<div class="col-md-3 bg-light p-3 left-panel">
-				<h4>Filter Options</h4>
+				<h4>Filtros</h4>
 				<div class="form-group">
 				
 					<form action="" method="get">
-						<label for="selectOptions">Select an Option:</label>
+						<label for="selectOptions">Seleccione una opción:</label>
 						<select class="form-control" id="selectOptions" name="selectControl">
 							<option value="option1">-</option>
 							<option value="option2">Departamento</option>
@@ -94,8 +94,10 @@
 						<% 
 							String redirectTo = (String) request.getAttribute("redirectTo");
 						%>
+						
 						<input type="text" id="redirectTo" name="redirectTo" value="<%= redirectTo %>" style="display: none;">
-						<a href="<%= request.getContextPath() %>/registerActivity" method="get"> Hacia registrar Actividad</a>
+						
+						
 						
 						<button type="submit" class="btn btn-primary">Buscar actividad</button>
 					
@@ -123,13 +125,25 @@
 						</form>
 						
 					</div>
-					<%if(userType != null){
-							if(userType.equals("provider")){ %>
-								<a href="<%= request.getContextPath() %>/registerActivity" method="get">
-									<button class="btn btn-primary" >Dar de alta Actividad</button>
-								</a>
-							<%}
-						}%>
+					<%if(userType != null){ 
+							switch (redirectTo) { 
+								 case "activity":
+								 	if(userType.equals("provider")){%>
+										<a href="<%= request.getContextPath() %>/registerActivity" method="get">
+											<button class="btn btn-primary" >Dar de alta Actividad</button>
+										</a>
+									<%}
+									break;
+									
+								case "departure":
+									if(userType.equals("provider")){%>
+										<a href="<%= request.getContextPath() %>/registerDeparture" method="get">
+											<button class="btn btn-primary" >Dar de alta Salida Turística</button>
+										</a>
+									<%}
+									break;
+							 }%>
+						<% } %>
 				</div>
 				
 			</div>
