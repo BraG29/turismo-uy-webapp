@@ -45,6 +45,7 @@
             width: 300px; /* Ajusta el tamaño de la imagen según tus necesidades */
             height: 300px;
             margin-right: 30px;
+            
         }
 
         .user-nickname {
@@ -101,7 +102,7 @@
 			%>
 			
 			<li class="user-item">
-			<img class="user-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+			<img style="width:25em;  border-radius: 5%;" class="user-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
 			<div class="user-info">
 			<span class="user-nickname"> Nombre de usuario:
 				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">

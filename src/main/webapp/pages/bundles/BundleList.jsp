@@ -96,7 +96,7 @@
 		%>
 		
 		<li class="bundle-item">
-			<img class="bundle-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+			<img style="width:25em;  border-radius: 5%;" class="bundle-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
 			<div class="bundle-info">
 			<span class="bundle-name"> Nombre:
 				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">

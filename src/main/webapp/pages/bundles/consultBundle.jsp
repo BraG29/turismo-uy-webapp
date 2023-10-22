@@ -124,10 +124,16 @@
     //procesamiento de imagenes del paquete.		
     BufferedImage bundleImage = bundle.getImage();
     
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if(bundleImage != null){
+        	
+        
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String format = "jpeg"; // Formato predeterminado es JPEG
 
         // Determina el formato de la imagen
+        
+        
         if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
             format = "png";
         }
@@ -135,6 +141,7 @@
         ImageIO.write(bundleImage, format, baos);
         byte[] bytes = baos.toByteArray();
         String base64Image = Base64.getEncoder().encodeToString(bytes);
+        
     %>
 <div class="container">
        
@@ -228,6 +235,149 @@
 									
 									BufferedImage activityImage = activity.getImage();
 									//procesar imagenes de la actividad
+									if(activityImage != null){	
+									ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
+								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
+								
+								        // Determina el formato de la imagen
+								        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
+								            activityFormat = "png";
+								        }
+								
+								        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
+								        byte[] activityBytes = activityBaos.toByteArray();
+								        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+									
+									
+								%>
+									<li class="list-group-item">
+									<div class="media">
+											<div class="media-body">
+											<span> Nombre: </span>
+											<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">
+											 <%= activity.getName() %>
+											</a>
+											</div>
+											<div class="image">
+												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%= activityFormat %>;base64,<%= base64ActivityImage%>" alt="Foto de perfil">
+											</div>
+										
+									</div>
+								</li>
+									<% } else {//if imagen
+										 %>
+										 
+										<li class="list-group-item">
+									<div class="media">
+											<div class="media-body">
+											<span> Nombre: </span>
+											<%= activity.getName() %></div>
+											<div class="image">
+												<p> No se pudo encontrar la imagen </p>
+											</div>
+									</div>
+								</li> 
+			 
+								<%	}//else imagen.
+								}//for imagen actividad de paquete
+								%>
+    		</ul>
+    	</div>
+
+    	<%} else{%>
+    	    <div class="divBundle">
+       
+	   <p> No se pudo encontrar la imagen.</p>
+	
+	    <p class="card-text"> Descripción: <%=description%></p>
+	    
+		    <%
+		    if(validity > 1){   //cuando el periodo de validez es mayor a uno muestro "dias" caso contrario muestro "dia" 
+		    %>
+		    
+	    <p class="card-text"> Validez: <%=validity%> dias</p>
+	    
+	    
+	    <%	} else{ %>
+	    	
+	    	<p class="card-text"> Validez: <%=validity%> dia</p>
+	    	
+	     <%	} %>
+	    
+	    <p class="card-text"> Descuento: <%=discount%>% </p>
+	    
+	    
+	    <p class="card-text"> Fecha de alta: <%=uploadDateStr%> </p>
+	    
+	    
+	    <p class="card-text"> Categorias:</p>
+	    
+	    <ul>
+	    <% 
+	    for (DtCategory category: categories){
+	    %>
+	    	<li>
+	    		<span> <%=category.getName()%>  </span>	
+	    	</li> 
+	    <% 
+	    }
+	    %>   
+	    </ul>	   
+	    <%
+
+	    if(userInSession != null && usrType.equals("tourist")){
+	    	
+		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+				    
+	    %>
+	    
+	    <br>
+	    
+	    <button id="showForm" name="showForm" class="w-100 btn btn-lg btn-primary"> Detalles de compra</button>	    
+	    <br>
+	    <br>
+	    <div>
+	    	<form onsubmit="purchaseSuccesful()" action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    
+		    	<div>
+			    <span> Nº Turistas: </span>
+			    <input  name="touristAmount" id="touristAmount" type="number" min="1"  placeholder="Ej: 10"/>
+			    </div>
+				
+			    <button type="button" id="calculatePrice" style="display: none;"> Calcular precio </button>
+		   		
+		   		<br>
+		   		
+		   		
+		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
+		   		<input type="number" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
+		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
+		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
+		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">
+		   		
+		   		 <span>Comprar por:</span><button type="submit" id="calculatedPrice" name="calculatedPrice" class="w-100 btn btn-lg btn-primary"> $0</button>
+	   		 </form>    
+	    </div>
+	    
+	    <% 
+	     }//if userInSession%>
+     
+     </div>
+    
+    	<div class="divActivity">
+    	
+    		<h4 class="card-text">Actividades del paquete:</h4>
+    			<ul class="list-group custom-list">
+								<%
+								//for each de actividades.
+								
+								for (DtTouristicActivity activity : activities) {
+									
+									BufferedImage activityImage = activity.getImage();
+									//procesar imagenes de la actividad
+										if(activityImage != null){
+											
+										
 										ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
 								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
 								
@@ -246,7 +396,10 @@
 									<div class="media">
 											<div class="media-body">
 											<span> Nombre: </span>
-											<%= activity.getName() %></div>
+											<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">
+											 <%= activity.getName() %>
+											</a>
+											</div>
 											<div class="image">
 												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%= activityFormat %>;base64,<%= base64ActivityImage%>" alt="Foto de perfil">
 											</div>
@@ -254,13 +407,27 @@
 									</div>
 								</li>
 								<%
+									} else {//if imagen
+										 %>
+										<li class="list-group-item">
+									<div class="media">
+											<div class="media-body">
+											<span> Nombre: </span>
+											<%= activity.getName() %></div>
+											<div class="image">
+												<p> No se pudo encontrar la imagen </p>
+											</div>
+									</div>
+								</li> 
+										 
+										 
+								<%	}//else
 								}//for imagen actividad de paquete
 								%>
-
-
-    	
     		</ul>
     	</div>
+    	
+    	<%} %>
     
 </div>   
    
@@ -318,15 +485,15 @@
     		        if (result.value) {
     		            // El usuario confirmó la compra, puedes enviar el formulario
     		            document.getElementById('purchaseForm').submit();
-    		            window.location.href = '<%= request.getContextPath() %>/bundleList';
+    		            
+    		            
     		        }
     		    });
 
     		    // Devolver false para evitar el envío automático del formulario
     		    return false;
     	}
-    	
-    	
+	
     </script>
 
 </body>

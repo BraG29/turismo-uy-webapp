@@ -37,17 +37,8 @@
 	
 	BufferedImage departureImage = departure.getImage();
     
-	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    String format = "jpeg"; // Formato predeterminado es JPEG
-
-    // Determina el formato de la imagen
-    if (departureImage.getTransparency() == BufferedImage.OPAQUE) {
-        format = "png";
-    }
-
-    ImageIO.write(departureImage, format, baos);
-    byte[] bytes = baos.toByteArray();
-    String base64Image = Base64.getEncoder().encodeToString(bytes);
+	
+	
 	
 %>
 <!DOCTYPE html>
@@ -69,20 +60,23 @@
 </head>
 <body onload="currentTime()">
 <jsp:include page="../../templates/header.jsp" />
-    
-			    
-			  <!--   <div style="align-items: center;">
-					<div class="card text-center" style="width: 18rem; border: solid 0; text-align: left; margin-left: 40% ">
-					  		<img class="image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
-						  	<div class="card-body">
-							   	<p class="card-text"> Lugar: <%=place%></p>
-								<p class="card-text"> Cupos disponibles: <%=touristAmount%></p>
-								<p class="card-text"> Fecha de salida: <%=departureDate%></p>
-						  </div>
-					</div>
-			    </div> -->
-			    
-			    
+  			    
+  			    <%
+  			  if(departureImage != null){
+  				
+  				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+  			    String format = "jpeg"; // Formato predeterminado es JPEG
+
+  			    // Determina el formato de la imagen
+  			    if (departureImage.getTransparency() == BufferedImage.OPAQUE) {
+  			        format = "png";
+  			    }
+
+  			    ImageIO.write(departureImage, format, baos);
+  			    byte[] bytes = baos.toByteArray();
+  			    String base64Image = Base64.getEncoder().encodeToString(bytes);
+  			    %>
+  			    
 		    <div class="card text-center">
 		    
 				  <div class="card-header">
@@ -95,12 +89,24 @@
 					<p class="card-text"> Cupos disponibles: <%=touristAmount%></p>
 					<p class="card-text"> Fecha de salida: <%=departureDate%></p>
 				  </div>
+				  
 			</div>
-	
-	
-		
-	
-    
+    <%} else{ %>
+     <div class="card text-center">
+		    
+				  <div class="card-header">
+				   <h2> <%= name %> </h2>
+				  </div>
+				  
+				  <div class="card-body">
+				    <p> No se encontró la imagen.</p>
+				    <p class="card-text"> Lugar: <%=place%></p>
+					<p class="card-text"> Cupos disponibles: <%=touristAmount%></p>
+					<p class="card-text"> Fecha de salida: <%=departureDate%></p>
+				  </div>
+				  
+			</div>
+    <%	} %>
 <jsp:include page="../../templates/footer.jsp" />
     <!-- Add Bootstrap JS and jQuery scripts (optional) -->
 

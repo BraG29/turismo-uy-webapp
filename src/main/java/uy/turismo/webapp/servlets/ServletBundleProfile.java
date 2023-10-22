@@ -76,7 +76,7 @@ public class ServletBundleProfile extends HttpServlet {
 		DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
 		controller.registerPurchase(purchase);
 		
-		//response.sendRedirect(request.getContextPath() + "/bundleList");
+		response.sendRedirect(request.getContextPath() + "/bundleList");
 	}
 
 }
