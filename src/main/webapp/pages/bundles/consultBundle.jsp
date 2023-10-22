@@ -5,6 +5,8 @@
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -28,7 +30,9 @@
     <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
     <script src="assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="assets/images/star.ico" type="image/png">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+	
     <style>
     
     .container::after{
@@ -69,13 +73,20 @@
     
     </style>
 
-    <%  IController controller = ControllerFactory.getIController();
+    <% 
+    IController controller = ControllerFactory.getIController();
     
     Long idBundle = (Long) request.getAttribute("idBundle"); //id que me viene desde el servlet
     
     DtTouristicBundle bundle = controller.getTouristicBundleData(idBundle);
 
-    String name = bundle.getName(); %>
+    String name = bundle.getName(); 
+	Long userInSession = (Long) session.getAttribute("userId");    
+    
+	String usrType = (String) session.getAttribute("userType");
+    
+	
+    %>
 
     <title><%= name %></title>
     
@@ -107,11 +118,12 @@
     List<DtTouristicActivity> activities = bundle.getActivities(); //hacerle for each para nombres e imagenes
     
     List<DtCategory> categories = bundle.getCategories(); //hacerle for each para nombres.
-    
+    		
+    Double price = bundle.getPrice();
+    		
     //procesamiento de imagenes del paquete.		
     BufferedImage bundleImage = bundle.getImage();
     
-	if(bundleImage != null){
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String format = "jpeg"; // Formato predeterminado es JPEG
 
@@ -145,7 +157,7 @@
 	    	
 	     <%	} %>
 	    
-	    <p class="card-text"> Descuento: <%=discount%> % </p>
+	    <p class="card-text"> Descuento: <%=discount%>% </p>
 	    
 	    
 	    <p class="card-text"> Fecha de alta: <%=uploadDateStr%> </p>
@@ -163,29 +175,46 @@
 	    <% 
 	    }
 	    %>   
-	    </ul>
-	    
+	    </ul>	   
 	    <%
-	    
-	    //si el usuario es un turista, mostrar el boton.
-	    //al presionar el boton desplegar el formulario con la cantidad de turistas.
-	    //modificar el boton para mostrar el precio.
-	    
+
+	    if(userInSession != null && usrType.equals("tourist")){
+	    	
+		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+				    
 	    %>
 	    
+	    <br>
 	    
-	    <button class="w-100 btn btn-lg btn-primary"> Comprar </button>
-	    
-	    <form>
-	    
+	    <button id="showForm" name="showForm" class="w-100 btn btn-lg btn-primary"> Detalles de compra</button>	    
+	    <br>
+	    <br>
 	    <div>
-	    <span> Nº Turistas: </span>
-	    <input   name="touristAmount" id="touristAmount" type="number" placeholder="Ej: 10"/>
+	    	<form onsubmit="purchaseSuccesful()" action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    
+		    	<div>
+			    <span> Nº Turistas: </span>
+			    <input  name="touristAmount" id="touristAmount" type="number" min="1"  placeholder="Ej: 10"/>
+			    </div>
+				
+			    <button type="button" id="calculatePrice" style="display: none;"> Calcular precio </button>
+		   		
+		   		<br>
+		   		
+		   		
+		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
+		   		<input type="number" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
+		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
+		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
+		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">
+		   		
+		   		 <span>Comprar por:</span><button type="submit" id="calculatedPrice" name="calculatedPrice" class="w-100 btn btn-lg btn-primary"> $0</button>
+	   		 </form>    
 	    </div>
-	   
-	    </form>
 	    
-	    
+	    <% 
+	     }//if userInSession%>
+     
      </div>
     
     	<div class="divActivity">
@@ -199,7 +228,6 @@
 									
 									BufferedImage activityImage = activity.getImage();
 									//procesar imagenes de la actividad
-									if(activityImage != null){
 										ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
 								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
 								
@@ -226,13 +254,10 @@
 									</div>
 								</li>
 								<%
-									}//if imagen actividad de paquete
 								}//for imagen actividad de paquete
 								%>
 
-    <%
-    
-	}  //if de la imagen paquete. %> 
+
     	
     		</ul>
     	</div>
@@ -242,6 +267,68 @@
     
     <jsp:include page="../../templates/footer.jsp" />
     
+    <script>
+    
+    	var btnShowForm = document.getElementById("showForm");
+    	var purchaseForm = document.getElementById("purchaseForm");
+    	
+    	//btn listener
+    	btnShowForm.addEventListener("click", function(){
+    		purchaseForm.style.display = "block";
+    	});
+    	
+
+    	var inputTouristAmount = document.getElementById("touristAmount");
+    	var btnCalculatePrice = document.getElementById("calculatePrice");
+    	var spanCalculatedPrice = document.getElementById("calculatedPrice");
+    	
+    	btnCalculatePrice.addEventListener("click", function(){
+    		var amount = parseInt(inputTouristAmount.value);
+    		
+    		if(isNaN(amount) || amount < 1){
+    			alert("La cantidad ingresada debe ser mayor o igual a 1.");
+    		} else{
+    			
+    			var priceJs = amount * <%=price%>;
+
+    			if(priceJs !== null){
+    			spanCalculatedPrice.textContent = "$" + priceJs;
+    			document.getElementById("priceToServlet").value = priceJs;
+    				
+    			}
+    		}
+    		
+    	});
+    	
+    	//recalcular al cambiar cantidad.
+    	inputTouristAmount.addEventListener("input", function(){
+    		btnCalculatePrice.click();
+    	});
+    	
+    	function purchaseSuccesful(){
+    	
+    		  Swal.fire({
+    		        title: '¿Confirmar compra?',
+    		        text: '¿Estás seguro de completar la compra?',
+    		        icon: 'question',
+    		        showCancelButton: true,
+    		        confirmButtonText: 'Sí',
+    		        cancelButtonText: 'No'
+    		    }).then((result) => {
+    		        if (result.value) {
+    		            // El usuario confirmó la compra, puedes enviar el formulario
+    		            document.getElementById('purchaseForm').submit();
+    		            window.location.href = '<%= request.getContextPath() %>/bundleList';
+    		        }
+    		    });
+
+    		    // Devolver false para evitar el envío automático del formulario
+    		    return false;
+    	}
+    	
+    	
+    </script>
+
 </body>
 
 </html>

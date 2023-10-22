@@ -413,8 +413,8 @@
 						return false;
 					}
 				}
-				alert("Usuario creado correctamente")
 				return true;
+				alert("Usuario creado correctamente");
 
 				
 			}

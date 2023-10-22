@@ -1,6 +1,8 @@
 package uy.turismo.webapp.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
 import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtPurchase;
+import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
+import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 
 /**
  * Servlet implementation class ServletBundleProfile
@@ -45,8 +50,33 @@ public class ServletBundleProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		IController controller = ControllerFactory.getIController();
+
+		Long bundleId = Long.parseLong(request.getParameter("bundleId"));
+		
+		DtTouristicBundle bundle = new DtTouristicBundle(bundleId);
+		
+		Long touristId = Long.parseLong(request.getParameter("touristId"));
+		
+		DtTourist tourist = new DtTourist(touristId, null, null, null);
+		
+		Long validityDays = Long.parseLong(request.getParameter("validity"));
+		
+		LocalDate purchaseDate = LocalDate.now();
+		
+		String priceStr = request.getParameter("priceToServlet");
+		
+		Double price = Double.parseDouble(priceStr);
+	
+		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount"));
+		
+		LocalDate expireDate = purchaseDate.plusDays(validityDays); //sumarle X que es el periodo de validez para obtener fecha de vencimiento.
+		
+		// armar DtPurchase
+		DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
+		controller.registerPurchase(purchase);
+		
+		//response.sendRedirect(request.getContextPath() + "/bundleList");
 	}
 
 }
