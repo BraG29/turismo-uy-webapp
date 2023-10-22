@@ -106,6 +106,18 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletConsultDeparture</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletInscription</servlet-name>
+  	<display-name>ServletInscription</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletInscription</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletConsultDeparture</servlet-name>
+  	<display-name>ServletConsultDeparture</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletConsultDeparture</servlet-class>
+  </servlet>
   
 	<servlet>
 		<servlet-name>ServletRegisterDeparture</servlet-name>

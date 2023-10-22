@@ -68,11 +68,8 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
 				<span>Seleccione una actividad: </span>
 				<select id="activities" class="form-select" aria-label="Ej: Rocha" name="activities" required>
 					<% //for(DtTouristicActivity activity : activities){%>
-						<option value=<%=//activity.getId()%>> <%=// activity.getName() %>
+						<!-- <option value=   -->
 						</option>
-						<%
-						//}
-						%>
 				</select>
 			</div>
 

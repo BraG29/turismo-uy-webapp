@@ -63,7 +63,11 @@ public class ServletLogin extends HttpServlet {
             
             //Genero el input Stream aqui porque no podia hacerlo en la operacion 'seveImage' ya que es 'static'
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
-            String image = Functions.saveImage(user.getImage(), user.getNickname(), inputStream, "user/");
+            String image = Functions.saveImage(
+            		user.getImage(), 
+            		user.getNickname(), 
+            		inputStream, 
+            		"user/");
             session.setAttribute("userImage", image);
             
             if(user instanceof DtTourist) {

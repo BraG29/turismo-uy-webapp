@@ -35,7 +35,7 @@ public class Functions {
 			
 		} catch (Exception e) {
 			properties.clear();
-			System.err.println("Error al guardar la imagen: " + e.getMessage());
+			System.err.println("Error al guardar la imagen en webapp/functions" + ":" + e.getMessage());
 		}
 		
 		properties.clear();
