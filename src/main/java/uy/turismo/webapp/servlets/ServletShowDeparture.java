@@ -21,22 +21,13 @@ public class ServletShowDeparture extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		
-		Long departureId = Long.parseLong(request.getParameter("departureId"));
+		Long departureId = Long.parseLong(request.getParameter("id"));
 		
-		IController controller = ControllerFactory.getIController();
+		request.setAttribute("departureId", departureId);
 		
-		DtTouristicDeparture departureToShow = controller.getTouristicDepartureData(departureId);
+		request.setAttribute("stream", getClass().getClassLoader().getResourceAsStream("configWebapp.properties"));
 		
-		String departureImagePath = Functions.saveImage(
-				departureToShow.getImage(),
-				departureToShow.getName(),
-				getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-				"departure/");
-		
-		request.setAttribute("departureToShow", departureToShow);
-		request.setAttribute("departureImagePath", departureImagePath);
-
-		request.getRequestDispatcher("pages/activities/showDeparture.jsp")
+		request.getRequestDispatcher("pages/departures/showDeparture.jsp")
 		.forward(request, response);
 	}
 
