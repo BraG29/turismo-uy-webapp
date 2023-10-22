@@ -60,27 +60,30 @@
                 </div>
             </div>
             <div  class="col-md-4">
-             <%if(!activityToShow.getBundles().isEmpty()){ %>
+             	<%if(!activityToShow.getBundles().isEmpty()){ %>
             
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
-            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
-            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
-            			<li class="list-group-item"><%= bundle.getName() %></li>
-            		</a>
-            		<%}%>
-            	<%} %>
-                </ul>
-                <br>
-                <br>
+	            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
+	            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
+	            			<li class="list-group-item"><%= bundle.getName() %></li>
+	            		</a>
+	            	<%}%>
+	            <%} %>
+	                </ul>
+	                <br>
+	                <br>
                 
                 <%if(!activityToShow.getDepartures().isEmpty()){ %>
-                <h5 class="card-text">Salidas: </h5>
-            	<ul class="list-group custom-list-group">
-            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
-            		<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
-            		<%}%>
-            	<%}%>
+                
+	                <h5 class="card-text">Salidas: </h5>
+	            	<ul class="list-group custom-list-group">
+	            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
+	            		<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>">
+	            			<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
+	            		</a>
+	            	<%}%>
+	            <%}%>
                 </ul>
                 <br>
                 <br>
