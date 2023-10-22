@@ -1,12 +1,11 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory" %>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider" %>
 <%@page import="java.util.List" %>
-<% List<DtProvider> providers = (List<DtProvider>) request.getAttribute("providers");
-List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categories");
-%>
+<% 
+	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) request.getAttribute("activitiesStated");
 
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,13 +13,13 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="../../assets/styles/bootstrap4.5.2.min.css">
-	<link rel="stylesheet" href="../../assets/styles/main.css">
-	<script src="../../assets/scripts/jquery3.5.1.min.js"></script>
-	<script src="../../assets/scripts/bootstrap4.5.2.min.js"></script>
-	<script src="../../assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
-	<script src="../../assets/scripts/clock.js" type="text/javascript"></script>
-	<link rel="icon" href="../../assets/images/star.ico" type="image/png">
+	<link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
+	<link rel="stylesheet" href="assets/styles/main.css">
+	<script src="assets/scripts/jquery3.5.1.min.js"></script>
+	<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+	<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+	<script src="assets/scripts/clock.js" type="text/javascript"></script>
+	<link rel="icon" href="assets/images/star.ico" type="image/png">
 	<title>Turismo.UY</title>
 </head>
 
@@ -29,8 +28,15 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
 	<main class="form-signin w-50 m-auto container-fluid">
 		<form action="<%= request.getContextPath() %>/registerDeparture" enctype="multipart/form-data" method="post">
 			<div>
+			<br>
+				<div class="input-group">
+				
+	                <label class="input-group-text" for="nameDeparture"> Nombre de la Salida Turística: </label>
+	                <input id="username" type="text" name="nameDeparture" class="form-control" placeholder="Ej: Recorrida rambla" required>
+	            </div>
+	            <br>
 				<span> Seleccione el departamento de la actividad:</span>
-				<select id="department" class="form-select" aria-label="Default select example" name="department" required>
+				<select id="departmentCombobox" class="form-select" aria-label="Default select example" name="department" required>
 					<option value="1"> Canelones </option>
 					<option value="2"> Maldonado </option>
 					<option value="3"> Rocha </option>
@@ -53,41 +59,21 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
 				</select>
 			</div>
 			<br>
-			<div>
-				<span> Seleccione el proveedor:</span>
-				<select id="provider" class="form-select" aria-label="Default select example" name="provider" required>
-					<% for(DtProvider provider : providers){%>
-						<option value=<%=provider.getId()%>> <%= provider.getNickname() %>
-						</option>
-						<%}%>
-				</select>
-			</div>
-			<br>
+
 
 			<div>
 				<span>Seleccione una actividad: </span>
-				<select id="activities" class="form-select" aria-label="Ej: Rocha" name="activities" required>
-					<% //for(DtTouristicActivity activity : activities){%>
-						<option value=<%=//activity.getId()%>> <%=// activity.getName() %>
-						</option>
-						<%//}%>
+				<select id="activitiesCombobox" class="form-select" aria-label="Ej: Rocha" name="activityId" required>
+             			<option value="-"> - </option>
 				</select>
 			</div>
 
 			<br>
-            <div class="input-group">
-                <label class="input-group-text" for="nameDeparture"> Nombre de la Salida Turística: </label>
-                <input id="username" type="text" name="nameDeparture" class="form-control" placeholder="Ej: Recorrida rambla" required>
-            </div>
-            <br>
+            
+      
             <div class="input-group">
                 <label class="input-group-text" for="startingDate">Fecha que comienza: </label>
-                <input id="departureSchedule" type="date" name="startingDate" class="form-control" placeholder="Ej: 10/10/2023 - 15:00 PM" required>
-            </div>
-            <br>
-            <div class="input-group">
-                <label class="input-group-text" for="hour"> Hora de comiemzo: </label>
-                <input id="hour" type="number" name="hour" class="form-control" min="0" step="1" max="23" placeholder="Ej: 15" required>
+                <input id="departureSchedule" type="datetime-local" name="startingDate" class="form-control" placeholder="Ej: 10/10/2023 - 15:00 PM" required>
             </div>
             <br>
             <div class="input-group">
@@ -100,16 +86,54 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
                 <input id="place" type="text" name="place" class="form-control" placeholder="Ej: Club deportivo union" required>
             </div>
 			<br>
-
 			<label for="imagen">Selecciona una imagen:</label>
 			<input type="file" accept="image/*" id="imagen" name="image">
 			<br>
-
+			<br>
 			<input href="login.html" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear Salida Turística" />
 
 		</form>
 	</main>
 	<jsp:include page="../../templates/footer.jsp" />
 </body>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var departmentCombobox = document.getElementById("departmentCombobox");
+		var activitiesCombobox = document.getElementById("activitiesCombobox");
+		
+		departmentCombobox.addEventListener("change", function () {
+			
+			activitiesCombobox.innerHTML = ""; // Clear previous options
+			var selectedDepartment = departmentCombobox.value;
+			var activitiesFound = false;
+			
+			<% for(DtTouristicActivity activity : activitiesStated) { %>
+				// Check if the activity's department matches the selected department
+				if ("<%= activity.getDepartment().getId() %>" === selectedDepartment) {
+					
+					var option = document.createElement("option");
+					
+					option.text = "<%= activity.getName() %>";
+					option.value = "<%= activity.getId() %>";
+					
+					activitiesCombobox.appendChild(option);
+					
+					activitiesFound = true;
+				}
+			<% } %>
+			
+			if(!activitiesFound){
+				var option = document.createElement("option");
+				option.text = "No hay actividades para este departamento.";
+				option.value = "-";
+				
+				activitiesCombobox.appendChild(option);
+			}
+		});
+	});
+</script>
+
+
 
 </html>
