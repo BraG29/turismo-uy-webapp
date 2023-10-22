@@ -370,6 +370,8 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 			</div>
 		</div>
 	</form>
+	<jsp:include page="../../templates/footer.jsp" />
+	
     <script>
         // Función para mostrar la imagen seleccionada
         document.getElementById('image').addEventListener('change', function() {
@@ -389,7 +391,6 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
             }
         });
     </script>
-	<jsp:include page="../../templates/footer.jsp" />
 </body>
 
 </html>

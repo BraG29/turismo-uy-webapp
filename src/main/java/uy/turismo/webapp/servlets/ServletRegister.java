@@ -1,4 +1,3 @@
-
 package uy.turismo.webapp.servlets;
 
 import java.awt.image.BufferedImage;
@@ -117,7 +116,7 @@ public class ServletRegister extends HttpServlet {
     		
     		IController controller = ControllerFactory.getIController();
     		controller.registerUser(userData);
-    		
+    		response.sendRedirect(request.getContextPath() + "/login");
     	}
 
 	}
