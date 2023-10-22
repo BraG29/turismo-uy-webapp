@@ -37,8 +37,18 @@ public class ServletConsultActivity extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String algoPrueba = null;
-		algoPrueba = request.getParameter("selectControl");
+		//Codigo al pedo
+//		String algoPrueba = null;
+//		algoPrueba = request.getParameter("selectControl");
+		
+		String redirectTo = request.getParameter("redirectTo");
+		
+		if(redirectTo.equalsIgnoreCase("activity")) {
+			request.setAttribute("redirectTo", "activity");
+			
+		}else if(redirectTo.equalsIgnoreCase("departure")){
+			request.setAttribute("redirectTo", "departure");
+		}
 		
 		if(request.getParameter("selectControl") == null) {
 			IController controller = ControllerFactory.getIController();

@@ -22,7 +22,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href=" ${contextPath}/consultActivity">
+                <a class="nav-link" href="${contextPath}/consultActivity?redirectTo=activity">
                     <button class="btn btn-outline-success">
                         &nbsp;Actividades&nbsp;
                     </button>
@@ -36,7 +36,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="../../pages/departures/consultDeparture.jsp">
+                <a class="nav-link" href="${contextPath}/consultActivity?redirectTo=departure">
                     <button class="btn btn-outline-success">
                         &nbsp;Salidas Turísticas&nbsp;
                     </button>

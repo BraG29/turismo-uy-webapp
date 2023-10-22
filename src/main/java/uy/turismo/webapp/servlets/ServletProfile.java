@@ -83,12 +83,12 @@ public class ServletProfile extends HttpServlet {
     			Map<Long, String> departureImages = new HashMap<Long, String>();
     			
     			for(DtTouristicDeparture departure : touristData.getDepartures()) {
-    				String activityImagePath = Functions.saveImage(
+    				String departureImagePath = Functions.saveImage(
     						departure.getImage(),
     						departure.getName(),
     						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
     						"departure/");
-    				departureImages.put(departure.getId(), activityImagePath);
+    				departureImages.put(departure.getId(), departureImagePath);
     			}
     				
     			request.setAttribute("departureImages", departureImages);

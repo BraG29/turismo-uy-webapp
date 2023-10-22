@@ -82,6 +82,30 @@
   	<description></description>
   	<servlet-class>uy.turismo.webapp.servlets.ServletBundleProfile</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ServletInscription</servlet-name>
+  	<display-name>ServletInscription</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletInscription</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletConsultDeparture</servlet-name>
+  	<display-name>ServletConsultDeparture</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletConsultDeparture</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletInscription</servlet-name>
+  	<display-name>ServletInscription</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletInscription</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ServletConsultDeparture</servlet-name>
+  	<display-name>ServletConsultDeparture</display-name>
+  	<description></description>
+  	<servlet-class>uy.turismo.webapp.servlets.ServletConsultDeparture</servlet-class>
+  </servlet>
   
 	<servlet>
 		<servlet-name>ServletRegisterDeparture</servlet-name>
@@ -169,6 +193,14 @@
   <servlet-mapping>
   	<servlet-name>ServletShowActivity</servlet-name>
   	<url-pattern>/showActivity</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletInscription</servlet-name>
+  	<url-pattern>/inscription</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ServletConsultDeparture</servlet-name>
+  	<url-pattern>/consultdeparture</url-pattern>
   </servlet-mapping>
   
 	<servlet-mapping>

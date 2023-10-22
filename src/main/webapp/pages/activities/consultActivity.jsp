@@ -91,6 +91,11 @@
 							<option value="option2">Departamento</option>
 							<option value="option3">Categoria</option>
 						</select>
+						<% 
+							String redirectTo = (String) request.getAttribute("redirectTo");
+						%>
+						<input type="text" id="redirectTo" name="redirectTo" value="<%= redirectTo %>" style="display: none;">
+						<a href="<%= request.getContextPath() %>/registerActivity" method="get"> Hacia registrar Actividad</a>
 						
 						<button type="submit" class="btn btn-primary">Buscar actividad</button>
 					
@@ -137,9 +142,18 @@
 								<div class="card" style="align-items: center;">
 									<img src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="width:15em; margin-top: 1em; margin-left: 3%; border-radius: 5%; ">
 									<div class="card-body">
+									<%
+										
+							
+										if(redirectTo.equalsIgnoreCase("activity")){%>
 										<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">
 											<h5 class="card-title"> <%= activity.getName() %> </h5>
 										</a>
+										<%}else if(redirectTo.equalsIgnoreCase("departure")){ %>
+										<a href="<%= request.getContextPath() %>/consultdeparture?activityId=<%= activity.getId()%>">
+											<h5 class="card-title"> <%= activity.getName() %> </h5>
+										</a>
+										<%} %>
 										<p class="card-text"> <%= activity.getDescription() %></p>
 									</div>
 								</div>

@@ -70,7 +70,9 @@ List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categorie
 					<% //for(DtTouristicActivity activity : activities){%>
 						<option value=<%=//activity.getId()%>> <%=// activity.getName() %>
 						</option>
-						<%//}%>
+						<%
+						//}
+						%>
 				</select>
 			</div>
 
