@@ -47,74 +47,84 @@ public class ServletProfile extends HttpServlet {
 		IController controller = ControllerFactory.getIController();
 		
 		Long userId = Long.parseLong(request.getParameter("id"));
-		DtUser userData = controller.getUserData(userId);
+		DtUser userData = null;
+		
+		try {
+			userData = controller.getUserData(userId);
+			
+		} catch (Exception e) {
+			System.err.println("Error en Profile: " + e.getMessage());
+		}
 		
 		
 
 //        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
-        String imagePath = Functions.saveImage(
-        		userData.getImage(),
-        		userData.getNickname(),
-        		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-        		"user/");
-        
-        
-        if(userData instanceof DtProvider) {
-        	DtProvider providerData = (DtProvider) userData;
-        	if(providerData.getTouristicActivities() != null) {
-        		
-    			Map<Long, String> activityImages = new HashMap<Long, String>();
-    			
-    			for(DtTouristicActivity activity : providerData.getTouristicActivities()) {
-    				String activityImagePath = Functions.saveImage(
-    						activity.getImage(),
-    						activity.getName(),
-    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-    						"activity/");
-    				activityImages.put(activity.getId(), activityImagePath);
-    			}
-    				
-    			request.setAttribute("activityImages", activityImages);
-        	}
-        }else {
-        	DtTourist touristData = (DtTourist) userData;
-        	if(touristData.getDepartures() != null) {
-        		
-    			Map<Long, String> departureImages = new HashMap<Long, String>();
-    			
-    			for(DtTouristicDeparture departure : touristData.getDepartures()) {
-    				String departureImagePath = Functions.saveImage(
-    						departure.getImage(),
-    						departure.getName(),
-    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-    						"departure/");
-    				departureImages.put(departure.getId(), departureImagePath);
-    			}
-    				
-    			request.setAttribute("departureImages", departureImages);
-        	}
-        	if(touristData.getPurchases() != null) {
-        		
-    			Map<Long, String> bundleImages = new HashMap<Long, String>();
-    			
-    			for(DtPurchase purchase : touristData.getPurchases()) {
-    				String bundleImagePath = Functions.saveImage(
-    						purchase.getBundle().getImage(),
-    						purchase.getBundle().getName(),
-    						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-    						"bundle/");
-    				bundleImages.put(purchase.getBundle().getId(), bundleImagePath);
-    			}
-    				
-    			request.setAttribute("bundleImages", bundleImages);
-        	}
-        	
-        	
-        	
-        }
-		
-		request.setAttribute("userData", userData);
-		request.setAttribute("imagePath", imagePath);
+		if(userData != null) {
+			String imagePath = Functions.saveImage(
+					userData.getImage(),
+					userData.getNickname(),
+					getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+					"user/");
+			
+			
+			if(userData instanceof DtProvider) {
+				DtProvider providerData = (DtProvider) userData;
+				if(providerData.getTouristicActivities() != null) {
+					
+					Map<Long, String> activityImages = new HashMap<Long, String>();
+					
+					for(DtTouristicActivity activity : providerData.getTouristicActivities()) {
+						String activityImagePath = Functions.saveImage(
+								activity.getImage(),
+								activity.getName(),
+								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+								"activity/");
+						activityImages.put(activity.getId(), activityImagePath);
+					}
+					
+					request.setAttribute("activityImages", activityImages);
+				}
+			}else {
+				DtTourist touristData = (DtTourist) userData;
+				if(touristData.getDepartures() != null) {
+					
+					Map<Long, String> departureImages = new HashMap<Long, String>();
+					
+					for(DtTouristicDeparture departure : touristData.getDepartures()) {
+						String departureImagePath = Functions.saveImage(
+								departure.getImage(),
+								departure.getName(),
+								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+								"departure/");
+						departureImages.put(departure.getId(), departureImagePath);
+					}
+					
+					request.setAttribute("departureImages", departureImages);
+				}
+				if(touristData.getPurchases() != null) {
+					
+					Map<Long, String> bundleImages = new HashMap<Long, String>();
+					
+					for(DtPurchase purchase : touristData.getPurchases()) {
+						String bundleImagePath = Functions.saveImage(
+								purchase.getBundle().getImage(),
+								purchase.getBundle().getName(),
+								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+								"bundle/");
+						bundleImages.put(purchase.getBundle().getId(), bundleImagePath);
+					}
+					
+					request.setAttribute("bundleImages", bundleImages);
+				}
+				
+				
+				
+			}
+			
+			request.setAttribute("userData", userData);
+			request.setAttribute("imagePath", imagePath);
+			
+		}
 		
 		request.getRequestDispatcher("pages/users/consultUser.jsp")
 			.forward(request, response);

@@ -1,3 +1,4 @@
+<%@page import="javax.crypto.ShortBufferException"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
@@ -20,6 +21,12 @@ DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 String birthDateStr = userData.getBirthDate().format(format);
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
+
+if(!userInSession){
+	
+	response.sendRedirect(request.getContextPath() + "/pages/error/invalidAccess.jsp" );
+}
+
 %>
 
 <head>
@@ -27,8 +34,8 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
-
 <link rel="stylesheet" href="assets/styles/main.css">
+
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
@@ -39,9 +46,11 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp" />
+	
+	
 
-	<form method="post" action="<%= request.getContextPath() %>/updateuser" enctype="multipart/form-data" accept-charset="UTF-8">
-		<div class="container mt-5">
+	<div class="container mt-5">
+		<form method="post" action="<%= request.getContextPath() %>/updateuser" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="card">
@@ -368,10 +377,9 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 					<input class="btn btn-success" type="submit" value="Confirmar Cambios"/>
 	           	</div>
 			</div>
-		</div>
-	</form>
-	<jsp:include page="../../templates/footer.jsp" />
-	
+		</form>
+	</div>
+
     <script>
         // Función para mostrar la imagen seleccionada
         document.getElementById('image').addEventListener('change', function() {
@@ -391,6 +399,8 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
             }
         });
     </script>
+    
+	<jsp:include page="../../templates/footer.jsp"/>
 </body>
 
 </html>
