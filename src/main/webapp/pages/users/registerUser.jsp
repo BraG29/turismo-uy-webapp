@@ -413,9 +413,6 @@
 						return false;
 					}
 				}
-				return true;
-				alert("Usuario creado correctamente");
-
 				
 			}
 

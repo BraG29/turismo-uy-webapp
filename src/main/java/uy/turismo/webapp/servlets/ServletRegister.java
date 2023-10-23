@@ -70,54 +70,67 @@ public class ServletRegister extends HttpServlet {
 		String country = request.getParameter("touristCountry");
 		
 		
+		try {
+		    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
 		
-    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
-
-    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
-    		InputStream fileContent = filePart.getInputStream();
-    		BufferedImage image = ImageIO.read(fileContent);
-    		
-    		DtUser userData = new DtProvider(
-    				null,
-    				name,
-    				nickname,
-    				email,
-    				lastName,
-    				birthDate,
-    				image,
-    				web,
-    				description,
-    				null,
-    				password
-    				); 
-    		
-    		IController controller = ControllerFactory.getIController();
-    		controller.registerUser(userData);
-    	}else {
-    		
-    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
-    		InputStream fileContent = filePart.getInputStream();
-    		BufferedImage image = ImageIO.read(fileContent);
-    		
-    		DtUser userData =  new DtTourist(
-    				null,
-    				name,
-    				nickname,
-    				email,
-    				lastName,
-    				birthDate,
-    				image,
-    				country,
-    				null,
-    				password,
-    				null,
-    				null
-    				);
-    		
-    		IController controller = ControllerFactory.getIController();
-    		controller.registerUser(userData);
-    		response.sendRedirect(request.getContextPath() + "/login");
-    	}
+		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+		    		InputStream fileContent = filePart.getInputStream();
+		    		BufferedImage image = ImageIO.read(fileContent);
+		    		
+		    		DtUser userData = new DtProvider(
+		    				null,
+		    				name,
+		    				nickname,
+		    				email,
+		    				lastName,
+		    				birthDate,
+		    				image,
+		    				web,
+		    				description,
+		    				null,
+		    				password
+		    				); 
+		    		
+		    		IController controller = ControllerFactory.getIController();
+		    		controller.registerUser(userData);
+		    	}else {
+		    		
+		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+		    		InputStream fileContent = filePart.getInputStream();
+		    		BufferedImage image = ImageIO.read(fileContent);
+		    		
+		    		DtUser userData =  new DtTourist(
+		    				null,
+		    				name,
+		    				nickname,
+		    				email,
+		    				lastName,
+		    				birthDate,
+		    				image,
+		    				country,
+		    				null,
+		    				password,
+		    				null,
+		    				null
+		    				);
+		    		
+		    		
+		    		IController controller = ControllerFactory.getIController();
+		    		controller.registerUser(userData);
+		    		response.sendRedirect(request.getContextPath() + "/login");
+		    			
+		    	}
+    	
+		}catch(Exception e) {
+			
+			String errorType = "User";
+			
+			request.setAttribute("errorType", errorType);
+			
+			request.setAttribute("error", e.getMessage());
+			
+			request.getRequestDispatcher(request.getContextPath() + "/errorPage").forward(request, response);
+		}
 
 	}
 

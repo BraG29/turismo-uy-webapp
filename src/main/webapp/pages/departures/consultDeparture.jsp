@@ -39,7 +39,7 @@
 				<div class="media">
 					<img src="<%= departureImages.get(departure.getId()) %>" class="mr-3" style="width: 100px;">
 					<div class="media-body">
-                    	<a href=""> <b> <%= departure.getName() %> </b></a>
+                    	<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>"> <b> <%= departure.getName() %> </b></a>
 					</div>
 				</div>
 			</li>

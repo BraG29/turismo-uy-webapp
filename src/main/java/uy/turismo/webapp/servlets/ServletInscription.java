@@ -25,7 +25,7 @@ En caso de que ya exista un registro de el/la turista a la salida turística o
 se haya alcanzado el límite máximo de turistas para la salida, el turista
 podrá (dependiendo del caso): cambiar la salida seleccionada o cancelar el
 caso de uso. Finalmente, el sistema realiza la inscripción de el/la turista a
-la salida en la fecha actual y con el costo de la inscripción que
+la salida en la fecha actual y con el costo de la inscripción quef
 corresponda.
  */
 public class ServletInscription extends HttpServlet {
@@ -36,14 +36,42 @@ public class ServletInscription extends HttpServlet {
      */
     public ServletInscription() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+
+		/* 
+		 * Get Salidas Vigentes.
+		 * 			if ( De aquellas actividades que estén con el State 'Confirmada' AND Cantidad inscripciones seleccionadas < inscripciones disponibles de la salida)
+		 * 			{ Show Salidas; }
+		 * 			
+		 * 			if ( Usuario está inscripto a Salida )
+		 * 			{
+		 * 				Show Botones con Cancelar inscripción;
+		 * 			}
+		 * 
+		 * 
+		 * 
+		 * Del usuario se busca si tiene un paquete comprado
+		 * 			if ( Date Paquete Vigente, 
+		 * 					Bool Paquete incluye esa Actividad Turística, 
+		 * 					Int  Cantidad inscripciones seleccionadas < inscripciones disponibles del paquete )
+		 * 				{ Show Paquetes }
+		 * 				
+		 * 			else
+		 * 				Se hace la inscripcion sin un paquete
+		 * 
+		 * 
+		 */
+		
+
+
+
+
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -51,7 +79,30 @@ public class ServletInscription extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		/* Viene el id de una departure
+		 * Viene la cantidad de turistas que el quiere inscribir
+		 * Viene la forma de pago (general o por paquete)
+		 * 
+		 * 
+		 * if ( selecciono paquete ) {
+		 * 		>> Ir a Paquete >>
+		 * 		Int inscripciones disponibles - Cantidad inscripciones seleccionadas
+		 * 		Delete (Actividad dentro de paquete)
+		 * 	}
+		 * 
+		 * Registro con UsuarioId, Salida, Paquete, LocalDate, Costo
+		 * 
+		 */
+
+
+
+
+
+
+
+
+
 		doGet(request, response);
 	}
 
