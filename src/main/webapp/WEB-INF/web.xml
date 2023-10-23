@@ -146,6 +146,18 @@
 		<description></description>
 		<servlet-class>uy.turismo.webapp.servlets.ServletShowDeparture</servlet-class>
   	</servlet>
+	<servlet>
+		<servlet-name>ServletErrorPage</servlet-name>
+		<display-name>ServletErrorPage</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletErrorPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ServletSucessPage</servlet-name>
+		<display-name>ServletSucessPage</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletSucessPage</servlet-class>
+	</servlet>
 
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
@@ -234,6 +246,14 @@
   	  <servlet-name>ServletShowDeparture</servlet-name>
   	  <url-pattern>/showDeparture</url-pattern>
     </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletErrorPage</servlet-name>
+		<url-pattern>/errorPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletSucessPage</servlet-name>
+		<url-pattern>/ServletSucessPage</url-pattern>
+	</servlet-mapping>
 
   <welcome-file-list>
         <welcome-file>/pages/home/index.jsp</welcome-file>

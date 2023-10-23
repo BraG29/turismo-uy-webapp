@@ -197,7 +197,7 @@
 	    <br>
 	    <br>
 	    <div>
-	    	<form onsubmit="purchaseSuccesful()" action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    	<form action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
 	    
 		    	<div>
 			    <span> Nº Turistas: </span>
@@ -337,7 +337,7 @@
 	    <br>
 	    <br>
 	    <div>
-	    	<form onsubmit="purchaseSuccesful()" action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    	<form action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
 	    
 		    	<div>
 			    <span> Nº Turistas: </span>
@@ -472,27 +472,6 @@
     		btnCalculatePrice.click();
     	});
     	
-    	function purchaseSuccesful(){
-    	
-    		  Swal.fire({
-    		        title: '¿Confirmar compra?',
-    		        text: '¿Estás seguro de completar la compra?',
-    		        icon: 'question',
-    		        showCancelButton: true,
-    		        confirmButtonText: 'Sí',
-    		        cancelButtonText: 'No'
-    		    }).then((result) => {
-    		        if (result.value) {
-    		            // El usuario confirmó la compra, puedes enviar el formulario
-    		            document.getElementById('purchaseForm').submit();
-    		            
-    		            
-    		        }
-    		    });
-
-    		    // Devolver false para evitar el envío automático del formulario
-    		    return false;
-    	}
 	
     </script>
 
