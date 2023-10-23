@@ -47,7 +47,14 @@ public class ServletErrorPage extends HttpServlet {
 					break;
 					
 				case "Purchase":
-	
+					
+					request.setAttribute("errorType", errorType);
+					
+					//error = "Nombre de Usuario/E-mail ya existente.";
+					request.setAttribute("error", error);
+					
+					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
+					
 					break;
 					
 				case "Departure":

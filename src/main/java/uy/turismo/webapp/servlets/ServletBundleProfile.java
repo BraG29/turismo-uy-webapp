@@ -74,9 +74,36 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		// armar DtPurchase
 		DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
-		controller.registerPurchase(purchase);
+		try {
+			controller.registerPurchase(purchase);
+			
+			String successType = "Purchase";
+				
+			request.setAttribute("successType", successType);	
+			
+			request.getRequestDispatcher("/successPage").forward(request, response);	
+			
+		}catch(Exception e) {
+
+			String errorType = "Purchase";
+			
+			request.setAttribute("errorType", errorType);
+			
+			request.setAttribute("error", e.getLocalizedMessage());
+			
+			request.getRequestDispatcher("/errorPage").forward(request, response);
+			
+		}
 		
-		response.sendRedirect(request.getContextPath() + "/bundleList");
+		/**		case "Purchase": %>
+    					<span>Error: <%= error %></span>
+	    					<a href="<%= request.getContextPath() %>/bundleList">
+	    						<button> Volver al listado de paquetes </button>
+	    					</a>
+				 <%	break;
+                	}%>
+    				
+		 * */
 	}
 
 }

@@ -153,10 +153,10 @@
 		<servlet-class>uy.turismo.webapp.servlets.ServletErrorPage</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>ServletSucessPage</servlet-name>
-		<display-name>ServletSucessPage</display-name>
+		<servlet-name>ServletSuccessPage</servlet-name>
+		<display-name>ServletSuccessPage</display-name>
 		<description></description>
-		<servlet-class>uy.turismo.webapp.servlets.ServletSucessPage</servlet-class>
+		<servlet-class>uy.turismo.webapp.servlets.ServletSuccessPage</servlet-class>
 	</servlet>
 
   <servlet-mapping>
@@ -251,8 +251,8 @@
 		<url-pattern>/errorPage</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>ServletSucessPage</servlet-name>
-		<url-pattern>/ServletSucessPage</url-pattern>
+		<servlet-name>ServletSuccessPage</servlet-name>
+		<url-pattern>/successPage</url-pattern>
 	</servlet-mapping>
 
   <welcome-file-list>

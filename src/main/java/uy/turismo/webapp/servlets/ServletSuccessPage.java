@@ -24,8 +24,45 @@ public class ServletSuccessPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String successType = (String) request.getAttribute("successType");
+		
+		String successMessage = null;
+		
+			switch(successType) {
+			
+				case "User":
+					request.setAttribute("successType", successType);
+					
+					//error = "Nombre de Usuario/E-mail ya existente.";
+					successMessage = "El usuario fue creado con exito";
+					
+					request.setAttribute("successMessage", successMessage);
+					
+					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
+					break;
+					
+				case "Activity":
+					
+					break;
+					
+				case "Purchase":
+					
+					request.setAttribute("successType", successType);
+					
+					successMessage = "La compra fue realizada con exito";
+					request.setAttribute("successMessage", successMessage);
+					
+					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
+					
+					break;
+					
+				case "Departure":
+					
+				break;
+			
+			}
+		
 	}
 
 	/**
