@@ -101,10 +101,26 @@ public class ServletRegisterActivity extends HttpServlet {
 														null,
 														null,
 														categoriesList);
-		controller.registeTouristicActivity(DTA);
+		try {
+			controller.registeTouristicActivity(DTA);
+			
+			request.getRequestDispatcher("/consultActivity?redirectTo=activity")
+			.forward(request, response);
+			
+		} catch (Exception e) {
+			
+			String errorType = "Activity";
+			
+			request.setAttribute("errorType", errorType);
+			
+			request.setAttribute("error", e.getLocalizedMessage());
+			
+			request.getRequestDispatcher("/errorPage")
+			.forward(request, response);
+		}
 		
-		request.getRequestDispatcher("/consultActivity?redirectTo=activity")
-		.forward(request, response);
+		
+		
 		
 	}
 

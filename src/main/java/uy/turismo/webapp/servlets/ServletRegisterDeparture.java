@@ -78,10 +78,22 @@ public class ServletRegisterDeparture extends HttpServlet {
 				activity,
 				tourists
 				);
+		try {
+			controller.registerTouristicDeparture(departureData);
+			
+			request.getRequestDispatcher("/consultActivity?redirectTo=departure")
+			.forward(request, response);
+			
+		} catch (Exception e) {
+			
+			String errorType = "Departure";
+			
+			request.setAttribute("errorType", errorType);
+			
+			request.setAttribute("error", e.getLocalizedMessage());
+			
+			request.getRequestDispatcher("/errorPage").forward(request, response);
+		}
 		
-		controller.registerTouristicDeparture(departureData);
-		
-		request.getRequestDispatcher("/consultActivity?redirectTo=departure")
-		.forward(request, response);
 	}
 }

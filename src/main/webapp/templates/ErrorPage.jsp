@@ -21,13 +21,40 @@
       <div class="card text-center">
         <div class="card-body">
           <!-- Big Red Title -->
-          <h1 class="text-danger"><%= errorType %></h1>
+          <h1 class="text-danger">Ha ocurrido un Error!</h1>
           
           <!-- Label -->
           <label for="inputField"> <%= error %></label>
 
           <!-- Button -->
-          <button class="btn btn-primary">volver</button>
+          <%switch(errorType) {
+			
+			case "User":%>
+				<a href="<%= request.getContextPath() %>/register">
+					<button class="btn btn-primary">Volver a Registrar Usuario</button>
+				</a>
+				<%break;
+				
+			case "Activity":%>
+				<a href="<%= request.getContextPath() %>/registerActivity">
+					<button class="btn btn-primary">Volver a Registrar Actividad</button>
+				</a>
+				<%break;
+				
+			case "Purchase":%>
+				<a href="<%= request.getContextPath() %>/bundleProfile">
+					<button class="btn btn-primary">Volver a Registrar Compra</button>
+				</a>
+				<%break;
+				
+			case "Departure":%>
+				<a href="<%= request.getContextPath() %>/registerDeparture">
+					<button class="btn btn-primary">Volver a Registrar Salida</button>
+				</a>
+			<%break;
+		
+		} %>
+          
         </div>
       </div>
     </div>
