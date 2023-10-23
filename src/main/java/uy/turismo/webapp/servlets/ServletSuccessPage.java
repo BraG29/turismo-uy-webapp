@@ -27,6 +27,7 @@ public class ServletSuccessPage extends HttpServlet {
 		
 		String successType = (String) request.getAttribute("successType");
 		
+		
 		String successMessage = null;
 		
 			switch(successType) {
@@ -34,7 +35,6 @@ public class ServletSuccessPage extends HttpServlet {
 				case "User":
 					request.setAttribute("successType", successType);
 					
-					//error = "Nombre de Usuario/E-mail ya existente.";
 					successMessage = "El usuario fue creado con exito";
 					
 					request.setAttribute("successMessage", successMessage);

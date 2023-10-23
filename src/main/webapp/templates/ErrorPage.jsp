@@ -43,7 +43,7 @@
 				
 			case "Purchase":%>
 				<a href="<%= request.getContextPath() %>/bundleProfile">
-					<button class="btn btn-primary">Volver a Registrar Compra</button>
+					<button class="btn btn-primary">Reintentar compra</button>
 				</a>
 				<%break;
 				

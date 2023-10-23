@@ -94,16 +94,7 @@ public class ServletBundleProfile extends HttpServlet {
 			request.getRequestDispatcher("/errorPage").forward(request, response);
 			
 		}
-		
-		/**		case "Purchase": %>
-    					<span>Error: <%= error %></span>
-	    					<a href="<%= request.getContextPath() %>/bundleList">
-	    						<button> Volver al listado de paquetes </button>
-	    					</a>
-				 <%	break;
-                	}%>
-    				
-		 * */
+
 	}
 
 }

@@ -3,43 +3,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Incluye el enlace a Bootstrap -->
-   <link href="assets/scripts/bootstrap5.2.3.bundle.min.js" rel="stylesheet">
-    
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<!--
- -->
+  <meta charset="UTF-8">
+  <title>Simple Bootstrap Page</title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="modal fade" id="miPopup" tabindex="-1" role="dialog" aria-labelledby="miPopupLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="miPopupLabel">Título de tu Popup</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Contenido de tu popup aquí -->
+<jsp:include page="header.jsp" />
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <!-- Big Red Title -->
+    
                     
                     <% 
                     String successType = (String) request.getAttribute("successType");
             		
             		String success = (String) request.getAttribute("successMessage");
-
+					
+            		
                 	switch(successType) {
         			
 	    				case "User":%>
-	    					<span><%= success %></span>
-	    					<a href="<%= request.getContextPath() %>/register">
-	    						<button> Ver perfil </button>
+	    				 <h1 style="text-color: green;"class="text-danger"><%= success %></h1>
+	    					<a href="<%= request.getContextPath() %>/userList">
+	    						<button> Ver listado de usuarios </button>
 	    					</a>
     					<%break;
     					
     					case "Purchase": %>
-    					<span><%= success %></span>
+				          <h1 style="text-color: green;"class="text-danger"><%= success %></h1>
+				          		
 	    					<a href="<%= request.getContextPath() %>/bundleList">
 	    						<button> Volver al listado de paquetes </button>
 	    					</a>
@@ -48,17 +44,16 @@
     				
     				
                    
-                    <p>Este es el contenido de tu popup.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
         </div>
+      </div>
     </div>
- 
-    <script src="assets/scripts/jquery3.5.1.min.js"></script>
-    <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
- 
+  </div>
+</div>
+
+<!-- Include Bootstrap JS and jQuery (Optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<jsp:include page="footer.jsp" />
 </body>
 </html>
