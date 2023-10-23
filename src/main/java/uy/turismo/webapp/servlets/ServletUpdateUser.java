@@ -42,16 +42,23 @@ public class ServletUpdateUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
-
-		Long userId = Long.parseLong(request.getParameter("id"));
-		DtUser userData = controller.getUserData(userId);
+		
+		
+		try {
+			IController controller = ControllerFactory.getIController();
 			
-		String imagePath = (String) request.getSession().getAttribute("imagePath");
-		
-		
-		request.setAttribute("userData", userData);
-		request.setAttribute("imagePath", imagePath);
+			Long userId = Long.parseLong(request.getParameter("id"));
+			DtUser userData = controller.getUserData(userId);
+			
+			String imagePath = (String) request.getSession().getAttribute("imagePath");
+			
+			
+			request.setAttribute("userData", userData);
+			request.setAttribute("imagePath", imagePath);
+			
+		} catch (Exception e) {
+			System.err.println("Error en Update: " + e.getMessage());
+		}
 		
 		request.getRequestDispatcher("pages/users/modifyUser.jsp")
 			.forward(request, response);
@@ -133,8 +140,8 @@ public class ServletUpdateUser extends HttpServlet {
 		IController controller = ControllerFactory.getIController();
 		controller.updateUser(modifiedUser);
 		
-		
-		
-		response.sendRedirect(request.getContextPath() + request.getServletPath() + "?id=" + userData.getId());
+		response.sendRedirect(request.getContextPath() 
+				+ request.getServletPath() 
+				+ "?id=" + userData.getId());
 	}
 }

@@ -51,7 +51,14 @@ public class ServletLogin extends HttpServlet {
 		String password = request.getParameter("loginUserPasswordInput");
 		IController cotroller = ControllerFactory.getIController();
 		
-		DtUser user = cotroller.checkCredentials(email, password);
+		DtUser user = null;
+		
+		try {
+			user = cotroller.checkCredentials(email, password);
+			
+		} catch (Exception e) {
+			System.err.println("Error en Login: " + e.getMessage());
+		}
 		
 		
         if (user != null) {

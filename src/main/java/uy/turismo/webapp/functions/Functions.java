@@ -23,6 +23,9 @@ public class Functions {
 		String imagePath = null;
 		
 		try {
+			if(image == null) {
+				throw new Exception("Imagen del Servidor Central viene null");
+			}
 			properties.load(inputStream);
 				
 			
