@@ -4,7 +4,18 @@
 <html>
 <head>
     <!-- Incluye el enlace a Bootstrap -->
-    <link href="ruta/a/bootstrap.min.css" rel="stylesheet">
+   <link href="assets/scripts/bootstrap5.2.3.bundle.min.js" rel="stylesheet">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="assets/scripts/jquery3.5.1.min.js"></script>
+<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+<script src="assets/scripts/clock.js" type="text/javascript"></script>
+<link rel="icon" href="assets/images/star.ico" type="image/png">
+ -->
 </head>
 <body>
     <div class="modal fade" id="miPopup" tabindex="-1" role="dialog" aria-labelledby="miPopupLabel" aria-hidden="true">
@@ -20,16 +31,16 @@
                     <!-- Contenido de tu popup aquí -->
                     
                     <% 
-                    String errorType = request.getParameter("errorType");  
-                    
-                    String error = request.getParameter("error");
+                    String errorType = (String) request.getAttribute("errorType");
+            		
+            		String error = (String) request.getAttribute("error");
 
                 	switch(errorType) {
         			
 	    				case "User":%>
 	    					<span>Error: <%= error %></span>
 	    					<a href="<%= request.getContextPath() %>/register">
-	    					<button> Volver al registro </button>
+	    						<button> Volver al registro </button>
 	    					</a>
 	    					
 				 	
@@ -46,8 +57,9 @@
             </div>
         </div>
     </div>
-
-    <script src="ruta/a/jquery.min.js"></script>
-    <script src="ruta/a/bootstrap.min.js"></script>
+ 
+    <script src="assets/scripts/jquery3.5.1.min.js"></script>
+    <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+ 
 </body>
 </html>

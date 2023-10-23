@@ -24,18 +24,22 @@ public class ServletErrorPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String errorType = request.getParameter("errorType");
 		
-		String error = request.getParameter("error");
+		String errorType = (String) request.getAttribute("errorType");
+		
+		String error = (String) request.getAttribute("error");
+		
+		
 		
 			switch(errorType) {
 			
 				case "User":
 					request.setAttribute("errorType", errorType);
 					
+					//error = "Nombre de Usuario/E-mail ya existente.";
 					request.setAttribute("error", error);
 					
-					request.getRequestDispatcher("/ErrorPage.jsp").forward(request, response);
+					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
 					break;
 					
 				case "Activity":
@@ -45,6 +49,10 @@ public class ServletErrorPage extends HttpServlet {
 				case "Purchase":
 	
 					break;
+					
+				case "Departure":
+					
+				break;
 			
 			}
 		

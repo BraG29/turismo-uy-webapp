@@ -64,10 +64,10 @@
 			<div>
 				<span>Seleccione una actividad: </span>
 
-				<select id="activitiesCombobox" class="form-select" aria-label="Ej: Rocha" name="activityId" required>
+				<select id="activitiesCombobox" class="form-select" aria-label="Ej: Rocha" name="activityId" onclick="selectActivity()" required>
              			<option value="-"> - </option>
              			
-				</select>
+				</select >
 			</div>
 
 			<br>
@@ -92,7 +92,10 @@
 			<input type="file" accept="image/*" id="imagen" name="image">
 			<br>
 			<br>
-			<input href="login.html" class="w-100 btn btn-lg btn-primary" type="submit" value="Crear Salida Turística" />
+			<!-- <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear Salida Turística" /> -->
+			
+			<div id="liveAlertPlaceholder"></div>
+			<button type="submit" class="btn btn-primary" id="liveAlertBtn" " >Crear Salida Turística</button>
 
 		</form>
 	</main>
@@ -100,40 +103,84 @@
 </body>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-		var departmentCombobox = document.getElementById("departmentCombobox");
-		var activitiesCombobox = document.getElementById("activitiesCombobox");
+	/*
+	function checkAlgo(){
+	
+		const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+		const appendAlert = (message, type) => {
+		  const wrapper = document.createElement('div')
+		  wrapper.innerHTML = [
+		    <div class="alert alert-${type} alert-dismissible" role="alert">,
+		       <div>${message}</div>,
+		    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+		    '</div>'
+		  ].join('')
 		
-		departmentCombobox.addEventListener("change", function () {
+		  alertPlaceholder.append(wrapper)
+		}
+		
+		const alertTrigger = document.getElementById('liveAlertBtn')
+		if (alertTrigger) {
+		  alertTrigger.addEventListener('click', () => {
+		    appendAlert('Nice, you triggered this alert message!', 'success')
+		  })
+		}
+	}*/
+
+	
+	
+	function selectActivity(){
+			//document.addEventListener("DOMContentLoaded", function () {
+				
+				console.log("entre al SelectActivity");
+				
+			var departmentCombobox = document.getElementById("departmentCombobox");
+			var activitiesCombobox = document.getElementById("activitiesCombobox");
 			
-			activitiesCombobox.innerHTML = ""; // Clear previous options
-			var selectedDepartment = departmentCombobox.value;
-			var activitiesFound = false;
-			
-			<% for(DtTouristicActivity activity : activitiesStated) { %>
-				// Check if the activity's department matches the selected department
-				if ("<%= activity.getDepartment().getId() %>" === selectedDepartment) {
-					
+			departmentCombobox.addEventListener("change", function () {
+				
+				activitiesCombobox.innerHTML = ""; // Clear previous options
+				var selectedDepartment = departmentCombobox.value;
+				var activitiesFound = false;
+				
+				<% for(DtTouristicActivity activity : activitiesStated) { %>
+					// Check if the activity's department matches the selected department
+					console.log("entre al for");
+					if ("<%= activity.getDepartment().getId() %>" === selectedDepartment) {
+						
+						var option = document.createElement("option");
+						
+						option.text = "<%= activity.getName() %>";
+						option.value = "<%= activity.getId() %>";
+						
+						activitiesCombobox.appendChild(option);
+						
+						activitiesFound = true;
+						console.log("entre al if");
+					}
+				<% } %>
+				
+				if(!activitiesFound){
 					var option = document.createElement("option");
-					
-					option.text = "<%= activity.getName() %>";
-					option.value = "<%= activity.getId() %>";
+					option.text = "No hay actividades para este departamento.";
+					option.value = "-";
 					
 					activitiesCombobox.appendChild(option);
-					
-					activitiesFound = true;
+					console.log("entre al no activityFound");
 				}
-			<% } %>
+			});
+		//});
+	}
+	selectActivity();
+	
+	/*
+	function checkRegister(){
+		
+		if(){
 			
-			if(!activitiesFound){
-				var option = document.createElement("option");
-				option.text = "No hay actividades para este departamento.";
-				option.value = "-";
-				
-				activitiesCombobox.appendChild(option);
-			}
-		});
-	});
+		}
+	}*/
+	
 </script>
 
 

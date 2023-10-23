@@ -127,9 +127,9 @@ public class ServletRegister extends HttpServlet {
 			
 			request.setAttribute("errorType", errorType);
 			
-			request.setAttribute("error", e.getMessage());
+			request.setAttribute("error", e.getLocalizedMessage());
 			
-			request.getRequestDispatcher(request.getContextPath() + "/errorPage").forward(request, response);
+			request.getRequestDispatcher("/errorPage").forward(request, response);
 		}
 
 	}

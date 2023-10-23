@@ -80,5 +80,8 @@ public class ServletRegisterDeparture extends HttpServlet {
 				);
 		
 		controller.registerTouristicDeparture(departureData);
+		
+		request.getRequestDispatcher("/consultActivity?redirectTo=departure")
+		.forward(request, response);
 	}
 }

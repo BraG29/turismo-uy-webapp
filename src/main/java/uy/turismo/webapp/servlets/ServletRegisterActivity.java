@@ -103,6 +103,9 @@ public class ServletRegisterActivity extends HttpServlet {
 														categoriesList);
 		controller.registeTouristicActivity(DTA);
 		
+		request.getRequestDispatcher("/consultActivity?redirectTo=activity")
+		.forward(request, response);
+		
 	}
 
 }

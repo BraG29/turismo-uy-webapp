@@ -35,7 +35,7 @@
 		}
         
         p{
-    		line-height: 0.8; /* You can adjust the value as needed for tighter or looser spacing */
+    		line-height: 0.9; /* You can adjust the value as needed for tighter or looser spacing */
 		}
     </style>
 </head>
