@@ -44,7 +44,14 @@ public class ServletErrorPage extends HttpServlet {
 					
 				case "Activity":
 					
+					request.setAttribute("errorType", errorType);
+					
+
+					request.setAttribute("error", error);
+					
+					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
 					break;
+					
 					
 				case "Purchase":
 					
@@ -58,6 +65,12 @@ public class ServletErrorPage extends HttpServlet {
 					
 				case "Departure":
 					
+					request.setAttribute("errorType", errorType);
+					
+
+					request.setAttribute("error", error);
+					
+					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
 				break;
 			
 			}

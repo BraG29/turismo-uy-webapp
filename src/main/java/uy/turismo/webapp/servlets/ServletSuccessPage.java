@@ -44,6 +44,14 @@ public class ServletSuccessPage extends HttpServlet {
 					
 				case "Activity":
 					
+					request.setAttribute("successType", successType);
+					
+					successMessage = "La actividad fue realizada con exito";
+					request.setAttribute("successMessage", successMessage);
+					
+					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
+					
+					
 					break;
 					
 				case "Purchase":
@@ -58,6 +66,13 @@ public class ServletSuccessPage extends HttpServlet {
 					break;
 					
 				case "Departure":
+					
+					request.setAttribute("successType", successType);
+					
+					successMessage = "La salida fue realizada con exito";
+					request.setAttribute("successMessage", successMessage);
+					
+					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
 					
 				break;
 			

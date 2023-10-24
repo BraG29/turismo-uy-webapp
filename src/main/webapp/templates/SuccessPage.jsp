@@ -27,19 +27,35 @@
                 	switch(successType) {
         			
 	    				case "User":%>
-	    				 <h1 style="text-color: green;"class="text-danger"><%= success %></h1>
+	    				 <h1 style="text-color: green;"class="text-success"><%= success %></h1>
 	    					<a href="<%= request.getContextPath() %>/userList">
-	    						<button> Ver listado de usuarios </button>
+	    						<button class="btn btn-primary"> Ver listado de usuarios </button>
 	    					</a>
     					<%break;
     					
     					case "Purchase": %>
-				          <h1 style="text-color: green;"class="text-danger"><%= success %></h1>
+				          <h1 style="text-color: green;"class="text-success"><%= success %></h1>
 				          		
 	    					<a href="<%= request.getContextPath() %>/bundleList">
-	    						<button> Volver al listado de paquetes </button>
+	    						<button class="btn btn-primary"> Volver al listado de paquetes </button>
 	    					</a>
-				 <%	break;
+				 		<%	break;
+				 		
+    					case "Activity":%>
+    						
+    						<h1 style="text-color: green;"class="text-success"><%= success %></h1>
+    						<a href="<%= request.getContextPath()%>/consultActivity?redirectTo=activity">
+	    						<button class="btn btn-primary"> Volver al listado de Actividades </button>
+	    					</a>
+    						<%break;
+    					
+    					case "Departure":%>
+    					
+    					<h1 style="text-color: green;"class="text-success"><%= success %></h1>
+    						<a href="<%= request.getContextPath()%>/consultActivity?redirectTo=departure">
+	    						<button class="btn btn-primary"> Volver al listado de Actividades </button>
+	    					</a>
+	    				<%break;	
                 	}%>
     				
     				

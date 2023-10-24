@@ -81,8 +81,12 @@ public class ServletRegisterDeparture extends HttpServlet {
 		try {
 			controller.registerTouristicDeparture(departureData);
 			
-			request.getRequestDispatcher("/consultActivity?redirectTo=departure")
-			.forward(request, response);
+			
+			String successType = "Departure";
+				
+			request.setAttribute("successType", successType);	
+			
+			request.getRequestDispatcher("/successPage").forward(request, response);	
 			
 		} catch (Exception e) {
 			

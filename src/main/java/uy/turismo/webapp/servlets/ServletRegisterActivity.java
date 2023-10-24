@@ -85,27 +85,33 @@ public class ServletRegisterActivity extends HttpServlet {
 			System.out.println(category.getId());
 		}
 		
-		IController controller = ControllerFactory.getIController();
 		
-		DtTouristicActivity DTA = new DtTouristicActivity(id,
-														name,
-														description,
-														duration,
-														cost,
-														city,
-														image,
-														state,
-														uploadDate,
-														provider,
-														department,
-														null,
-														null,
-														categoriesList);
 		try {
+			IController controller = ControllerFactory.getIController();
+			
+			DtTouristicActivity DTA = new DtTouristicActivity(id,
+															name,
+															description,
+															duration,
+															cost,
+															city,
+															image,
+															state,
+															uploadDate,
+															provider,
+															department,
+															null,
+															null,
+															categoriesList);
 			controller.registeTouristicActivity(DTA);
 			
-			request.getRequestDispatcher("/consultActivity?redirectTo=activity")
-			.forward(request, response);
+			String successType = "Activity";
+			
+			request.setAttribute("successType", successType);	
+			
+			request.getRequestDispatcher("/successPage")
+			.forward(request, response);	
+			
 			
 		} catch (Exception e) {
 			
