@@ -26,7 +26,7 @@
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp" />
 	<main class="form-signin w-50 m-auto container-fluid">
-		<form action="<%= request.getContextPath() %>/registerDeparture" enctype="multipart/form-data" method="post">
+		<form action="<%= request.getContextPath() %>/registerDeparture" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
 			<div>
 			<br>
 				<div class="input-group">
@@ -103,29 +103,6 @@
 </body>
 
 <script>
-	/*
-	function checkAlgo(){
-	
-		const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-		const appendAlert = (message, type) => {
-		  const wrapper = document.createElement('div')
-		  wrapper.innerHTML = [
-		    <div class="alert alert-${type} alert-dismissible" role="alert">,
-		       <div>${message}</div>,
-		    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-		    '</div>'
-		  ].join('')
-		
-		  alertPlaceholder.append(wrapper)
-		}
-		
-		const alertTrigger = document.getElementById('liveAlertBtn')
-		if (alertTrigger) {
-		  alertTrigger.addEventListener('click', () => {
-		    appendAlert('Nice, you triggered this alert message!', 'success')
-		  })
-		}
-	}*/
 
 	
 	
@@ -173,13 +150,20 @@
 	}
 	selectActivity();
 	
-	/*
-	function checkRegister(){
-		
-		if(){
-			
-		}
-	}*/
+	function validateForm() {
+		 // Get the input value
+		  var inputValue = document.getElementById("activitiesCombobox").value;
+
+		  // Check the condition (e.g., incorrect value)
+		  if (inputValue === "-") {
+		    alert("Actividad incorrecta.");
+		    return false; // Prevent form submission
+		  }
+
+		  // If the condition is not met, allow form submission
+		  return true;
+	}
+	
 	
 </script>
 
