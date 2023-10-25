@@ -59,10 +59,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="assets/scripts/jquery3.5.1.min.js"></script>
 	<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
+	
 	<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 	<script src="assets/scripts/clock.js" type="text/javascript"></script>
  	<link rel="icon" href="assets/images/star.ico" type="image/png">
 	<title>Consultar Actividad</title>
+	<link rel="stylesheet" href="assets/styles/main.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
 	<style>
@@ -74,7 +76,8 @@
   </style>
 </head>
 
-<body>
+<body onload="currentTime()" >
+
 	<jsp:include page="../../templates/header.jsp" />
 
 	<div class="container-fluid">
@@ -153,8 +156,8 @@
 					<!-- Small Boxes -->
 						<% for(DtTouristicActivity activity : activitiesToPrint){%>
 							<div class="col-md-3">
-								<div class="card" style="align-items: center;">
-									<img src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="width:15em; margin-top: 1em; margin-left: 3%; border-radius: 5%; ">
+								<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
+									<img src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="border-radius: 5%; margin: auto">
 									<div class="card-body">
 									<%
 										

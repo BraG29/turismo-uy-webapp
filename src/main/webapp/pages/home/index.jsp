@@ -23,13 +23,16 @@
 <style>
 	.cuadrado {
 	  width: 400px; /* Define el ancho de cada cuadrado */
-	  height: 500px; /* Define la altura de cada cuadrado */
+	  height: 550px; /* Define la altura de cada cuadrado */
 	  background-color: #ccc; /* Color de fondo de los cuadrados */
 	  margin: 20px; /* Espacio entre los cuadrados */
 	  float: left; /* Hace que los cuadrados se coloquen uno al lado del otro */
 	  text-align: center; /* Centra el contenido del div */
 	  padding: 10px; /* Espacio interno dentro del cuadrado para el contenido */
 	  font-size: 25px;
+	  border: 2px solid darkgreen;
+	  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+	  border-radius: 0.5em;
 	  
 	}
 
@@ -39,7 +42,7 @@
     
 		<jsp:include page="../../templates/header.jsp" />   
 		
-		<h1 style=" text-align: center;"> Laboratorio programación de aplicaciones. Tarea 2 </h1>
+		 <h1  style=" text-align: center;">  <em> <b style="text-shadow: 0.15em 0.15em 0.24em ;"> Laboratorio de programación de aplicaciones. Tarea 2  </b> </em> </h1>
 		
 		<br>
 		 
@@ -58,13 +61,17 @@
 			<div class="cuadrado">
 			<h4><b>¿Que ofrecemos?</b></h4>
 			<p style=" text-align: left;"> 
-			Brindamos un extenso catalogo de	
+			Brindamos un extenso catalogo de
 	        <a href="<%=request.getContextPath()%>/consultActivity?redirectTo=activity">
-	        actividades turisticas</a> a lo largo y ancho del país, desde actividades en las costas más bellas del país
+	        actividades turisticas
+	        </a> 
+	        a lo largo y ancho del país, desde actividades en las costas más bellas del país
 	        hasta disfrutar la gastronomia del interior del pais.
 	        También contamos con interesantes 
 	        <a href="<%= request.getContextPath() %>/bundleList">
-	        paquetes promocionales</a>, para la familia.
+	        paquetes promocionales
+	        </a>
+	        , para la familia.
 			</p>	
 			</div>
 	        
@@ -86,7 +93,7 @@
 				
 				<li>  Eugenio Perdomo </li>
 				
-				<li>  Martin Antunez </li>
+				<li>  Martín Antúnez </li>
 				
 				<li>  Kevin Viera </li>
 				

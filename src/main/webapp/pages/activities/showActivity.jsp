@@ -41,13 +41,13 @@
 </head>
 <body>
 <jsp:include page="../../templates/header.jsp" />
-    <div class="container mt-5">
+    <div class="container mt-4">
      
         <div class="row">
-            <div class="col-md-8 offset-md-2" style="margin-left: -28%;">
-                <div class="card">
+            <div class="col-md-8 " style="">
+                <div class="card" style="padding: 1em; background-color: aliceblue;">
                 	<h3 class="card-title"><%= activityToShow.getName() %></h5>
-                    <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="width:25em;  border-radius: 5%; margin-left: 3%;" >
+                    <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="margin: auto;  border-radius: 5%; " >
                     <div class="card-body">
                         <p class="card-text">Descripción: <%= activityToShow.getDescription()%></p>
                         <p class="card-text">Departamento: <%= activityToShow.getDepartment().getName() %></p>

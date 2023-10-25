@@ -7,6 +7,11 @@ document.write(`
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">            
         <ul class="nav justify-content-center">
+         <li class="nav-item" style="margin: auto; margin-left: 1em;" > 
+		       	<a href="${contextPath}">
+		        	<img class="ml-auto" src="assets/images/logoTurismoUY.png" alt="Usuario Generico" width="150px">
+		       </a>
+	        </li>
             <li class="nav-item">
                 <a class="nav-link" href=" ${contextPath}/login ">
                     <button class="btn btn-outline-success">
@@ -14,12 +19,7 @@ document.write(`
                     </button>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}">
-                    <button class="btn btn-outline-success">
-                        &nbsp;Página Principal&nbsp;
-                    </button>
-                </a>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${contextPath}/consultActivity?redirectTo=activity">
