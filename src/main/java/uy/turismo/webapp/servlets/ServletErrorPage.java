@@ -36,7 +36,6 @@ public class ServletErrorPage extends HttpServlet {
 				case "User":
 					request.setAttribute("errorType", errorType);
 					
-					//error = "Nombre de Usuario/E-mail ya existente.";
 					request.setAttribute("error", error);
 					
 					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);

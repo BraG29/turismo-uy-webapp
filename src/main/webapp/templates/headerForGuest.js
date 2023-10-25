@@ -15,7 +15,7 @@ document.write(`
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/home/index.jsp">
+                <a class="nav-link" href="${contextPath}">
                     <button class="btn btn-outline-success">
                         &nbsp;Página Principal&nbsp;
                     </button>
