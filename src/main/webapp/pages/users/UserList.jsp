@@ -118,7 +118,8 @@
 			
 			<li class="user-item">
 			<p>No se encontró la imagen.</p>
-			<span class="user-nickname">
+			<br>
+			<span class="user-nickname"> Nombre de usuario:
 				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
 				<%= user.getNickname()%>  
 				</a>
