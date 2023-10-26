@@ -50,7 +50,7 @@ public class ServletRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		
+		request.setCharacterEncoding("UTF-8");
 		//users
 		String name = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");

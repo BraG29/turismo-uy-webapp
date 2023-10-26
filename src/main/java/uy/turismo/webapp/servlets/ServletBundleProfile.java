@@ -50,6 +50,9 @@ public class ServletBundleProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		IController controller = ControllerFactory.getIController();
 
 		Long bundleId = Long.parseLong(request.getParameter("bundleId"));

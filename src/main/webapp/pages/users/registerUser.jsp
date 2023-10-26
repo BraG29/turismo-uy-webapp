@@ -102,16 +102,16 @@
 			<span> Seleccione su pais:</span> <select name="touristCountry" id="touristCountry">
 						<option value="" selected> Selección </option>
 						<option value="Afganistán">Afganistán</option>
-						<option value="Albsdania">Albsdania</option>
+						<option value="Albania">Albania</option>
 						<option value="Alemania">Alemania</option>
 						<option value="Andorra">Andorra</option>
-						<option value="Angsdola">Angsdola</option>
+						<option value="Angola">Angola</option>
 						<option value="Anguilla">Anguilla</option>
-						<option value="Antsdártida">Antsdártida</option>
-						<option value="Antigsdua y Barbuda">Antigsdua y Barbuda</option>
+						<option value="Antártida">Antártida</option>
+						<option value="Antigsdua y Barbuda">Antigua y Barbuda</option>
 						<option value="Antillas Holandesas">Antillas Holandesas</option>
 						<option value="Arabia Saudí">Arabia Saudí</option>
-						<option value="Argesdlia">Argesdlia</option>
+						<option value="Argelia">Argelia</option>
 						<option value="Argentina">Argentina</option>
 						<option value="Armenia">Armenia</option>
 						<option value="Arubsda">Arubsda</option>

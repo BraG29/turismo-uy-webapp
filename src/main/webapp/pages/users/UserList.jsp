@@ -117,17 +117,16 @@
 			<% }else{ %>
 			
 			<li class="user-item">
-			<p>No se encontró la imagen.</p>
-			<br>
+			<img style="width:25em;  border-radius: 5%;" class="user-image" alt="No se encontró la imagen">
+			<div class="user-info">
 			<span class="user-nickname"> Nombre de usuario:
 				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
 				<%= user.getNickname()%>  
 				</a>
 			</span>	
-			
-			<span> <%= user.getEmail() %> </span>	
-			<hr>
-			
+			<br>
+			<span> Correo electrónico:<%= user.getEmail() %> </span>	
+			</div>
 			 </li> 		
 			<%		
 					} //else

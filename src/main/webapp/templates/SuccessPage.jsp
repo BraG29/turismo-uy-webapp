@@ -31,6 +31,7 @@
 	    					<a href="<%= request.getContextPath() %>/userList">
 	    						<button class="btn btn-primary"> Ver listado de usuarios </button>
 	    					</a>
+	    					
     					<%break;
     					
     					case "Purchase": %>
