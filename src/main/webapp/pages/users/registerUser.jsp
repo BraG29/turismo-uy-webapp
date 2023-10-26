@@ -21,6 +21,7 @@
 </head>
 
 <body>
+<jsp:include page="../../templates/header.jsp" />
 <div class="">
 	<main class="form-signin w-50 m-auto container-fluid">
 	<h1 class="h3 mb-3 fw-normal pt-3">Registro de usuario</h1>
@@ -353,7 +354,7 @@
 	
 	<a href="<%= request.getContextPath() %>/login">¿Ya tienes cuenta? <b>Inicia
 				sesión</b></a>
-	
+	<jsp:include page="../../templates/footer.jsp" />
 	</main>
 	
 		<script>

@@ -61,7 +61,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 		<div class="row">
 			<div class="col-md-4">
 				<div class="card">
-					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil">
+					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil" style="border-radius: 3em;">
 					<div class="card-body">
 						<h5 class="card-title"><%=fullUserName%>
 						</h5>
@@ -152,10 +152,9 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 								<li class="list-group-item">
 									<div class="media">
 										<img src="<%=activityImages.get(activity.getId())%>"
-											class="mr-3" style="width: 100px;"> 
-											<div class="media-body">
-												<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId() %>"> <b><%= activity.getName() %></b></a>
-											</div>
+
+											class="mr-3" style="width: 100px; border-radius: 1em;"> 
+											<div class="media-body"><%= activity.getName() %></div>
 										
 									</div>
 								</li>
@@ -196,7 +195,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 									<li class="list-group-item">
 										<div class="media">
 											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
-												class="mr-3" style="width: 100px;"> 
+												class="mr-3" style="width: 100px; border-radius: 1em;"> 
 											<div class="media-body">
 												<a href="<%= request.getContextPath() %>/showDeparture?id=<%= departure.getId() %>"> <b> <%= departure.getName() %> </b> </a>
 												<% if(userInSession){ %>
@@ -230,7 +229,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 											<li class="list-group-item">
 												<div class="media">
 													<img src="<%= bundleImages.get(bundle.getId()) %>"
-														class="mr-3" style="width: 100px;"> 
+														class="mr-3" style="width: 100px;border-radius: 1em;"> 
 													<div class="media-body">
 														<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
 															<br>
@@ -263,7 +262,9 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 
 
 	<jsp:include page="../../templates/footer.jsp" />
-
+ <hr>
+ <br>
+ <br>
 </body>
 
 </html>
