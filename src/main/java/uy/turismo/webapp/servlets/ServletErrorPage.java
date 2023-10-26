@@ -29,6 +29,7 @@ public class ServletErrorPage extends HttpServlet {
 		
 		String error = (String) request.getAttribute("error");
 		
+		Long bundleId = Long.parseLong(request.getParameter("bundleId")); //bundle al que volver desde el boton
 		
 		
 			switch(errorType) {
@@ -53,6 +54,8 @@ public class ServletErrorPage extends HttpServlet {
 					
 					
 				case "Purchase":
+					
+					request.setAttribute("bundleId", bundleId);
 					
 					request.setAttribute("errorType", errorType);
 					

@@ -157,7 +157,11 @@
 						<% for(DtTouristicActivity activity : activitiesToPrint){%>
 							<div class="col-md-3">
 								<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
-									<img src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="border-radius: 5%; margin: auto">
+									<%if(activity.getImage() != null){ %>
+									<img id="showedImage" src="<%=activityImages.get(activity.getId())%>" class="card-img-top" style="border-radius: 5%; margin: auto" alt="TROLA">
+									<% }else{%>
+									<img id="showedImage" src="assets/images/noImage.jpg" class="card-img-top" style="border-radius: 5%; margin: auto" alt="PTA">
+									<% }%>
 									<div class="card-body">
 									<%
 										

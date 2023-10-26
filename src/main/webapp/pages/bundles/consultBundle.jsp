@@ -210,7 +210,7 @@
 		   		
 		   		
 		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
-		   		<input type="number" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
+		   		<input type="hidden" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
 		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
 		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
 		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">
@@ -350,7 +350,7 @@
 		   		
 		   		
 		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
-		   		<input type="number" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
+		   		<input type="hidden" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" >
 		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
 		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
 		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">

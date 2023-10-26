@@ -55,6 +55,7 @@ public class ServletRegisterActivity extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
 		Long id = null;
 		HttpSession session = request.getSession();
 		String name = request.getParameter("activityName");
@@ -65,7 +66,7 @@ public class ServletRegisterActivity extends HttpServlet {
 
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
-		BufferedImage image = ImageIO.read(fileContent);		
+		BufferedImage image = ImageIO.read(fileContent);
 		
 		ActivityState state = ActivityState.ADDED;
 		
@@ -103,6 +104,7 @@ public class ServletRegisterActivity extends HttpServlet {
 															null,
 															null,
 															categoriesList);
+					
 			controller.registeTouristicActivity(DTA);
 			
 			String successType = "Activity";

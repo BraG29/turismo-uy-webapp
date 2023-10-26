@@ -4,6 +4,8 @@
     String errorType = (String) request.getAttribute("errorType");
 	
 	String error = (String) request.getAttribute("error");
+	
+	Long id = Long.parseLong(request.getParameter("bundleId"));
     %>
 <!DOCTYPE html>
 <html>
@@ -42,7 +44,10 @@
 				<%break;
 				
 			case "Purchase":%>
-				<a href="<%= request.getContextPath() %>/bundleProfile">
+			
+			
+			
+				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=id%>">
 					<button class="btn btn-primary">Reintentar compra</button>
 				</a>
 				<%break;
