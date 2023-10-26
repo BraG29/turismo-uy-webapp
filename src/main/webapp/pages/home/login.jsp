@@ -19,7 +19,7 @@
 </head>
 
 <body onload="currentTime()">
-	<script src="templates/header.js"></script>
+<jsp:include page="../../templates/header.jsp" />
 	<main class="form-signin w-50 m-auto container-fluid">
 		<form action=" <%= request.getContextPath() %>/login" method="post" accept-charset="UTF-8">
 			<h1 class="h3 mb-3 fw-normal pt-3">Iniciar Sesión</h1>
@@ -27,7 +27,7 @@
 			<div class="form-floating my-3">
 				<input type="email" class="form-control" name="loginUserEmailInput"
 					placeholder="nombre@ejemplo.com" required> <label
-					for="credencialInput">Nickname o Mail</label>
+					for="credencialInput"> E-Mail</label>
 			</div>
 			<div class="form-floating my-3">
 				<input type="password" class="form-control"
@@ -40,6 +40,6 @@
 		<a href="<%= request.getContextPath() %>/register">¿No tienes cuenta? <b>Registrate
 				aquí</b></a>
 	</main>
-	<script src="templates/footer.js"></script>
+<jsp:include page="../../templates/footer.jsp" />
 </body>
 </html>
