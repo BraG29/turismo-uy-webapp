@@ -87,7 +87,7 @@
 				BufferedImage userImage = user.getImage(); 
 				
 					if(userImage != null){
-						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						/* ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				        String format = "jpeg"; // Formato predeterminado es JPEG
 		
 				        // Determina el formato de la imagen
@@ -97,12 +97,18 @@
 		
 				        ImageIO.write(userImage, format, baos);
 				        byte[] bytes = baos.toByteArray();
-				        String base64Image = Base64.getEncoder().encodeToString(bytes);	
+				        String base64Image = Base64.getEncoder().encodeToString(bytes);	 */
+				        
+				        String imagePath = Functions.saveImage(
+                                userImage, 
+                                user.getNickname(), 
+                                getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+                                "user/");
 			
 			%>
 			
 			<li class="user-item">
-			<img style="width:25em;  border-radius: 5%;" class="user-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+			<img style="width:25em;  border-radius: 5%;" class="user-image" src="<%= imagePath %>" alt="Foto de perfil">
 			<div class="user-info">
 			<span class="user-nickname"> Nombre de usuario:
 				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
