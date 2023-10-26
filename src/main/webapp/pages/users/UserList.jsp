@@ -19,8 +19,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
-<link rel="stylesheet" href="assets/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/styles/main.css">
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
@@ -42,9 +42,11 @@
         }
 
         .user-image {
-            width: 300px; /* Ajusta el tamaño de la imagen según tus necesidades */
-            height: 300px;
-            margin-right: 30px;
+            border-radius: 5%;
+			margin: auto;
+			width: 300px;
+			height: 300px;
+			
             
         }
 
@@ -62,6 +64,10 @@
             justify-content: center;
             align-items: center;
         }
+        
+        .sea-lo-que-sea{
+        
+        }
 </style>
 
 </head>
@@ -70,10 +76,10 @@
 <jsp:include page="../../templates/header.jsp" />
 
 
-<div class="">
-<main class="form-signin w-50 m-auto container-fluid">
-<h1> Usuarios registrados en la plataforma: </h1>
-	<ul class="user-list">			
+
+<main class="container-fluid">
+<div class="row">
+<h1> Usuarios registrados en la plataforma: </h1>			
 			<% 
 				
 				IController controller = ControllerFactory.getIController();
@@ -105,44 +111,57 @@
                                 getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
                                 "user/");
 			
+
 			%>
 			
-			<li class="user-item">
-			<img style="width:25em;  border-radius: 5%;" class="user-image" src="<%= imagePath %>" alt="Foto de perfil">
-			<div class="user-info">
-			<span class="user-nickname"> Nombre de usuario:
-				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
-				<%= user.getNickname()%>  
-				</a>
-			</span>			
-			<span> Correo electrónico: <%= user.getEmail() %> </span>		 
-			 </div>
-			 </li> 
+			
+			 
+		<div class="col-3">
+			<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
+				<img src="<%= imagePath %>" class="user-image" alt="No se encontró la imagen.">
+					<div class="card-body">
+					<div class="user-info">
+					<span class="user-nickname"> Nombre de usuario:
+						<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
+						<%= user.getNickname()%>  
+						</a>
+					</span>			
+					<span> Correo electrónico: <%= user.getEmail() %> </span>		 
+					 </div>	
+				</div>
+			</div>
+		</div>
+
 			
 	
 			<% }else{ %>
 			
-			<li class="user-item">
-			<img style="width:25em;  border-radius: 5%;" class="user-image" alt="No se encontró la imagen">
-			<div class="user-info">
-			<span class="user-nickname"> Nombre de usuario:
-				<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
-				<%= user.getNickname()%>  
-				</a>
-			</span>	
-			<br>
-			<span> Correo electrónico:<%= user.getEmail() %> </span>	
+			
+			<div class="col-3">
+			<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
+				<img src="assets/images/noImage.jpg" class="user-image" alt="">
+					<div class="card-body">
+					<div class="user-info">
+					<span class="user-nickname"> Nombre de usuario:
+						<a href="<%= request.getContextPath() %>/profile?id=<%=user.getId()%>">
+						<%= user.getNickname()%>  
+						</a>
+					</span>			
+					<span> Correo electrónico: <%= user.getEmail() %> </span>		 
+					 </div>	
+				</div>
 			</div>
-			 </li> 		
+		</div>
+			 		
 			<%		
 					} //else
 			
 				} //for
 			%>
-			
-		</ul>
+			<hr>
+			</div>
 		</main>
-</div>
+
 
 <jsp:include page="../../templates/footer.jsp" />
 
