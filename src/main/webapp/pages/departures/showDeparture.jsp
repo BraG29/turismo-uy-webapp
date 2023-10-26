@@ -201,6 +201,7 @@ Boolean availableUser = session.getAttribute("userType") != null
 	<script>
 
 		function requestInscription(){
+
 			//Cargo los valores que quiero pasar como parametro
 			var touristId = <%= touristData.getId() %>;
 			var departureId = <%= departureId %>;
@@ -217,15 +218,18 @@ Boolean availableUser = session.getAttribute("userType") != null
 			        if (response.status === 200) {
 			            return response.text();
 			        }
-			        throw new Error("Error en la solicitud.");
+			        throw new Error("Supero la cantidad maximas de turistas para esta salida");
 			    })
 			    .then(function (data) {
 			        alert("Se ha Inscripto correctamente");
 			        //console.log(data);
 			    })
 			    .catch(function (error) {
-			        console.error(error);
+				    alert(error);
+			        //console.error(error);
 			    });
+
+			
 		}
 
 	</script>

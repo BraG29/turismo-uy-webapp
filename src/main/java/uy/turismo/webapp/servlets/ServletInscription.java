@@ -58,6 +58,11 @@ public class ServletInscription extends HttpServlet {
 		IController controller = ControllerFactory.getIController();
 		
 		DtTouristicDeparture departureData = controller.getTouristicDepartureData(departureId);
+		
+		if(departureData.getMaxTourist() <= touristAmount + departureData.getTourists().size()) {
+			throw new ServletException("Supero la cantidad maximas de turistas para esta salida");
+		}
+		
 		DtTourist touristData = new DtTourist(
 				touristId,
 				null,

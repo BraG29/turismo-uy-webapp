@@ -61,7 +61,13 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		Long touristId = Long.parseLong(request.getParameter("touristId"));
 		
-		DtTourist touristData = (DtTourist) controller.getUserData(touristId);
+		DtTourist touristData = new DtTourist();
+		try {
+			touristData = (DtTourist) controller.getUserData(touristId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		List<DtPurchase> listPurchases = touristData.getPurchases();
 		

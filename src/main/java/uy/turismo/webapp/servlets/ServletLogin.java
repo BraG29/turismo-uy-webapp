@@ -53,14 +53,8 @@ public class ServletLogin extends HttpServlet {
 		
 		DtUser user = null;
 		
-		try {
-			user = cotroller.checkCredentials(email, password);
+		user = cotroller.checkCredentials(email, password);
 			
-		} catch (Exception e) {
-			System.err.println("Error en Login: " + e.getMessage());
-		}
-		
-		
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("userId", user.getId());
@@ -88,7 +82,7 @@ public class ServletLogin extends HttpServlet {
         	request.getRequestDispatcher("pages/home/index.jsp")
         	.forward(request, response); // Página de bienvenida
         } else {
-            response.sendRedirect(request.getContextPath() + "/login"); // Redireccionar a la página de inicio de sesión si las credenciales son incorrectas
+          response.sendRedirect(request.getContextPath() + "/login"); // Redireccionar a la página de inicio de sesión si las credenciales son incorrectas
         }
     }
 
