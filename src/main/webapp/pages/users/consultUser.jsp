@@ -1,3 +1,4 @@
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtInscription"%>
@@ -152,7 +153,9 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 									<div class="media">
 										<img src="<%=activityImages.get(activity.getId())%>"
 											class="mr-3" style="width: 100px;"> 
-											<div class="media-body"><%= activity.getName() %></div>
+											<div class="media-body">
+												<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId() %>"> <b><%= activity.getName() %></b></a>
+											</div>
 										
 									</div>
 								</li>
@@ -188,15 +191,16 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 								for (int i = 0; i < departuresToPrint.size(); i++) {
 									DtInscription inscription = inscriptions.get(i);
 									String inscriptionDateStr = inscription.getInscriptionDate().format(format);
+									DtTouristicDeparture departure = departuresToPrint.get(i);
  								%>
 									<li class="list-group-item">
 										<div class="media">
 											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
 												class="mr-3" style="width: 100px;"> 
 											<div class="media-body">
-												<p> <b> <%= departuresToPrint.get(i).getName() %> </b> </p>
+												<a href="<%= request.getContextPath() %>/showDeparture?id=<%= departure.getId() %>"> <b> <%= departure.getName() %> </b> </a>
 												<% if(userInSession){ %>
-												
+													<br>
 													Fecha de inscripción: <%= inscriptionDateStr %> <br>
 													Costo total: <%= inscription.getTotalCost() %> <br>
 													Cantidad de Turistas: <%= inscription.getTouristAmount() %>
@@ -228,7 +232,8 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 													<img src="<%= bundleImages.get(bundle.getId()) %>"
 														class="mr-3" style="width: 100px;"> 
 													<div class="media-body">
-														<p> <b> <%= bundle.getName() %> </b> </p>
+														<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
+															<br>
 															Fecha de compra: <%= purchaseDateStr %> <br>
 															Fecha de vencimiento: <%= expireDateStr %> <br>
 															Costo total: <%= purchase.getTotalCost() %> <br>

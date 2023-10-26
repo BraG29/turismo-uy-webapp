@@ -96,7 +96,7 @@ if(!userInSession){
 							<br>
 							<div class="form-group">
 								<label for="description">Descripción:</label>
-								<textarea id="description" name="" class="form-control" rows="5" id="description"><%= providerData.getDescription() %></textarea>
+								<textarea id="description" name="description" class="form-control" rows="5" id="description"><%= providerData.getDescription() %></textarea>
 							</div>
 							<br>
 						</div>

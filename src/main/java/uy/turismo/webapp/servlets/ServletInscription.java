@@ -1,10 +1,18 @@
 package uy.turismo.webapp.servlets;
 
 import java.io.IOException;
+import java.time.LocalDate;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
+import uy.turismo.servidorcentral.logic.controller.IController;
+import uy.turismo.servidorcentral.logic.datatypes.DtInscription;
+import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
+import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 
 
 
@@ -42,66 +50,47 @@ public class ServletInscription extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-		/* 
-		 * Get Salidas Vigentes.
-		 * 			if ( De aquellas actividades que estén con el State 'Confirmada' AND Cantidad inscripciones seleccionadas < inscripciones disponibles de la salida)
-		 * 			{ Show Salidas; }
-		 * 			
-		 * 			if ( Usuario está inscripto a Salida )
-		 * 			{
-		 * 				Show Botones con Cancelar inscripción;
-		 * 			}
-		 * 
-		 * 
-		 * 
-		 * Del usuario se busca si tiene un paquete comprado
-		 * 			if ( Date Paquete Vigente, 
-		 * 					Bool Paquete incluye esa Actividad Turística, 
-		 * 					Int  Cantidad inscripciones seleccionadas < inscripciones disponibles del paquete )
-		 * 				{ Show Paquetes }
-		 * 				
-		 * 			else
-		 * 				Se hace la inscripcion sin un paquete
-		 * 
-		 * 
-		 */
+		Long touristId = Long.parseLong(request.getParameter("touristId"));
+		Long departureId = Long.parseLong(request.getParameter("departureId"));
+		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount"));
+		LocalDate inscriptionDate = LocalDate.now();
 		
-
-
-
-
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		IController controller = ControllerFactory.getIController();
+		
+		DtTouristicDeparture departureData = controller.getTouristicDepartureData(departureId);
+		DtTourist touristData = new DtTourist(
+				touristId,
+				null,
+				null,
+				null
+				);
+		
+		DtInscription inscriptionData = new DtInscription(
+				null,
+				inscriptionDate,
+				null,
+				touristAmount,
+				touristData,
+				departureData
+				);
+		try {
+			controller.registerInscription(inscriptionData);
+			
+		} catch (Exception e) {
+			System.out.println("No se ha podido dar de alta la Inscripcion");
+		}
+		
+		request.getRequestDispatcher("/showDeparture?id=" + departureId)
+			.forward(request, response);
+				
+		
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		/* Viene el id de una departure
-		 * Viene la cantidad de turistas que el quiere inscribir
-		 * Viene la forma de pago (general o por paquete)
-		 * 
-		 * 
-		 * if ( selecciono paquete ) {
-		 * 		>> Ir a Paquete >>
-		 * 		Int inscripciones disponibles - Cantidad inscripciones seleccionadas
-		 * 		Delete (Actividad dentro de paquete)
-		 * 	}
-		 * 
-		 * Registro con UsuarioId, Salida, Paquete, LocalDate, Costo
-		 * 
-		 */
-
-
-
-
-
-
-
-
 
 		doGet(request, response);
 	}
