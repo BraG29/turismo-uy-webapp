@@ -52,6 +52,7 @@ public class ServletRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		request.setCharacterEncoding("UTF-8");
 		//users
+		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String nickname = request.getParameter("nickname");
