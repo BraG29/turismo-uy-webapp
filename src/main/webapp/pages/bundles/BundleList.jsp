@@ -109,15 +109,12 @@
 
 		<% }else{ %>
 		<li class="user-item">
-			<p>No se encontró la imagen.</p>
-			<span class="user-nickname">
+			<img style="width:25em;  border-radius: 5%;" class="bundle-image"  alt="No se encontro la imagen">
+			<span class="bundle-name"> Nombre:
 				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
 				<%= bundle.getName()%>  
 				</a>
 			</span>	
-			
-			<span> <%= bundle.getDescription() %> </span>	
-			<hr>
 		
 		</li>
 		

@@ -61,23 +61,64 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		Long touristId = Long.parseLong(request.getParameter("touristId"));
 		
+		DtTourist touristData = (DtTourist) controller.getUserData(touristId);
+		
+		List<DtPurchase> listPurchases = touristData.getPurchases();
+		
+		
 		DtTourist tourist = new DtTourist(touristId, null, null, null);
 		
-		Long validityDays = Long.parseLong(request.getParameter("validity"));
+		Long validityDays = Long.parseLong(request.getParameter("validity")); //dias de validez del paquete , tambien lo uso para la compra
 		
-		LocalDate purchaseDate = LocalDate.now();
+		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount")); //cantidad de turistas
+
+		
+		LocalDate purchaseDate = LocalDate.now(); //fecha de cuando se compra el paquete
+		
+		//para saber fecha de vencimiento del paquete
+		String uploadDateStr = request.getParameter("uploadDate");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate uploadDate = LocalDate.parse(uploadDateStr,formatter);
+		
 		
 		String priceStr = request.getParameter("priceToServlet");
-		
 		Double price = Double.parseDouble(priceStr);
 	
-		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount"));
 		
-		LocalDate expireDate = purchaseDate.plusDays(validityDays); //sumarle X que es el periodo de validez para obtener fecha de vencimiento.
+		LocalDate expireDate = purchaseDate.plusDays(validityDays); //sumarle X que es el periodo de validez para obtener fecha de vencimiento de la compra.
+		
+		LocalDate expiredBundleDate = uploadDate.plusDays(validityDays);
 		
 		// armar DtPurchase
-		DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
+		if(expiredBundleDate.isBefore(purchaseDate)) {
+			System.out.println("paquete vencido");
+			
+		}
+		//vencimiento del paquete
+		//15/09/2022 
+		//validity
+		
+		
+		for(int i = 0; i < listPurchases.size(); i++) {
+			if(expiredBundleDate.isBefore(purchaseDate) || listPurchases.get(i).getBundle().getId() == bundleId ) { //si ya compro el paquete, o esta vencido
+				String errorType = "Purchase";
+				
+				request.setAttribute("errorType", errorType);
+				
+				request.setAttribute("bundleId", bundleId);
+				
+				String error = "Ya compraste este paquete o el mismo se encuentra vencido, verifique e intente nuevamente";
+				
+				request.setAttribute("error", error);
+				
+				request.getRequestDispatcher("/errorPage").forward(request, response);
+			}
+		}
+		
+		
 		try {
+			DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
+			
 			controller.registerPurchase(purchase);
 			
 			String successType = "Purchase";
