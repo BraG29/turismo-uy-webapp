@@ -47,7 +47,11 @@
             <div class="col-md-8 " style="">
                 <div class="card" style="padding: 1em; background-color: aliceblue;">
                 	<h3 class="card-title"><%= activityToShow.getName() %></h5>
+                	<%if(activityToShow.getImage() != null){ %>
                     <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="margin: auto;  border-radius: 5%; " >
+                    <% }else{ %>
+                    <img src="assets/images/noImage.jpg" class="card-img-top" alt="Image" style="margin: auto;  border-radius: 5%; " >
+                    <%} %>
                     <div class="card-body">
                         <p class="card-text">Descripción: <%= activityToShow.getDescription()%></p>
                         <p class="card-text">Departamento: <%= activityToShow.getDepartment().getName() %></p>
@@ -68,11 +72,12 @@
 	            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
 	            			<li class="list-group-item"><%= bundle.getName() %></li>
 	            		</a>
+	            		<br>
+	                	<br>
 	            	<%}%>
 	            <%} %>
 	                </ul>
-	                <br>
-	                <br>
+	                
                 
                 <%if(!activityToShow.getDepartures().isEmpty()){ %>
                 
@@ -82,11 +87,12 @@
 	            		<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>">
 	            			<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
 	            		</a>
+	            		<br>
+                		<br>
 	            	<%}%>
 	            <%}%>
                 </ul>
-                <br>
-                <br>
+                
                 <%if(!activityToShow.getCategories().isEmpty()){ %>
                 <h5 class="card-text">Categorias: </h5>
             	<ul class="list-group custom-list-group">
