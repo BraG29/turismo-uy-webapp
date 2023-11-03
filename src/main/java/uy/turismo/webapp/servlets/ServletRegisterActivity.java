@@ -60,10 +60,16 @@ public class ServletRegisterActivity extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = request.getParameter("activityName");
 		String description = request.getParameter("description");
+		
+		//agrego codigo : LT
+		String urlVideo = request.getParameter("videoURL");
+		
 		Double duration = Double.parseDouble(request.getParameter("duration"));
 		Double cost = Double.parseDouble(request.getParameter("cost"));
 		String city = request.getParameter("city");
-
+		
+		System.out.println(urlVideo);
+		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
@@ -103,7 +109,9 @@ public class ServletRegisterActivity extends HttpServlet {
 															department,
 															null,
 															null,
-															categoriesList);
+															categoriesList,
+															null,
+															urlVideo);
 					
 			controller.registeTouristicActivity(DTA);
 			

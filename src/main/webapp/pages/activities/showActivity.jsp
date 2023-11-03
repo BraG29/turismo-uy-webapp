@@ -60,12 +60,27 @@
                         <p class="card-text">Duración: <%= activityToShow.getDuration() %> HRs</p>
                         <p class="card-text">Costo por turista: <%= activityToShow.getCostPerTourist()%>$ </p> 
                         <p class="card-text">Proveedor: <%= activityToShow.getProvider().getNickname() %></p>
+                        
                     </div>
                 </div>
             </div>
             <div  class="col-md-4">
+            	
+            	<% if (activityToShow.getVideoURL() != null){%>
+            	
+            	<iframe width="560" height="315" src="<%=activityToShow.getVideoURL() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+             	
+             	<% } else{ %>
+             	<span>No hay video chaval</span>
+             	 <img width="560" height="315" src="" class="card-img-top" alt="Video" style="margin: auto;  border-radius: 5%; " >
+             	
+             	<% }  %>
+             	
+             	
              	<%if(!activityToShow.getBundles().isEmpty()){ %>
-            
+            	
+            	<br>
+            	
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
 	            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>

@@ -78,8 +78,9 @@ public class ServletRegisterDeparture extends HttpServlet {
 				place,
 				image,
 				activity,
-				tourists
-				);
+				tourists,
+				null
+				); //visitas
 		try {
 			controller.registerTouristicDeparture(departureData);
 			

@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="assets/scripts/jquery3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
@@ -51,22 +51,24 @@
         <br>
 
 
-        <div class="input-group">
-			<span class="input-group-text"> Nombre de usuario: </span>
-	        <input class="form-control" name="nickname" id="nickname" type="text" placeholder="Ej: FerTorr123" required/>		
-		</div>
-        <br>
-
-
 		<div class="input-group">
 			<span class="input-group-text"> Fecha de nacimiento: </span>
 	        <input class="form-control" name="birthDate"  id="birthDate" type="date" placeholder="Ej: 2022/12/10" required/>		
 		</div>
         <br>
+
+        <div class="input-group">
+			<span class="input-group-text"> Nombre de usuario: </span>
+	        <input class="form-control" name="nickname" id="nickname" type="text" placeholder="Ej: FerTorr123" required/>
+	        <span id ="nicknameStatus"></span>		
+		</div>		
+        <br>
+
 		
 		<div class="input-group">
 			<span class="input-group-text"> E-Mail: </span>
-	        <input class="form-control" name="email" id="email" type="email" placeholder="Ej: FerTor@gmail.com" required/>		
+	        <input class="form-control" name="email" id="email" type="email" placeholder="Ej: FerTor@gmail.com" required/>
+	        <span id ="emailError"></span>		
 		</div>
         <br>
 		
@@ -339,13 +341,12 @@
 					</select>
 		</div>
 		
-		<br>
 		
+		<br>
 			<label>Sube una foto de perfil:</label> 
-			<input type="file" accept="image/*" id="image" name="image"/>
-			
-		
+			<input type="file" accept="image/*" id="image" name="image"/>		
 		<br>
+		
 		
 		<input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear usuario"/>
         <br>
@@ -354,11 +355,42 @@
 	
 	<a href="<%= request.getContextPath() %>/login">¿Ya tienes cuenta? <b>Inicia
 				sesión</b></a>
+				
 	<jsp:include page="../../templates/footer.jsp" />
 	</main>
 	
 		<script>
 			//funcionando
+				 $('#nickname').on('input', function() {
+				    var nickname = $(this).val();
+				
+				    $.ajax({
+				      type: 'POST', // Puede ser GET o POST, según tu configuración del servlet.
+				      url: 'register', // Reemplaza 'ruta-del-servlet' con la URL de tu servlet.
+				      data: { nickname: nickname },
+				      dataType: 'xml',
+				      success: function(response) {
+			    	  var status = $(response).find('status').text();
+				    	  
+				        if (response === 'no_disponible') {
+				          $('#nicknameStatus').text('Nombre de usuario en uso');
+				        } else {
+				          $('#nicknameStatus').text('Nombre de usuario disponible');
+				        }
+				      }
+				    });
+				  });
+			
+		
+				
+			
+			
+			
+			
+			
+			
+			
+			
 			function showFields() {
 				var userType = document.getElementById("userType").value;
 				var providerDataVar = document.getElementById("providerData");

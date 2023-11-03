@@ -116,6 +116,13 @@
 	    </div>
 	    <br>
 	    
+	     <div class="input-group">
+	     	<span class="input-group-text">Video (URL):</span>
+	        <input id="videoURL" type="text" class="form-control" placeholder="https://www.youtube.com/shorts/N_rXwhTtVVA" name="videoURL" required>
+	    </div>
+	    <br>
+	    
+	    
 	     <div>
 	     	<span >Seleccione categoría/s:</span>
              <select id="categories" class="form-select" aria-label="Ej: Recorridos" name="categories" multiple required>

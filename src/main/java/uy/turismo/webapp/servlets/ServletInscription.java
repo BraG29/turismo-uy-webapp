@@ -81,6 +81,8 @@ public class ServletInscription extends HttpServlet {
 		try {
 			controller.registerInscription(inscriptionData);
 			
+			//redireccionar a successPage y ver como es el tema del pdf
+			
 		} catch (Exception e) {
 			System.out.println("No se ha podido dar de alta la Inscripcion");
 		}

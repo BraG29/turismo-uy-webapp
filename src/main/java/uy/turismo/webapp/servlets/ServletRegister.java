@@ -3,8 +3,10 @@ package uy.turismo.webapp.servlets;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -20,6 +22,7 @@ import uy.turismo.servidorcentral.logic.controller.IController;
 import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
 import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+import uy.turismo.servidorcentral.logic.entities.Purchase;
 
 /**
  * Servlet implementation class ServletRegister
@@ -50,13 +53,42 @@ public class ServletRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		request.setCharacterEncoding("UTF-8");
 		//users
+		
+		IController controller = ControllerFactory.getIController();
+		String email = request.getParameter("email"); //llega bien	
+
 		request.setCharacterEncoding("UTF-8");
+
+		//response
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/xml");
+		
+		String nickname = request.getParameter("nickname"); 
+		
+		System.out.println(nickname);
+		
+		String testNickname = "chino";
+		
+		PrintWriter out = response.getWriter();
+		
+		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		out.println("<response>");
+
+		if(nickname.equals(testNickname)) {
+			out.println("<status>no_disponible</status>");
+		} else {
+			out.println("<status>disponible</status>");
+		}
+
+		out.println("</response>");
+	
+	    
+	
+		
+		
 		String name = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
-		String nickname = request.getParameter("nickname");
-		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
 		String birthDateStr = request.getParameter("birthDate");		
@@ -92,8 +124,15 @@ public class ServletRegister extends HttpServlet {
 		    				password
 		    				); 
 		    		
-		    		IController controller = ControllerFactory.getIController();
+		    		
 		    		controller.registerUser(userData);
+		    		
+		    		String successType = "User";
+					
+					request.setAttribute("successType", successType);
+		    		
+		    		request.getRequestDispatcher("/successPage").forward(request, response);
+		    		
 		    	}else {
 		    		
 		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
@@ -117,7 +156,7 @@ public class ServletRegister extends HttpServlet {
 		    				);
 		    		
 		    		
-		    		IController controller = ControllerFactory.getIController();
+		    		
 		    		controller.registerUser(userData);
 		    		
 		    		String successType = "User";
