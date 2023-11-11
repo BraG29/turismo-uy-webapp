@@ -22,7 +22,8 @@
                     String successType = (String) request.getAttribute("successType");
             		
             		String success = (String) request.getAttribute("successMessage");
-					
+            		
+            		Long departureId = Long.parseLong(request.getParameter("departureId"));
             		
                 	switch(successType) {
         			
@@ -57,6 +58,16 @@
 	    						<button class="btn btn-primary"> Volver al listado de Actividades </button>
 	    					</a>
 	    				<%break;	
+	    				
+    					case "Inscription":%>
+    						
+    						<h1 style="text-color: green;"class="text-success"><%= success %></h1>
+    						<a href="<%= request.getContextPath()%>/showDeparture?id=<%=departureId%>">
+	    						<button class="btn btn-primary"> Volver a la salida</button>
+	    					</a>
+	    					
+    						<%
+    						break;
                 	}%>
     				
     				

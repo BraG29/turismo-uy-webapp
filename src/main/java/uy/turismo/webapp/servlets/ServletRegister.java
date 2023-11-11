@@ -121,7 +121,8 @@ public class ServletRegister extends HttpServlet {
 		    				web,
 		    				description,
 		    				null,
-		    				password
+		    				password, 
+		    				null
 		    				); 
 		    		
 		    		
@@ -152,6 +153,8 @@ public class ServletRegister extends HttpServlet {
 		    				password,
 		    				null,
 		    				null,
+		    				null, 
+		    				null, 
 		    				null
 		    				);
 		    		

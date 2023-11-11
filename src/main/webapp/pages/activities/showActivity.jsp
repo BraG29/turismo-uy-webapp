@@ -1,13 +1,27 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
 <%@page  import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
+	
+	String userType = (String) session.getAttribute("userType");
+	
+	List<DtTouristicActivity> favActivity =  (List<DtTouristicActivity>) session.getAttribute("favActivities");
+	
+	Long id = (Long) session.getAttribute("id");
+	
+
+	//java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +60,9 @@
         <div class="row">
             <div class="col-md-8 " style="">
                 <div class="card" style="padding: 1em; background-color: aliceblue;">
-                	<h3 class="card-title"><%= activityToShow.getName() %></h5>
+                	<h3 class="card-title"><%= activityToShow.getName() %>        	
+                	</h3>
+                	
                 	<%if(activityToShow.getImage() != null){ %>
                     <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="margin: auto;  border-radius: 5%; " >
                     <% }else{ %>
@@ -65,12 +81,34 @@
                 </div>
             </div>
             <div  class="col-md-4">
+            
+            					<% 	
+						if("tourist".equals(userType)){
+						boolean isFavorite = false;
+					    for (DtTouristicActivity activities : favActivity) {
+					    	if (activities.getId() == activityToShow.getId()) {
+					        	isFavorite = true;
+					            break;
+					        }
+					    }
+						if (isFavorite) { %>
+						    <button  style="margin-left: 15%;" class="btn btn-primary" id="unMarkFavorite">
+					       	Desmarcar actividad como favorita 
+						    </button>
+					<% 	} else { %>
+						 	<button style="margin-left: 15%;" class="btn btn-primary" id="markFavorite">
+					        Marcar actividad como favorita
+						    </button>
+					<% 	} 
+					}%>
+            	
             	
             	<% if (activityToShow.getVideoURL() != null){%>
-            	
+            	<br>
             	<iframe width="560" height="315" src="<%=activityToShow.getVideoURL() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              	
              	<% } else{ %>
+             	<br>
              	<span>No hay video chaval</span>
              	 <img width="560" height="315" src="" class="card-img-top" alt="Video" style="margin: auto;  border-radius: 5%; " >
              	

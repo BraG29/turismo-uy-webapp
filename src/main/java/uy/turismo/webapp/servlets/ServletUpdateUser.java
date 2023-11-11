@@ -114,6 +114,8 @@ public class ServletUpdateUser extends HttpServlet {
 					userData.getPassword(),
 					null,
 					null,
+					null, 
+					null, 
 					null
 					);
 			
@@ -134,7 +136,8 @@ public class ServletUpdateUser extends HttpServlet {
 					webSite,
 					description,
 					null,
-					userData.getPassword()
+					userData.getPassword(),
+					null
 					);
 		}
 		

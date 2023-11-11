@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
@@ -20,6 +21,10 @@
 <%
 DtUser userData = (DtUser) request.getAttribute("userData");
 
+java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
+
+//java.util.List<DtTouristicActivity> favActivities =  (List<DtTouristicActivity>) session.getAttribute("favActivities"); consultActivity
+
 String imagePath = (String) request.getAttribute("imagePath");
 
 String fullUserName = String.format("%s %s", userData.getName(), userData.getLastName());
@@ -31,6 +36,7 @@ DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM 'de' yyyy");
 String birthDateStr = userData.getBirthDate().format(format);
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
+
 %>
 
 
@@ -50,11 +56,14 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
+       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
+
 <title>Turismo.UY</title>
 </head>
 
 <body>
-
 	<jsp:include page="../../templates/header.jsp" />
 
 	<div class="container mt-5">
@@ -63,14 +72,39 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 				<div class="card">
 					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil" style="border-radius: 3em;">
 					<div class="card-body">
-						<h5 class="card-title"><%=fullUserName%>
+						<h5 class="card-title"><%=fullUserName%>	
+							<%
+							
+							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
+							    boolean isFollowing = false;
+							    for (DtUser followedUser : usrFollowed) {
+							        if (followedUser.getId() == userData.getId()) {
+							            isFollowing = true;
+							            break;
+							        }
+							    }
+
+							
+								if (isFollowing) { %>
+								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" style="margin-left: 9%;" class="btn btn-primary" id="unFollowButton">
+								        Dejar de seguir
+								    </button>
+							<% } else { %>
+								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" style="margin-left: 28%;" class="btn btn-primary" id="followButton">
+								        Seguir
+								    </button>
+								<% } 
+							
+							 } %>
+						
 						</h5>
 						<p class="card-text">
 							Correo Electrónico:
 							<%=userData.getEmail()%></p>
 						<p class="card-text">
 							Nickname:
-							<%=userData.getNickname()%></p>
+							<%=userData.getNickname()%>
+							</p>
 					</div>
 				</div>
 				<div align="right">
@@ -90,9 +124,10 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Información del Perfil</h5>
+						
 						<p class="card-text">
 							Fecha de Nacimiento:
-							<%=birthDateStr%></p>
+							<%=birthDateStr%></p> 
 						<%
 						if (userData instanceof DtProvider) {
 							DtProvider providerData = (DtProvider) userData;
@@ -103,6 +138,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 						<p class="card-text">
 							Sitio Web: <a href="<%=providerData.getUrl()%>"><%=providerData.getUrl()%></a>
 						</p>
+	
 
 						<%
 
@@ -191,26 +227,43 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 									DtInscription inscription = inscriptions.get(i);
 									String inscriptionDateStr = inscription.getInscriptionDate().format(format);
 									DtTouristicDeparture departure = departuresToPrint.get(i);
+ 							
  								%>
 									<li class="list-group-item">
 										<div class="media">
 											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
-												class="mr-3" style="width: 100px; border-radius: 1em;"> 
+												class="mr-3" style="width: 50%; border-radius: 1em;"> 
 											<div class="media-body">
 												<a href="<%= request.getContextPath() %>/showDeparture?id=<%= departure.getId() %>"> <b> <%= departure.getName() %> </b> </a>
-												<% if(userInSession){ %>
-													<br>
-													Fecha de inscripción: <%= inscriptionDateStr %> <br>
+												<br>
+												<%
+												if(userInSession){ 
+												%>
+													
+													<p>Fecha de inscripción: <%= inscriptionDateStr %> <br>
 													Costo total: <%= inscription.getTotalCost() %> <br>
-													Cantidad de Turistas: <%= inscription.getTouristAmount() %>
+													Cantidad de Turistas: <%= inscription.getTouristAmount() %></p>
+													
+													<span id="hiddenData" style="display: none;">
+														<input type ="hidden" id="departureName" value="<%=departure.getName()%>">
+														<input type ="hidden" id="touristAmount" value="<%=inscription.getTouristAmount()%>">
+														<input type ="hidden" id="inscriptionDate" value="<%=inscriptionDateStr%>">
+														
+													</span>
+													
+													<br>
+										  	<button class="btn btn-primary" onclick="pdf()" id="generatePDF" >Generar comprobante de suscripción </button>
 												<% }%>
 											</div>
 										</div>
-									</li>
+									
+								</li>
 								<%
 								}
 								%>
 								</ul>
+								
+								
 							</div>
 					<%
 							}
@@ -256,10 +309,58 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 		
 	</div>
 
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-
+	
+ 		<script type="text/javascript">
+ 		
+	 		$(document).ready(function() {
+	 		    $('#followButton, #unFollowButton').on('click', function() {
+	 		        var pageUserId = $(this).data('page-userid');
+	 		       var sessionUserId = $(this).data('session-userid');
+	 		        var buttonText = $(this).text();
+	 		        var action = 'follow'; // Acción predeterminada
+	
+	 		        if (buttonText === 'Dejar de seguir') {
+	 		            action = 'unfollow';
+	 		        }
+	
+	 		        // Realiza la solicitud AJAX al servlet según la acción y el ID del usuario de la página
+	 		        $.post('profile', { action: action, sessionUserId: sessionUserId, pageUserId: pageUserId }, function(data) {
+	 		            // La solicitud se completó exitosamente
+	 		            if (action === 'follow') {
+	 		                $(this).text('Dejar de seguir');
+	 		            } else if (action === 'unfollow') {
+	 		                $(this).text('Seguir');
+	 		            }
+	 		        });
+	 		    });
+	 		});
+ 	
+ 		
+	         function pdf() {
+		 		var departureNameVar = document.getElementById("departureName").value;
+		 		var touristAmountVar = document.getElementById("touristAmount").value;
+		 		var inscriptionDateVar = document.getElementById("inscriptionDate").value;
+		 		
+			
+				var content = `Comprobante de Suscripción\n 
+					Nombre:   <%=fullUserName%>\n				                
+	                Nombre de la salida: ${departureNameVar} 
+	               	Fecha de salida: ${inscriptionDateVar} `;
+	                var docDefinition = {
+	                    content: [
+	                        {text:content}
+	                    ],
+	                    defaultStyle: {
+	                    }
+	                };
+	                
+	                pdfMake.createPdf(docDefinition).print();
+	            }
+	     </script>
 
 	<jsp:include page="../../templates/footer.jsp" />
  <hr>
