@@ -32,21 +32,21 @@ public class ServletSuccessPage extends HttpServlet {
 		
 			switch(successType) {
 				
-				case "Inscription":
-					
-					Long departureId = Long.parseLong(request.getParameter("departureId"));
-					
-					request.setAttribute("departureId", departureId);
-					
-					request.setAttribute("successType", successType );
-					
-					successMessage = "Se ha inscripto con exito";
-					
-					request.setAttribute("successMessage", successMessage);
-					
-					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
-					
-					break;
+//				case "Inscription":
+//					
+//					Long departureId = Long.parseLong(request.getParameter("departureId"));
+//					
+//					request.setAttribute("departureId", departureId);
+//					
+//					request.setAttribute("successType", successType );
+//					
+//					successMessage = "Se ha inscripto con exito";
+//					
+//					request.setAttribute("successMessage", successMessage);
+//					
+//					request.getRequestDispatcher("templates/SuccessPage.jsp").forward(request, response);
+//					
+//					break;
 					
 				case "User":
 					request.setAttribute("successType", successType);

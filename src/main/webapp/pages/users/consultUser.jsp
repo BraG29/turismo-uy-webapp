@@ -72,7 +72,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 				<div class="card">
 					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil" style="border-radius: 3em;">
 					<div class="card-body">
-						<h5 class="card-title"><%=fullUserName%>	
+						<h5 class="card-title" style="line-height: 2em"><%=fullUserName%> 	
 							<%
 							
 							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
@@ -86,11 +86,14 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 
 							
 								if (isFollowing) { %>
-								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" style="margin-left: 9%;" class="btn btn-primary" id="unFollowButton">
+									<br>
+									
+								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" class="btn btn-primary" id="unFollowButton">
 								        Dejar de seguir
 								    </button>
 							<% } else { %>
-								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" style="margin-left: 28%;" class="btn btn-primary" id="followButton">
+								    <br>
+								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" class="btn btn-primary" id="followButton">
 								        Seguir
 								    </button>
 								<% } 

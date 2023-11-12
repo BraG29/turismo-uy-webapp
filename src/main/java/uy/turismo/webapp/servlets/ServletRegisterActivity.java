@@ -68,8 +68,6 @@ public class ServletRegisterActivity extends HttpServlet {
 		Double cost = Double.parseDouble(request.getParameter("cost"));
 		String city = request.getParameter("city");
 		
-		System.out.println(urlVideo);
-		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
@@ -89,7 +87,6 @@ public class ServletRegisterActivity extends HttpServlet {
 		for(int c = 0; c < arrayCategories.length; c++) {
 			DtCategory category = new DtCategory(Long.parseLong(arrayCategories[c]));
 			categoriesList.add(category);
-			System.out.println(category.getId());
 		}
 		
 		
