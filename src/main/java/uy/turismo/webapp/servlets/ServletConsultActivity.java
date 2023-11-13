@@ -1,5 +1,6 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import uy.turismo.webapp.ws.controller.DtDepartmentWS;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
 import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWSArray;
 import uy.turismo.webapp.ws.controller.DtCategoryWS;
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.Publisher;
@@ -52,8 +54,8 @@ public class ServletConsultActivity extends HttpServlet {
 			Publisher controller = service.getPublisherPort();
 			
 			
-			
-			List<DtTouristicActivityWS> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
+			//?
+			List<DtTouristicActivityWS> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED).getItem();
 			List<DtCategoryWS> categories = new ArrayList<DtCategoryWS>();
 			List<DtDepartmentWS> departments = new ArrayList<DtDepartmentWS>();
 			
@@ -95,10 +97,14 @@ public class ServletConsultActivity extends HttpServlet {
 					}
 				}
 			}
+			
 	
 			for(DtTouristicActivityWS activity : activitiesStated) {
+				
+				BufferedImage activityImage = Functions.convertArrayToBI(activity.getImage());
+				
 				String activityImagePath = Functions.saveImage(
-						activity.getImage(),
+						activityImage,
 						activity.getName(),
 						getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 						"activity/");
