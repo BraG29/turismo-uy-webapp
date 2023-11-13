@@ -37,7 +37,7 @@
 		<%for(DtTouristicDeparture departure : departures){ %>
 			<li class="list-group-item">
 				<div class="media">
-					<img src="<%= departureImages.get(departure.getId()) %>" class="mr-3" style="width: 100px;">
+					<img src="<%= departureImages.get(departure.getId()) %>" class="mr-3" style="width: 100px; border-radius: 5%;">
 					<div class="media-body">
                     	<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>"> <b> <%= departure.getName() %> </b></a>
 					</div>

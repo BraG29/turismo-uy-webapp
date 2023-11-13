@@ -19,20 +19,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
+    
     <link rel="stylesheet" href="assets/styles/main.css">
     <script src="assets/scripts/jquery3.5.1.min.js"></script>
-    <script src="assets/scripts/bootstrap4.5.2.min.js"></script>
-    <script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
     <script src="assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="assets/images/star.ico" type="image/png">
-    <title>Turismo.UY</title>
+    <title>Registrar Actividad</title>
 </head>
+
+<style>
+	@media (max-width: 700px){
+		.mobile{
+			width: 100% !important;
+		}
+		
+		body{
+			margin-bottom: 100px;
+		}
+	}
+</style>
 
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp"/>
-	<main class="form-signin w-50 m-auto container-fluid">
-
+	<main class="form-signin w-50 m-auto container-fluid mobile">
+	<h1 class="h3 mb-3 fw-normal pt-3">Registro de actividad</h1>
+	
  			<form action="<%= request.getContextPath() %>/registerActivity" enctype="multipart/form-data" method="post">	
 	    <div class="input-group">
 	     	<span class="input-group-text">Nombre:</span>
@@ -91,22 +105,9 @@
 	  		<option value="17"> Durazno </option>
 	  		<option value="18"> Tacuarembó </option>
 	  		<option value="19"> Montevideo </option>
-	  		
-	  		
 			</select>
         </div>
-	    <br>
-	    <%--  <div>
-             <span> Seleccione el proveedor:</span>
-             <select id="provider" class="form-select" aria-label="Default select example" name="provider" required>
-             		
-             		<% for(DtProvider provider : providers){%>
-             			<option value=<%=provider.getId()%>> <%= provider.getNickname() %></option>
-             		<%}%>
-             	
-			</select>
-			
-        </div> --%>
+	   
 	    <br>
 	    
 	     <div class="input-group">
@@ -134,6 +135,7 @@
           <br>
           
           <label for="imagen">Selecciona una imagen:</label>
+          <br>
         	<input type="file" accept="image/*" id="imagen" name="image">
         	<br>
         	

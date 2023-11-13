@@ -12,6 +12,7 @@
 
 <%@page import="java.util.List"%>
 <%
+
 	String userType = (String) session.getAttribute("userType");
 	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) session.getAttribute("activityStated");
 	List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
@@ -57,20 +58,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="assets/scripts/jquery3.5.1.min.js"></script>
-	<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
 	
-	<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
-	<script src="assets/scripts/clock.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="assets/styles/main.css">
+    <script src="assets/scripts/jquery3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="assets/scripts/clock.js" type="text/javascript"></script>
  	<link rel="icon" href="assets/images/star.ico" type="image/png">
 	<title>Consultar Actividad</title>
-	<link rel="stylesheet" href="assets/styles/main.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
 	<style>
     /* CSS to extend the left panel background */
     .left-panel {
       min-height: 100vh; /* Set the minimum height to 100% of the viewport height */
+    }
+    
+    @media (max-width: 700px){
+    .left-panel {
+      min-height: 50vh; /* Set the minimum height to 100% of the viewport height */
+    }
     }
     
   </style>
@@ -79,7 +85,6 @@
 <body onload="currentTime()" >
 
 	<jsp:include page="../../templates/header.jsp" />
-
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Left Panel -->

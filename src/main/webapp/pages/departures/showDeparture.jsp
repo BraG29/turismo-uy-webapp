@@ -1,8 +1,7 @@
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
 <%@page import="java.util.ArrayList"%>
-<%@page
-	import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
 <%@page import="java.util.List"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -13,11 +12,9 @@
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page
-	import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
 <%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
-<%@page
-	import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
 <%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -54,19 +51,15 @@ Boolean availableUser = session.getAttribute("userType") != null
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
 <link rel="stylesheet" href="assets/styles/main.css">
 <script src="assets/scripts/jquery3.5.1.min.js"></script>
-<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
-<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
+
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
 <style>
 .image {
 	width: 25em;
