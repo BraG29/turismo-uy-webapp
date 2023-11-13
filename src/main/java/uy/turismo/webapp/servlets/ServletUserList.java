@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 
 /**
  * Servlet implementation class ServletUserList

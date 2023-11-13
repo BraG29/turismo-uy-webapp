@@ -17,6 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
+
 /**
  * Servlet implementation class ServletRegister
  */
@@ -48,7 +54,9 @@ public class ServletRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		//users
 		
-		IController controller = ControllerFactory.getIController();
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
+		
 		String email = request.getParameter("email"); //llega bien	
 
 		request.setCharacterEncoding("UTF-8");
@@ -88,6 +96,9 @@ public class ServletRegister extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	
 		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
 		
+		//magia
+		String birthDateSTR = Functions.convertDateToString(birthDate);
+		
 		//provider
 		String web = request.getParameter("web");
 		String description = request.getParameter("description");
@@ -103,12 +114,12 @@ public class ServletRegister extends HttpServlet {
 		    		InputStream fileContent = filePart.getInputStream();
 		    		BufferedImage image = ImageIO.read(fileContent);
 		    
-		    		DtProvider userData = new DtProvider(); 
+		    		DtProviderWS userData = new DtProviderWS(); 
 		    		userData.setName(name);
 		    		userData.setNickname(nickname);
 		    		userData.setEmail(email);
 		    		userData.setLastName(lastName);
-		    		userData.setBirthDate(birthDate);
+		    		userData.setBirthDate(birthDateSTR);
 		    		userData.setImage(image);
 		    		userData.setUrl(web);
 		    		userData.setDescription(description);
@@ -127,12 +138,12 @@ public class ServletRegister extends HttpServlet {
 		    		InputStream fileContent = filePart.getInputStream();
 		    		BufferedImage image = ImageIO.read(fileContent);
 		    	
-		    		DtTourist userData =  new DtTourist();
+		    		DtTouristWS userData =  new DtTouristWS();
 		    		userData.setName(name);
 		    		userData.setNickname(nickname);
 		    		userData.setEmail(email);
 		    		userData.setLastName(lastName);
-		    		userData.setBirthDate(birthDate);
+		    		userData.setBirthDate(birthDateSTR);
 		    		userData.setImage(image);
 		    		userData.setNationality(country);
 		    		userData.setPassword(password);

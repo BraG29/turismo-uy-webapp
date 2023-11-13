@@ -2,6 +2,7 @@ package uy.turismo.webapp.functions;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -77,6 +78,18 @@ public class Functions {
 
 	}
 	
+	public static byte[] convertImageToArray(BufferedImage i) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+        	ImageIO.write(i, "png", baos);
+        	return baos.toByteArray();
+			
+		} catch (Exception e) {
+			System.err.println("Error al convertir imagen: " + e.getMessage());
+		}
+        
+        return null;
+	}
 }
 	
 

@@ -15,6 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtUserWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
+
 
 /**
  * Servlet implementation class ServletUpdateUser
@@ -38,10 +45,11 @@ public class ServletUpdateUser extends HttpServlet {
 		
 		
 		try {
-			IController controller = ControllerFactory.getIController();
+			PublisherService service = new PublisherService();
+			Publisher controller = service.getPublisherPort();
 			
 			Long userId = Long.parseLong(request.getParameter("id"));
-			DtUser userData = controller.getUserData(userId);
+			DtUserWS userData = controller.getUserData(userId);
 			
 			String imagePath = (String) request.getSession().getAttribute("imagePath");
 			
@@ -63,8 +71,11 @@ public class ServletUpdateUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
+		
 		HttpSession session = request.getSession();
-		DtUser userData = (DtUser) session.getAttribute("userData");
+		DtUserWS userData = (DtUserWS) session.getAttribute("userData");
 		session.removeAttribute("userData");
 		
 		request.setCharacterEncoding("UTF-8");
@@ -77,38 +88,39 @@ public class ServletUpdateUser extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
 		
+		String birthDateSTR = Functions.convertDateToString(birthDate);
+		
+		
 		Part filePart = request.getPart("image");
 		InputStream fileContent = filePart.getInputStream();
-		BufferedImage image = ImageIO.read(fileContent);
+		BufferedImage requestImage = ImageIO.read(fileContent);
 		
-		if( image == null) {
+		byte[] image = userData.getImage();
+		
+		if( image != null) {
 			
-			image = userData.getImage();
+			image = Functions.convertImageToArray(requestImage);
 		}
 		
-		DtUser modifiedUser;
 		
 		
-		
-		if(userData instanceof DtTourist) {
-		
+		if(userData instanceof DtTouristWS) {
+			
+			
+			
 			String nationality = request.getParameter("nationality");
 			
-			modifiedUser = new DtTourist(
-					userData.getId(),
-					name,
-					userData.getNickname(),
-					userData.getEmail(),
-					lastName,
-					birthDate,
-					image,
-					nationality,
-					null,
-					userData.getPassword(),
-					null,
-					null,
-					null
-					);
+			DtTouristWS modifiedUser = new DtTouristWS();
+			
+			modifiedUser.setId(userData.getId());
+			modifiedUser.setName(name);
+			modifiedUser.setNickname(userData.getNickname());
+			modifiedUser.setEmail(userData.getEmail());
+			modifiedUser.setLastName(lastName);
+			modifiedUser.setBirthDate(birthDateSTR);
+			modifiedUser.setImage(image);
+			modifiedUser.setNationality(nationality);
+			modifiedUser.setPassword(userData.getPassword());
 			
 			
 			
@@ -116,23 +128,23 @@ public class ServletUpdateUser extends HttpServlet {
 			String webSite = request.getParameter("webSite");
 			String description = request.getParameter("description");
 			
-			modifiedUser = new DtProvider(
-					userData.getId(),
-					name,
-					userData.getNickname(),
-					userData.getEmail(),
-					lastName,
-					birthDate,
-					image,
-					webSite,
-					description,
-					null,
-					userData.getPassword()
-					);
+			DtProviderWS modifiedUser = new DtProviderWS();
+			
+			modifiedUser.setId(userData.getId());
+			modifiedUser.setName(name);
+			modifiedUser.setNickname(userData.getNickname());
+			modifiedUser.setEmail(userData.getEmail());
+			modifiedUser.setLastName(lastName);
+			modifiedUser.setBirthDate(birthDateSTR);
+			modifiedUser.setImage(image);
+			modifiedUser.setUrl(webSite);
+			modifiedUser.setDescription(description);
+			modifiedUser.setPassword(userData.getPassword());
+			
+			controller.updateUser(modifiedUser);
 		}
 		
-		IController controller = ControllerFactory.getIController();
-		controller.updateUser(modifiedUser);
+	
 		
 		response.sendRedirect(request.getContextPath() 
 				+ request.getServletPath() 

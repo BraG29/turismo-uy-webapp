@@ -5,11 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 import uy.turismo.webapp.functions.Functions;
 
 public class ServletShowDeparture extends HttpServlet {

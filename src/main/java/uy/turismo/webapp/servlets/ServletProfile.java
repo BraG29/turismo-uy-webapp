@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
 import uy.turismo.webapp.ws.controller.DtPurchaseWS;
@@ -42,8 +44,7 @@ public class ServletProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		IController controller = ControllerFactory.getIController();
-		
+
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
 		
@@ -74,7 +75,9 @@ public class ServletProfile extends HttpServlet {
 					Map<Long, String> activityImages = new HashMap<Long, String>();
 					
 					for(DtTouristicActivityWS activity : providerData.getTouristicActivities()) {
+						
 						BufferedImage activityImage = Functions.convertArrayToBI(activity.getImage());
+
 						String activityImagePath = Functions.saveImage(
 								activityImage,
 								activity.getName(),
@@ -92,7 +95,9 @@ public class ServletProfile extends HttpServlet {
 					Map<Long, String> departureImages = new HashMap<Long, String>();
 					
 					for(DtTouristicDepartureWS departure : touristData.getDepartures()) {
+
 						BufferedImage departureImage = Functions.convertArrayToBI(departure.getImage());
+
 						String departureImagePath = Functions.saveImage(
 								departureImage,
 								departure.getName(),
@@ -109,6 +114,7 @@ public class ServletProfile extends HttpServlet {
 					
 					for(DtPurchaseWS purchase : touristData.getPurchases()) {
 						BufferedImage bundleImage = Functions.convertArrayToBI(purchase.getBundle().getImage());
+
 						String bundleImagePath = Functions.saveImage(
 								bundleImage,
 								purchase.getBundle().getName(),

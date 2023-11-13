@@ -1,5 +1,6 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -53,8 +54,10 @@ public class ServletConsultDeparture extends HttpServlet {
 				
 				for(DtTouristicDepartureWS departure : departures) {
 					
+					BufferedImage departureImage = Functions.convertArrayToBI(departure.getImage());
+					
 					String departureImagePath = Functions.saveImage(
-							departure.getImage(),
+							departureImage,
 							departure.getName(),
 							getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 							"departure/");
@@ -77,9 +80,9 @@ public class ServletConsultDeparture extends HttpServlet {
 			
 			DtTouristicDepartureWS departureData = controller.getTouristicDepartureData(departureId);
 			
-			
+			BufferedImage departureImage = Functions.convertArrayToBI(departureData.getImage());
 			String departureImagePath = Functions.saveImage(
-					departureData.getImage(),
+					departureImage,
 					departureData.getName(),
 					getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 					"departure/");

@@ -17,6 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import uy.turismo.webapp.ws.controller.ActivityState;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.DtTouristicDepartureWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
+
 @MultipartConfig(location="/tmp", fileSizeThreshold=0, maxFileSize=5242880, maxRequestSize=20971520)
 public class ServletRegisterDeparture extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,8 +32,11 @@ public class ServletRegisterDeparture extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
-		List<DtTouristicActivity> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
+		
+		
+		List<DtTouristicActivityWS> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED).getItem();
 		
 		request.setAttribute("activitiesStated", activitiesStated);
 
@@ -55,15 +65,20 @@ public class ServletRegisterDeparture extends HttpServlet {
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
 		
-		IController controller = ControllerFactory.getIController();
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 		
-		DtTouristicActivity activity = controller.getTouristicActivityData(activityId);
-		DtTourist tourist = new DtTourist();
-		List<DtTourist> tourists = new ArrayList<DtTourist>();
+		
+		DtTouristicActivityWS activity = controller.getTouristicActivityData(activityId);
+		DtTouristWS tourist = new DtTouristWS();
+		List<DtTouristWS> tourists = new ArrayList<DtTouristWS>();
 		tourists.add(tourist);
 		
-		DtTouristicDeparture departureData = new DtTouristicDeparture(
-                null,
+		DtTouristicDepartureWS departureData = new DtTouristicDepartureWS(
+               
+				);
+		/*
+		 *  null,
 				nameDeparture,
 				maxTourists,
 				uploadDate,
@@ -72,7 +87,14 @@ public class ServletRegisterDeparture extends HttpServlet {
 				image,
 				activity,
 				tourists
-				);
+		 * */
+		
+		departureData.setName(nameDeparture);
+		departureData.setMaxTourist(maxTourists);
+		departureData.setPlace(place);
+		departureData.setTouristicActivity(activity);
+		departureData.setTourist(tourists);
+		
 		try {
 			controller.registerTouristicDeparture(departureData);
 			

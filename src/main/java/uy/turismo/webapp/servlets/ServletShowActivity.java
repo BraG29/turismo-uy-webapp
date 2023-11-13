@@ -1,5 +1,6 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,8 +36,10 @@ public class ServletShowActivity extends HttpServlet {
 		
 		DtTouristicActivityWS activityToShow = controller.getTouristicActivityData(activityId);
 		
+		BufferedImage activityImage = Functions.convertArrayToBI(activityToShow.getImage());
+		
 		String activityImagePath = Functions.saveImage(
-				activityToShow.getImage(),
+				activityImage,
 				activityToShow.getName(),
 				getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 				"activity/");

@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtInscription;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
+import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.controller.DtInscriptionWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtTouristicDepartureWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
 
 
 
@@ -50,34 +51,35 @@ public class ServletInscription extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
+
+		
 		Long touristId = Long.parseLong(request.getParameter("touristId"));
 		Long departureId = Long.parseLong(request.getParameter("departureId"));
+		
 		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount"));
-		LocalDate inscriptionDate = LocalDate.now();
 		
-		IController controller = ControllerFactory.getIController();
+		LocalDate inscriptionDate = LocalDate.now();		
+		String inscriptionDateStr = Functions.convertDateToString(inscriptionDate);
 		
-		DtTouristicDeparture departureData = controller.getTouristicDepartureData(departureId);
+		
+		DtTouristicDepartureWS departureData = controller.getTouristicDepartureData(departureId);
 		
 		if(departureData.getMaxTourist() <= touristAmount + departureData.getTourists().size()) {
 			throw new ServletException("Supero la cantidad maximas de turistas para esta salida");
 		}
 		
-		DtTourist touristData = new DtTourist(
-				touristId,
-				null,
-				null,
-				null
-				);
+		DtTouristWS touristData = new DtTouristWS();
+		touristData.setId(touristId);
+		//null,inscriptionDate,null,touristAmount,touristData,departureData
+		DtInscriptionWS inscriptionData = new DtInscriptionWS();
+			
+			inscriptionData.setInscriptionDate(inscriptionDateStr);
+			inscriptionData.setTouristAmount(touristAmount);
+			inscriptionData.setTourist(touristData);
+			inscriptionData.setTouristicDeparture(departureData);
 		
-		DtInscription inscriptionData = new DtInscription(
-				null,
-				inscriptionDate,
-				null,
-				touristAmount,
-				touristData,
-				departureData
-				);
 		try {
 			controller.registerInscription(inscriptionData);
 			
