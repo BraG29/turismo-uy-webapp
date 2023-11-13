@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import uy.turismo.webapp.ws.controller.ActivityState;
 import uy.turismo.webapp.ws.controller.DtCategoryWS;
 import uy.turismo.webapp.ws.controller.DtDepartmentWS;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
 import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
-import uy.turismo.webapp.ws.controller.ActivityState;
 
 /**
  * Servlet implementation class ServletRegisterActivity
@@ -38,10 +38,8 @@ public class ServletRegisterActivity extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
 		
+		IController controller = ControllerFactory.getIController();
 		List<DtCategory> categories = controller.getListCategory();
 		
 		request.setAttribute("categories", categories);
@@ -77,44 +75,37 @@ public class ServletRegisterActivity extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
 		
-		Long providerId = (Long) session.getAttribute("userId");
-		DtProvider provider = new DtProvider();
-		provider.setId(providerId);
-		
-		Long departmentId = Long.parseLong(request.getParameter("department"));
-		DtDepartment department = new DtDepartment();
-		department.setId(departmentId);
+		DtProvider provider = new DtProvider( (Long) session.getAttribute("userId"), "", "", null);
+		DtDepartment department = new DtDepartment(Long.parseLong(request.getParameter("department")));
 		
 		String[] arrayCategories = request.getParameterValues("categories");
-		ArrayList<DtCategory> categoriesList = new ArrayList<DtCategory>();
+		List<DtCategory> categoriesList = new ArrayList<DtCategory>();
 		
 		for(int c = 0; c < arrayCategories.length; c++) {
-			Long categoryId = Long.parseLong(arrayCategories[c]);
-			DtCategory category = new DtCategory();
-			category.setId(categoryId);
+			DtCategory category = new DtCategory(Long.parseLong(arrayCategories[c]));
 			categoriesList.add(category);
 		}
 		
 		
 		try {
+			IController controller = ControllerFactory.getIController();
 			
-			ControllerService service = new ControllerService();
-			Controller controller = service.getControllerPort();
-			
-			DtTouristicActivity activityData = new DtTouristicActivity();
-			activityData.setName(name);
-			activityData.setDescription(description);
-			activityData.setDuration(duration);
-			activityData.setCostPerTourist(cost);
-			activityData.setCity(city);
-			activityData.setImage(image);
-			activityData.setState(state);
-			activityData.setUploadDate(uploadDate);
-			activityData.setProvider(provider);
-			activityData.setDepartment(department);
-			activityData.setCategories(categoriesList);
+			DtTouristicActivity DTA = new DtTouristicActivity(id,
+															name,
+															description,
+															duration,
+															cost,
+															city,
+															image,
+															state,
+															uploadDate,
+															provider,
+															department,
+															null,
+															null,
+															categoriesList);
 					
-			controller.registeTouristicActivity(activityData);
+			controller.registeTouristicActivity(DTA);
 			
 			String successType = "Activity";
 			

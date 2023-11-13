@@ -394,20 +394,5 @@ public class DtTouristicActivityWS
     public void setVisitsAmount(Integer value) {
         this.visitsAmount = value;
     }
-    
-
-	@Override
-	public boolean equals(Object obj) {
-
-		if (!(obj instanceof DtTouristicActivityWS)) {
-			return false;
-		}
-
-		if (this.id == ((DtTouristicActivityWS) obj).getId()) {
-			return true;
-		}
-
-		return false;
-	}
 
 }

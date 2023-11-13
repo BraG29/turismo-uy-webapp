@@ -1,9 +1,10 @@
-<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
-<%
-List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) request.getAttribute("activitiesStated");
+<% 
+	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) request.getAttribute("activitiesStated");
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,7 @@ List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) req
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp" />
 	<main class="form-signin w-50 m-auto container-fluid">
-		<form action="<%=request.getContextPath()%>/registerDeparture" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
+		<form action="<%= request.getContextPath() %>/registerDeparture" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
 			<div>
 			<br>
 				<div class="input-group">
@@ -119,7 +120,7 @@ List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) req
 				var selectedDepartment = departmentCombobox.value;
 				var activitiesFound = false;
 				
-				<%for(DtTouristicActivityWS activity : activitiesStated) {%>
+				<% for(DtTouristicActivity activity : activitiesStated) { %>
 					// Check if the activity's department matches the selected department
 					console.log("entre al for");
 					if ("<%= activity.getDepartment().getId() %>" === selectedDepartment) {

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@page import="uy.turismo.webapp.ws.Controller"%>
-<%@page import="uy.turismo.webapp.ws.ControllerService"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicBundle"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
-<%@page import="uy.turismo.webapp.ws.DtCategory"%>
-<%@page import="uy.turismo.webapp.ws.DtUser"%>
-<%@page import="uy.turismo.webapp.ws.DtTourist"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -73,18 +73,19 @@
     
     </style>
 
-    <%
-    ControllerService service = new ControllerService();
-    	Controller controller = service.getControllerPort();
-        
-        Long idBundle = (Long) request.getAttribute("idBundle"); //id que me viene desde el servlet
-        
-        DtTouristicBundleWS bundle = controller.getTouristicBundleData(idBundle);
+    <% 
+    IController controller = ControllerFactory.getIController();
+    
+    Long idBundle = (Long) request.getAttribute("idBundle"); //id que me viene desde el servlet
+    
+    DtTouristicBundle bundle = controller.getTouristicBundleData(idBundle);
 
-        String name = bundle.getName(); 
-    	Long userInSession = (Long) session.getAttribute("userId");    
-        
-    	String usrType = (String) session.getAttribute("userType");
+    String name = bundle.getName(); 
+	Long userInSession = (Long) session.getAttribute("userId");    
+    
+	String usrType = (String) session.getAttribute("userType");
+    
+	
     %>
 
     <title><%= name %></title>
@@ -98,72 +99,70 @@
     <h2> <%= name %> </h2>
     
     <%
-        String description = bundle.getDescription();
-                    
-                    Integer validity = bundle.getValidityPeriod();
-                    
-                    Double discount = bundle.getDiscount();
-                    
-                    //perro truco con la fecha
-                    
-                    LocalDate uploadDate = bundle.getUploadDate();
-                    
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    
-                    String uploadDateStr = uploadDate.format(formatter);
-                    
-                    //fin del perro truco con la fecha.  
-                    List<DtTouristicActivityWS> activities = bundle.getActivities(); //hacerle for each para nombres e imagenes
-                    
-                    List<DtCategoryWS> categories = bundle.getCategories(); //hacerle for each para nombres.
-                    		
-                    Double price = bundle.getPrice();
-                    		
-                    //procesamiento de imagenes del paquete.		
-                    BufferedImage bundleImage = bundle.getImage();
-                    
-                        if(bundleImage != null){
-                        	
-                        
 
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        String format = "jpeg"; // Formato predeterminado es JPEG
+    String description = bundle.getDescription();
+    
+    Integer validity = bundle.getValidityPeriod();
+    
+    Double discount = bundle.getDiscount();
+    
+    //perro truco con la fecha
+    
+    LocalDate uploadDate = bundle.getUploadDate();
+    
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    String uploadDateStr = uploadDate.format(formatter);
+    
+    //fin del perro truco con la fecha.  
+    List<DtTouristicActivity> activities = bundle.getActivities(); //hacerle for each para nombres e imagenes
+    
+    List<DtCategory> categories = bundle.getCategories(); //hacerle for each para nombres.
+    		
+    Double price = bundle.getPrice();
+    		
+    //procesamiento de imagenes del paquete.		
+    BufferedImage bundleImage = bundle.getImage();
+    
+        if(bundleImage != null){
+        	
+        
 
-                        // Determina el formato de la imagen
-                        
-                        
-                        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
-                            format = "png";
-                        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String format = "jpeg"; // Formato predeterminado es JPEG
 
-                        ImageIO.write(bundleImage, format, baos);
-                        byte[] bytes = baos.toByteArray();
-                        String base64Image = Base64.getEncoder().encodeToString(bytes);
-        %>
+        // Determina el formato de la imagen
+        
+        
+        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
+            format = "png";
+        }
+
+        ImageIO.write(bundleImage, format, baos);
+        byte[] bytes = baos.toByteArray();
+        String base64Image = Base64.getEncoder().encodeToString(bytes);
+        
+    %>
 <div class="container">
        
     <div class="divBundle">
        
-	    <img style="width:25em;  border-radius: 5%;" class="imageStyle"  width="250" height="250" src="data:image/<%=format%>;base64,<%=base64Image%>" alt="Foto de perfil">
+	    <img style="width:25em;  border-radius: 5%;" class="imageStyle"  width="250" height="250" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
 	
 	    <p class="card-text"> Descripción: <%=description%></p>
 	    
 		    <%
-	    		    if(validity > 1){   //cuando el periodo de validez es mayor a uno muestro "dias" caso contrario muestro "dia"
-	    		    %>
+		    if(validity > 1){   //cuando el periodo de validez es mayor a uno muestro "dias" caso contrario muestro "dia" 
+		    %>
 		    
 	    <p class="card-text"> Validez: <%=validity%> dias</p>
 	    
 	    
-	    <%
-	    	    	    } else{
-	    	    	    %>
+	    <%	} else{ %>
 	    	
 	    	<p class="card-text"> Validez: <%=validity%> dia</p>
 	    	
-	     <%
-	    		     }
-	    		     %>
+	     <%	} %>
 	    
 	    <p class="card-text"> Descuento: <%=discount%>% </p>
 	    
@@ -174,21 +173,23 @@
 	    <p class="card-text"> Categorias:</p>
 	    
 	    <ul>
-	    <%
-	    for (DtCategoryWS category: categories){
+	    <% 
+	    for (DtCategory category: categories){
 	    %>
 	    	<li>
 	    		<span> <%=category.getName()%>  </span>	
 	    	</li> 
-	    <%
- 	    }
- 	    %>   
+	    <% 
+	    }
+	    %>   
 	    </ul>	   
 	    <%
-	   	    if(userInSession != null && usrType.equals("tourist")){
-	   	    	   	    	   	    	    	
-	   	    	   	    	   	    		DtTouristWS touristData = (DtTouristWS) controller.getUserData(userInSession);
-	   	    %>
+
+	    if(userInSession != null && usrType.equals("tourist")){
+	    	
+		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+				    
+	    %>
 	    
 	    <br>
 	    
@@ -196,7 +197,7 @@
 	    <br>
 	    <br>
 	    <div>
-	    	<form action="<%=request.getContextPath()%>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    	<form action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
 	    
 		    	<div>
 			    <span> Nº Turistas: </span>
@@ -211,16 +212,15 @@
 		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
 		   		<input type="hidden" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" style="display: none;">
 		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
-		   		<input type="text" id="bundleId" name="bundleId" value="<%=bundle.getId()%>" style="display: none;">
-		   		<input type="text" id="touristId" name="touristId" value="<%=touristData.getId()%>" style="display: none;">
+		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
+		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">
 		   		
 		   		 <span>Comprar por:</span><button type="submit" id="calculatedPrice" name="calculatedPrice" class="w-100 btn btn-lg btn-primary"> $0</button>
 	   		 </form>    
 	    </div>
 	    
-	    <%
-	    	    }//if userInSession
-	    	    %>
+	    <% 
+	     }//if userInSession%>
      
      </div>
     
@@ -230,63 +230,61 @@
     			<ul class="list-group custom-list">
 								<%
 								//for each de actividades.
-																										
-																										for (DtTouristicActivityWS activity : activities) {
-																											
-																											BufferedImage activityImage = activity.getImage();
-																											//procesar imagenes de la actividad
-																											if(activityImage != null){	
-																											ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
-																										        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
-																										
-																										        // Determina el formato de la imagen
-																										        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
-																										            activityFormat = "png";
-																										        }
-																										
-																										        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
-																										        byte[] activityBytes = activityBaos.toByteArray();
-																										        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+								
+								for (DtTouristicActivity activity : activities) {
+									
+									BufferedImage activityImage = activity.getImage();
+									//procesar imagenes de la actividad
+									if(activityImage != null){	
+									ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
+								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
+								
+								        // Determina el formato de la imagen
+								        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
+								            activityFormat = "png";
+								        }
+								
+								        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
+								        byte[] activityBytes = activityBaos.toByteArray();
+								        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+									
+									
 								%>
 									<li class="list-group-item">
 									<div class="media">
 											<div class="media-body">
 											<span> Nombre: </span>
-											<a href="<%=request.getContextPath()%>/showActivity?activityId=<%=activity.getId()%> ">
-											 <%=activity.getName()%>
+											<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">
+											 <%= activity.getName() %>
 											</a>
 											</div>
 											<div class="image">
-												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%=activityFormat%>;base64,<%=base64ActivityImage%>" alt="Foto de perfil">
+												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%= activityFormat %>;base64,<%= base64ActivityImage%>" alt="Foto de perfil">
 											</div>
 										
 									</div>
 								</li>
-									<%
-									} else {//if imagen
-									%>
+									<% } else {//if imagen
+										 %>
 										 
 										<li class="list-group-item">
 									<div class="media">
 											<div class="media-body">
 											<span> Nombre: </span>
-											<%=activity.getName()%></div>
+											<%= activity.getName() %></div>
 											<div class="image">
 												<p> No se pudo encontrar la imagen </p>
 											</div>
 									</div>
 								</li> 
 			 
-								<%
- 			 								}//else imagen.
- 			 								 			 								 			 														}//for imagen actividad de paquete
- 			 								%>
+								<%	}//else imagen.
+								}//for imagen actividad de paquete
+								%>
     		</ul>
     	</div>
 
-    	<%
-    	} else{
-    	%>
+    	<%} else{%>
     	    <div class="divBundle">
        
 	   <p> No se pudo encontrar la imagen.</p>
@@ -294,21 +292,17 @@
 	    <p class="card-text"> Descripción: <%=description%></p>
 	    
 		    <%
-	    		    if(validity > 1){   //cuando el periodo de validez es mayor a uno muestro "dias" caso contrario muestro "dia"
-	    		    %>
+		    if(validity > 1){   //cuando el periodo de validez es mayor a uno muestro "dias" caso contrario muestro "dia" 
+		    %>
 		    
 	    <p class="card-text"> Validez: <%=validity%> dias</p>
 	    
 	    
-	    <%
-	    	    	    } else{
-	    	    	    %>
+	    <%	} else{ %>
 	    	
 	    	<p class="card-text"> Validez: <%=validity%> dia</p>
 	    	
-	     <%
-	    		     }
-	    		     %>
+	     <%	} %>
 	    
 	    <p class="card-text"> Descuento: <%=discount%>% </p>
 	    
@@ -319,21 +313,23 @@
 	    <p class="card-text"> Categorias:</p>
 	    
 	    <ul>
-	    <%
-	    for (DtCategoryWS category: categories){
+	    <% 
+	    for (DtCategory category: categories){
 	    %>
 	    	<li>
 	    		<span> <%=category.getName()%>  </span>	
 	    	</li> 
-	    <%
- 	    }
- 	    %>   
+	    <% 
+	    }
+	    %>   
 	    </ul>	   
 	    <%
-	   	    if(userInSession != null && usrType.equals("tourist")){
-	   	    	   	    	    	
-	   	    	   	    		DtTouristWS touristData = (DtTouristWS) controller.getUserData(userInSession);
-	   	    %>
+
+	    if(userInSession != null && usrType.equals("tourist")){
+	    	
+		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+				    
+	    %>
 	    
 	    <br>
 	    
@@ -341,7 +337,7 @@
 	    <br>
 	    <br>
 	    <div>
-	    	<form action="<%=request.getContextPath()%>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
+	    	<form action="<%= request.getContextPath() %>/bundleProfile" method="post" id="purchaseForm" style="display: none;">
 	    
 		    	<div>
 			    <span> Nº Turistas: </span>
@@ -356,16 +352,15 @@
 		   		<input type="number" id="validity" name="validity" value="<%=validity%>" style="display: none;">
 		   		<input type="hidden" id="uploadDate" name="uploadDate" value="<%=uploadDateStr%>" >
 		   		<input type="number" id="priceToServlet" name="priceToServlet" value="" style="display: none;">
-		   		<input type="text" id="bundleId" name="bundleId" value="<%=bundle.getId()%>" style="display: none;">
-		   		<input type="text" id="touristId" name="touristId" value="<%=touristData.getId()%>" style="display: none;">
+		   		<input type="text" id="bundleId" name="bundleId" value="<%= bundle.getId()%>" style="display: none;">
+		   		<input type="text" id="touristId" name="touristId" value="<%= touristData.getId()%>" style="display: none;">
 		   		
 		   		 <span>Comprar por:</span><button type="submit" id="calculatedPrice" name="calculatedPrice" class="w-100 btn btn-lg btn-primary"> $0</button>
 	   		 </form>    
 	    </div>
 	    
-	    <%
-	    	    }//if userInSession
-	    	    %>
+	    <% 
+	     }//if userInSession%>
      
      </div>
     
@@ -375,25 +370,27 @@
     			<ul class="list-group custom-list">
 								<%
 								//for each de actividades.
-														
-														for (DtTouristicActivityWS activity : activities) {
-															
-															BufferedImage activityImage = activity.getImage();
-															//procesar imagenes de la actividad
-																if(activityImage != null){
-																	
-																
-																ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
-														        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
-														
-														        // Determina el formato de la imagen
-														        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
-														            activityFormat = "png";
-														        }
-														
-														        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
-														        byte[] activityBytes = activityBaos.toByteArray();
-														        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+								
+								for (DtTouristicActivity activity : activities) {
+									
+									BufferedImage activityImage = activity.getImage();
+									//procesar imagenes de la actividad
+										if(activityImage != null){
+											
+										
+										ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
+								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
+								
+								        // Determina el formato de la imagen
+								        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
+								            activityFormat = "png";
+								        }
+								
+								        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
+								        byte[] activityBytes = activityBaos.toByteArray();
+								        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+									
+									
 								%>
 									<li class="list-group-item">
 									<div class="media">

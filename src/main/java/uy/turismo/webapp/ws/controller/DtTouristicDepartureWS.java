@@ -253,17 +253,4 @@ public class DtTouristicDepartureWS
         this.visitsAmount = value;
     }
 
-	@Override
-	 public boolean equals(Object obj) {
-		 
-		 if(!(obj instanceof DtTouristicDepartureWS)) {
-			 return false;
-		 }
-		 
-		 if(this.id == ((DtTouristicDepartureWS) obj).getId()) {
-			 return true;
-		 }
-		 
-		 return false;
-	 }
 }

@@ -257,19 +257,5 @@ public class DtTouristicBundleWS
     public void setValidityPeriod(Integer value) {
         this.validityPeriod = value;
     }
-    
-
-	@Override 
-	public boolean equals(Object obj) {
-		if(!(obj instanceof DtTouristicBundleWS)) {
-			return false;
-		}
-		
-		if(((DtTouristicBundleWS) obj).getId() != this.id) {
-			return false;
-		}
-		
-		return true;
-	}
 
 }

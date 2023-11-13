@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,15 +41,11 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("loginUserEmailInput");
 		String password = request.getParameter("loginUserPasswordInput");
-		
-//		IController cotroller = ControllerFactory.getIController();
-		
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
+		IController cotroller = ControllerFactory.getIController();
 		
 		DtUser user = null;
 		
-		user = controller.checkCredentials(email, password);
+		user = cotroller.checkCredentials(email, password);
 			
         if (user != null) {
             HttpSession session = request.getSession();

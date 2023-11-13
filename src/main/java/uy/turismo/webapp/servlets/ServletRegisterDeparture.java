@@ -25,10 +25,7 @@ public class ServletRegisterDeparture extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
-		
+		IController controller = ControllerFactory.getIController();
 		List<DtTouristicActivity> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
 		
 		request.setAttribute("activitiesStated", activitiesStated);
@@ -57,25 +54,25 @@ public class ServletRegisterDeparture extends HttpServlet {
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
-
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
+		
+		IController controller = ControllerFactory.getIController();
 		
 		DtTouristicActivity activity = controller.getTouristicActivityData(activityId);
 		DtTourist tourist = new DtTourist();
-		ArrayList<DtTourist> tourists = new ArrayList<DtTourist>();
+		List<DtTourist> tourists = new ArrayList<DtTourist>();
 		tourists.add(tourist);
 		
-		DtTouristicDeparture departureData = new DtTouristicDeparture();
-		departureData.setName(nameDeparture);
-		departureData.setMaxTourist(maxTourists);
-		departureData.setUploadDate(uploadDate);
-		departureData.setDepartureDateTime(startingDate);
-		departureData.setPlace(place);
-		departureData.setImage(image);
-		departureData.setTouristicActivity(activity);
-		departureData.setTourists(tourists);
-		
+		DtTouristicDeparture departureData = new DtTouristicDeparture(
+                null,
+				nameDeparture,
+				maxTourists,
+				uploadDate,
+				startingDate,
+				place,
+				image,
+				activity,
+				tourists
+				);
 		try {
 			controller.registerTouristicDeparture(departureData);
 			

@@ -1,13 +1,11 @@
-<%@page import="java.io.ByteArrayInputStream"%>
-<%@page import="uy.turismo.webapp.ws.DtUserWSArray"%>
-<%@page import="uy.turismo.webapp.ws.DtUserWS"%>
-<%@page import="uy.turismo.webapp.ws.Publisher"%>
-<%@page import="uy.turismo.webapp.ws.PublisherService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%@page import="java.io.InputStream"%>
 <%@page import="java.util.List" %>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
+<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream" %>
 <%@ page import="java.util.Base64" %>
@@ -83,26 +81,16 @@
 <div class="row">
 <h1> Usuarios registrados en la plataforma: </h1>			
 			<% 
-				PublisherService service = new PublisherService();
-				Publisher controller = service.getPublisherPort();
-			
-				List<DtUserWS> usersList = controller.getListUser().getItem();
-						
-			
-				for(DtUserWS user : usersList){
-					
-					BufferedImage userImage = null;
 				
-					try{
-			           	InputStream inptuStream = new ByteArrayInputStream(user.getImage());
-						userImage = ImageIO.read(inptuStream);
-							
-							 
+				IController controller = ControllerFactory.getIController();
+			
+			
+				List<DtUser> usersList = controller.getListUser();
+			
+				for(DtUser user : usersList){
+				
 						
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-						
+				BufferedImage userImage = user.getImage(); 
 				
 					if(userImage != null){
 						/* ByteArrayOutputStream baos = new ByteArrayOutputStream();

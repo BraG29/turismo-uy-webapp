@@ -1,13 +1,14 @@
-<%@page import="uy.turismo.webapp.ws.DtCategory"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="uy.turismo.webapp.ws.DtProvider"%>
+<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
 <%@page import="java.util.List"%>
 
 
 <%
-List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("providers");
-	List<DtCategoryWS> categories = (List<DtCategoryWS>) request.getAttribute("categories");
+	List<DtProvider> providers = (List<DtProvider>) request.getAttribute("providers");
+	List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categories");
+
 %>
 
 
@@ -32,7 +33,7 @@ List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("provid
 	<jsp:include page="../../templates/header.jsp"/>
 	<main class="form-signin w-50 m-auto container-fluid">
 
- 			<form action="<%=request.getContextPath()%>/registerActivity" enctype="multipart/form-data" method="post">	
+ 			<form action="<%= request.getContextPath() %>/registerActivity" enctype="multipart/form-data" method="post">	
 	    <div class="input-group">
 	     	<span class="input-group-text">Nombre:</span>
 	        <input id="activityName" type="text" class="form-control" placeholder="Ej: Degusta" name="activityName" required>
@@ -125,9 +126,7 @@ List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("provid
 	     <div>
 	     	<span >Seleccione categoría/s:</span>
              <select id="categories" class="form-select" aria-label="Ej: Recorridos" name="categories" multiple required>
-             	<%
-             	for(DtCategoryWS category : categories){
-             	%>
+             	<% for(DtCategory category : categories){%>
              			<option value=<%=category.getId()%>> <%= category.getName() %></option>
              		<%}%>
 			</select>

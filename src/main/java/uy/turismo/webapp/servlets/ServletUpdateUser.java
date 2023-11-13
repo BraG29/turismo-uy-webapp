@@ -38,9 +38,7 @@ public class ServletUpdateUser extends HttpServlet {
 		
 		
 		try {
-			
-			ControllerService service = new ControllerService();
-			Controller controller = service.getControllerPort();
+			IController controller = ControllerFactory.getIController();
 			
 			Long userId = Long.parseLong(request.getParameter("id"));
 			DtUser userData = controller.getUserData(userId);
@@ -87,48 +85,54 @@ public class ServletUpdateUser extends HttpServlet {
 			
 			image = userData.getImage();
 		}
-	
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
+		
+		DtUser modifiedUser;
+		
+		
 		
 		if(userData instanceof DtTourist) {
 		
 			String nationality = request.getParameter("nationality");
 			
-			DtTourist modifiedTourist = new DtTourist();
-			modifiedTourist.setId(userData.getId());
-			modifiedTourist.setName(name);
-			modifiedTourist.setNickname(userData.getNickname());
-			modifiedTourist.setEmail(userData.getEmail());
-			modifiedTourist.setLastName(lastName);
-			modifiedTourist.setBirthDate(birthDate);
-			modifiedTourist.setImage(image);
-			modifiedTourist.setNationality(nationality);
-			modifiedTourist.setPassword(userData.getPassword());
-
-			controller.updateUser(modifiedTourist);
+			modifiedUser = new DtTourist(
+					userData.getId(),
+					name,
+					userData.getNickname(),
+					userData.getEmail(),
+					lastName,
+					birthDate,
+					image,
+					nationality,
+					null,
+					userData.getPassword(),
+					null,
+					null,
+					null
+					);
+			
 			
 			
 		}else {
 			String webSite = request.getParameter("webSite");
 			String description = request.getParameter("description");
 			
-			DtProvider modifiedProvider = new DtProvider();
-			modifiedProvider.setId(userData.getId());
-			modifiedProvider.setName(name);
-			modifiedProvider.setNickname(userData.getNickname());
-			modifiedProvider.setEmail(userData.getEmail());
-			modifiedProvider.setLastName(lastName);
-			modifiedProvider.setBirthDate(birthDate);
-			modifiedProvider.setImage(image);
-			modifiedProvider.setUrl(webSite);
-			modifiedProvider.setDescription(description);
-			modifiedProvider.setPassword(userData.getPassword());
-			
-			controller.updateUser(modifiedProvider);
+			modifiedUser = new DtProvider(
+					userData.getId(),
+					name,
+					userData.getNickname(),
+					userData.getEmail(),
+					lastName,
+					birthDate,
+					image,
+					webSite,
+					description,
+					null,
+					userData.getPassword()
+					);
 		}
-
 		
+		IController controller = ControllerFactory.getIController();
+		controller.updateUser(modifiedUser);
 		
 		response.sendRedirect(request.getContextPath() 
 				+ request.getServletPath() 

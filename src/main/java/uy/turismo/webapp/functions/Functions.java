@@ -1,7 +1,6 @@
 package uy.turismo.webapp.functions;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
@@ -44,26 +43,6 @@ public class Functions {
 		
 		properties.clear();
 		return "assets/images/" + dir + imageFullName;
-	}
-	
-	public static BufferedImage convertArrayToBI(byte[] imgArray) {
-
-		BufferedImage image = null;
-		
-		try{
-			if( imgArray == null) {
-				throw new NullPointerException("No hay imagen");
-			}
-           	InputStream inptuStream = new ByteArrayInputStream(imgArray);
-           	image = ImageIO.read(inptuStream);
-				
-				 
-			
-		}catch(Exception e){
-			e.printStackTrace();	
-		}
-		
-		return image;
 	}
 	
 }

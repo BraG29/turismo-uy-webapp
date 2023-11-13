@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-
 /**
  * Servlet implementation class ServletRegister
  */
@@ -96,8 +95,6 @@ public class ServletRegister extends HttpServlet {
 		//tourist
 		String country = request.getParameter("touristCountry");
 		
-		ControllerService service = new ControllerService();
-		Controller controller = service.getControllerPort();
 		
 		try {
 		    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
@@ -139,8 +136,6 @@ public class ServletRegister extends HttpServlet {
 		    		userData.setImage(image);
 		    		userData.setNationality(country);
 		    		userData.setPassword(password);
-		    		
-		    		controller.registerUser(userData);
 		    		
 		    		String successType = "User";
 					
