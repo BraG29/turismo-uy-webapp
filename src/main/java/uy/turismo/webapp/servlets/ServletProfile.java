@@ -24,7 +24,7 @@ import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
 import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import uy.turismo.webapp.functions.Functions;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.servidorcentral.logic.enums.ActivityState;
 
 /**
  * Servlet implementation class ServletProfile

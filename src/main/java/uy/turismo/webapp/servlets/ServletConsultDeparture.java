@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.DtTouristicDepartureWS;
 import uy.turismo.webapp.functions.Functions;
+
+import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
 
 /**
  * Servlet implementation class ServletConsultDeparture
@@ -34,19 +36,22 @@ public class ServletConsultDeparture extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
+		
+		PublisherService service = new PublisherService();
+		
+		Publisher controller = service.getPublisherPort();
 		
 		if(request.getParameter("activityId") != null) {
 			
 			Long activityId = Long.parseLong(request.getParameter("activityId"));
 		
-			List<DtTouristicDeparture> departures = controller.getListTouristicDeparture(activityId);
+			List<DtTouristicDepartureWS> departures = controller.getListTouristicDeparture(activityId);
 			
 			if(!departures.isEmpty()) {
 				
 				Map<Long, String> departureImages = new HashMap<Long, String>();
 				
-				for(DtTouristicDeparture departure : departures) {
+				for(DtTouristicDepartureWS departure : departures) {
 					
 					String departureImagePath = Functions.saveImage(
 							departure.getImage(),
@@ -70,7 +75,7 @@ public class ServletConsultDeparture extends HttpServlet {
 
 			Long departureId = Long.parseLong(request.getParameter("departureId"));
 			
-			DtTouristicDeparture departureData = controller.getTouristicDepartureData(departureId);
+			DtTouristicDepartureWS departureData = controller.getTouristicDepartureData(departureId);
 			
 			
 			String departureImagePath = Functions.saveImage(
