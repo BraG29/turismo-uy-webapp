@@ -18,13 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import uy.turismo.webapp.ws.DtCategory;
-import uy.turismo.webapp.ws.DtDepartment;
-import uy.turismo.webapp.ws.DtProvider;
-import uy.turismo.webapp.ws.DtTouristicActivity;
-import uy.turismo.webapp.ws.ActivityState;
-import uy.turismo.webapp.ws.ControllerService;
-import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.controller.DtCategoryWS;
+import uy.turismo.webapp.ws.controller.DtDepartmentWS;
+import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.ActivityState;
 
 /**
  * Servlet implementation class ServletRegisterActivity
@@ -61,10 +59,14 @@ public class ServletRegisterActivity extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = request.getParameter("activityName");
 		String description = request.getParameter("description");
+		
+		//agrego codigo : LT
+		String urlVideo = request.getParameter("videoURL");
+		
 		Double duration = Double.parseDouble(request.getParameter("duration"));
 		Double cost = Double.parseDouble(request.getParameter("cost"));
 		String city = request.getParameter("city");
-
+		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
@@ -91,7 +93,6 @@ public class ServletRegisterActivity extends HttpServlet {
 			DtCategory category = new DtCategory();
 			category.setId(categoryId);
 			categoriesList.add(category);
-//			System.out.println(category.getId());
 		}
 		
 		

@@ -92,28 +92,21 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		String priceStr = request.getParameter("priceToServlet");
 		Double price = Double.parseDouble(priceStr);
-	
 		
 		LocalDate expireDate = purchaseDate.plusDays(validityDays); //sumarle X que es el periodo de validez para obtener fecha de vencimiento de la compra.
 		
-		LocalDate expiredBundleDate = uploadDate.plusDays(validityDays);
-		
-		// armar DtPurchaseWS
-		
-		//vencimiento del paquete
-		//15/09/2022 
-		//validity
-		
+		//LocalDate expiredBundleDate = uploadDate.plusDays(validityDays);
+			
 		
 		for(int i = 0; i < listPurchases.size(); i++) {
-			if(expiredBundleDate.isBefore(purchaseDate) || listPurchases.get(i).getBundle().getId() == bundleId ) { //si ya compro el paquete, o esta vencido
+			if(listPurchases.get(i).getBundle().getId() == bundleId ) { //si ya compro el paquete, o esta vencido
 				String errorType = "Purchase";
 				
 				request.setAttribute("errorType", errorType);
 				
 				request.setAttribute("bundleId", bundleId);
 				
-				String error = "Ya compraste este paquete o el mismo se encuentra vencido, verifique e intente nuevamente";
+				String error = "Ya compraste este paquete, verifique e intente nuevamente";
 				
 				request.setAttribute("error", error);
 				

@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Simple Bootstrap Page</title>
+  <title>Accion realizada correctamente</title>
   <!-- Include Bootstrap CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -22,7 +22,8 @@
                     String successType = (String) request.getAttribute("successType");
             		
             		String success = (String) request.getAttribute("successMessage");
-					
+            		
+            		
             		
                 	switch(successType) {
         			
@@ -57,6 +58,18 @@
 	    						<button class="btn btn-primary"> Volver al listado de Actividades </button>
 	    					</a>
 	    				<%break;	
+	    				
+    					case "Inscription":
+    						Long departureId = Long.parseLong(request.getParameter("departureId"));   					
+    					%>
+    						
+    						<h1 style="text-color: green;"class="text-success"><%= success %></h1>
+    						<a href="<%= request.getContextPath()%>/showDeparture?id=<%=departureId%>">
+	    						<button class="btn btn-primary"> Volver a la salida</button>
+	    					</a>
+	    					
+    						<%
+    						break;
                 	}%>
     				
     				

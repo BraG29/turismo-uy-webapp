@@ -17,13 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import uy.turismo.webapp.ws.DtTourist;
-import uy.turismo.webapp.ws.DtTouristicActivity;
-import uy.turismo.webapp.ws.DtTouristicDeparture;
-import uy.turismo.webapp.ws.ActivityState;
-import uy.turismo.webapp.ws.Controller;
-import uy.turismo.webapp.ws.ControllerService;
-
 @MultipartConfig(location="/tmp", fileSizeThreshold=0, maxFileSize=5242880, maxRequestSize=20971520)
 public class ServletRegisterDeparture extends HttpServlet {
 	private static final long serialVersionUID = 1L;

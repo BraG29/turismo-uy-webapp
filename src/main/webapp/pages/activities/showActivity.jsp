@@ -1,13 +1,24 @@
-<%@page import="uy.turismo.webapp.ws.DtCategory"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicDeparture"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicBundle"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
-<%@page  import="uy.turismo.webapp.ws.DtDepartment"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page  import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
+	
+	String userType = (String) session.getAttribute("userType");
+	
+	List<DtTouristicActivity> favActivity =  (List<DtTouristicActivity>) session.getAttribute("favActivities");
+	
+	Long id = (Long) session.getAttribute("id");
+	
+
+	//java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +57,9 @@ DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttrib
         <div class="row">
             <div class="col-md-8 " style="">
                 <div class="card" style="padding: 1em; background-color: aliceblue;">
-                	<h3 class="card-title"><%= activityToShow.getName() %></h5>
+                	<h3 class="card-title"><%= activityToShow.getName() %>        	
+                	</h3>
+                	
                 	<%if(activityToShow.getImage() != null){ %>
                     <img src="<%= activityImagePath %>" class="card-img-top" alt="Image" style="margin: auto;  border-radius: 5%; " >
                     <% }else{ %>
@@ -60,12 +73,49 @@ DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttrib
                         <p class="card-text">Duración: <%= activityToShow.getDuration() %> HRs</p>
                         <p class="card-text">Costo por turista: <%= activityToShow.getCostPerTourist()%>$ </p> 
                         <p class="card-text">Proveedor: <%= activityToShow.getProvider().getNickname() %></p>
+                        
                     </div>
                 </div>
             </div>
             <div  class="col-md-4">
-             	<%if(!activityToShow.getBundles().isEmpty()){ %>
             
+            					<% 	
+						if("tourist".equals(userType)){
+						boolean isFavorite = false;
+					    for (DtTouristicActivity activities : favActivity) {
+					    	if (activities.getId() == activityToShow.getId()) {
+					        	isFavorite = true;
+					            break;
+					        }
+					    }
+						if (isFavorite) { %>
+						    <button  style="margin-left: 15%;" class="btn btn-primary" id="unMarkFavorite">
+					       	Desmarcar actividad como favorita 
+						    </button>
+					<% 	} else { %>
+						 	<button style="margin-left: 15%;" class="btn btn-primary" id="markFavorite">
+					        Marcar actividad como favorita
+						    </button>
+					<% 	} 
+					}%>
+            	
+            	
+            	<% if (activityToShow.getVideoURL() != null){%>
+            	<br>
+            	<iframe width="560" height="315" src="<%=activityToShow.getVideoURL() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+             	
+             	<% } else{ %>
+             	<br>
+             	<span>No hay video chaval</span>
+             	 <img width="560" height="315" src="" class="card-img-top" alt="Video" style="margin: auto;  border-radius: 5%; " >
+             	
+             	<% }  %>
+             	
+             	
+             	<%if(!activityToShow.getBundles().isEmpty()){ %>
+            	
+            	<br>
+            	
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
 	            	<%

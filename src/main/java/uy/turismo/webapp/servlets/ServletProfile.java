@@ -133,8 +133,17 @@ public class ServletProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		IController controller = ControllerFactory.getIController();
+		
+		String action = request.getParameter("action");
+		Long userFollowed = Long.parseLong(request.getParameter("pageUserId"));
+		Long userFollower = Long.parseLong(request.getParameter("sessionUserId"));
+		
+		if("follow".equals(action)) {
+			controller.followUser(userFollower, userFollowed);
+		}else if ("unfollow".equals(action)) {
+			controller.unFollowUser(userFollower, userFollowed);
+		}
 	}
 
 }

@@ -14,13 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.Session;
-
-import uy.turismo.webapp.ws.DtTourist;
-import uy.turismo.webapp.ws.DtUser;
-import uy.turismo.webapp.functions.Functions;
-import uy.turismo.webapp.ws.Controller;
-import uy.turismo.webapp.ws.ControllerService;
 
 
 public class ServletLogin extends HttpServlet {
@@ -65,7 +58,10 @@ public class ServletLogin extends HttpServlet {
             session.setAttribute(
             		"userName", 
             		String.format("%s %s", user.getName(), user.getLastName()));
-            
+              
+        	java.util.List<DtUser> followed = user.getFollowed();
+        	session.setAttribute("followed", followed);
+        	
             //Genero el input Stream aqui porque no podia hacerlo en la operacion 'seveImage' ya que es 'static'
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
             String image = Functions.saveImage(
@@ -76,7 +72,14 @@ public class ServletLogin extends HttpServlet {
             session.setAttribute("userImage", image);
             
             if(user instanceof DtTourist) {
-                session.setAttribute("userType", "tourist");
+            	
+            	 DtTourist touristUser = (DtTourist) user;
+            	
+            	java.util.List<DtTouristicActivity> activities = touristUser.getFavActivties();
+            	session.setAttribute("favActivities", activities);
+            	
+            	//cargar actividad.
+            	session.setAttribute("userType", "tourist");
                 
             }else {
                 session.setAttribute("userType", "provider");

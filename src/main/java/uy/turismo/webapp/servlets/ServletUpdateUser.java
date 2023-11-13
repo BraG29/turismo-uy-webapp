@@ -15,13 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import com.mysql.cj.Session;
-
-import uy.turismo.webapp.ws.DtProvider;
-import uy.turismo.webapp.ws.DtTourist;
-import uy.turismo.webapp.ws.DtUser;
-import uy.turismo.webapp.ws.Controller;
-import uy.turismo.webapp.ws.ControllerService;
 
 /**
  * Servlet implementation class ServletUpdateUser

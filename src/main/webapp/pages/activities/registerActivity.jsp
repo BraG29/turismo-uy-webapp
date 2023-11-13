@@ -48,21 +48,21 @@ List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("provid
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Duración (hrs):</span>
-	        <input id="duration" type="number" class="form-control" placeholder="Ej: 3" name="duration" required>
+	        <input id="duration" type="number" class="form-control" min="1" placeholder="Ej: 3" name="duration" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Costo:</span>
-	        <input id="cost" type="number" class="form-control" placeholder="Ej: $500" name="cost" required>
+	        <input id="cost" type="number" class="form-control" min="1" placeholder="Ej: $500" name="cost" required>
 	        
 	    </div>
 	    <br>
 	    
 	     <div class="input-group">
 	     	<span class="input-group-text">Fecha de creación:</span>
-	        <input id="uploadDate" type="date" class="form-control" placeholder="Ej: 10/10/2023" name="uploadDate" required>
+	        <input id="uploadDate" type="date" class="form-control" value="2023-10-10" placeholder="Ej: 10/10/2023" name="uploadDate" required>
 	        
 	    </div>
 	    <br>
@@ -114,6 +114,13 @@ List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("provid
 	        
 	    </div>
 	    <br>
+	    
+	     <div class="input-group">
+	     	<span class="input-group-text">Video (URL):</span>
+	        <input id="videoURL" type="text" class="form-control" placeholder="https://www.youtube.com/embed/zQjSMQ6uV1g" name="videoURL" required>
+	    </div>
+	    <br>
+	    
 	    
 	     <div>
 	     	<span >Seleccione categoría/s:</span>
