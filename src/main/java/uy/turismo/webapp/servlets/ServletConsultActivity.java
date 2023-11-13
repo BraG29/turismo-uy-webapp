@@ -12,16 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import uy.turismo.servidorcentral.logic.controller.Controller;
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
-import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
-import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+import uy.turismo.webapp.ws.controller.DtDepartmentWS;
+import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.DtCategoryWS;
 import uy.turismo.webapp.functions.Functions;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
-
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
+import uy.turismo.webapp.ws.controller.ActivityState;
 /**
  * Servlet implementation class ServletConsultActivity
  */
@@ -37,9 +35,6 @@ public class ServletConsultActivity extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//Codigo al pedo
-//		String algoPrueba = null;
-//		algoPrueba = request.getParameter("selectControl");
 		
 		String redirectTo = request.getParameter("redirectTo");
 		
@@ -51,52 +46,57 @@ public class ServletConsultActivity extends HttpServlet {
 		}
 		
 		if(request.getParameter("selectControl") == null) {
-			IController controller = ControllerFactory.getIController();
 			
-			List<DtTouristicActivity> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
-			List<DtCategory> categories = new ArrayList<DtCategory>();
-			List<DtDepartment> departments = new ArrayList<DtDepartment>();
+			PublisherService service = new PublisherService();
+			
+			Publisher controller = service.getPublisherPort();
+			
+			
+			
+			List<DtTouristicActivityWS> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
+			List<DtCategoryWS> categories = new ArrayList<DtCategoryWS>();
+			List<DtDepartmentWS> departments = new ArrayList<DtDepartmentWS>();
 			
 			Map<Long, String> activityImages = new HashMap<Long, String>();
 			
-			Map<Long, List<DtTouristicActivity>> filteredByDepartment = new HashMap<Long, List<DtTouristicActivity>>();
+			Map<Long, List<DtTouristicActivityWS>> filteredByDepartment = new HashMap<Long, List<DtTouristicActivityWS>>();
 			
-			Map<Long, List<DtTouristicActivity>> filteredByCategory = new HashMap<Long, List<DtTouristicActivity>>();
+			Map<Long, List<DtTouristicActivityWS>> filteredByCategory = new HashMap<Long, List<DtTouristicActivityWS>>();
 			
 			
-			for(DtTouristicActivity activity : activitiesStated) {
+			for(DtTouristicActivityWS activity : activitiesStated) {
 				
 				Long departmentKey = activity.getDepartment().getId();
 				
 				if(!filteredByDepartment.containsKey(departmentKey)){
-					List<DtTouristicActivity> activityListDepartment = new ArrayList<DtTouristicActivity>();
+					List<DtTouristicActivityWS> activityListDepartment = new ArrayList<DtTouristicActivityWS>();
 					activityListDepartment.add(activity);
 
 					filteredByDepartment.put(departmentKey, activityListDepartment);
 					departments.add(activity.getDepartment());
 				}else{
-					((List<DtTouristicActivity>) filteredByDepartment.get(departmentKey)).add(activity);
+					((List<DtTouristicActivityWS>) filteredByDepartment.get(departmentKey)).add(activity);
 				}
 				
 				
-				for(DtCategory category : activity.getCategories()){
+				for(DtCategoryWS category : activity.getCategories()){
 					
 					Long categoryKey = category.getId();
 					
 					if(!filteredByCategory.containsKey(categoryKey)){
-						List<DtTouristicActivity> activityListCategory = new ArrayList<DtTouristicActivity>();
+						List<DtTouristicActivityWS> activityListCategory = new ArrayList<DtTouristicActivityWS>();
 						
 						activityListCategory.add(activity);
 						filteredByCategory.put(categoryKey, activityListCategory);
 						
 						categories.add(category);
 					}else{
-						((List<DtTouristicActivity>) filteredByCategory.get(categoryKey)).add(activity);
+						((List<DtTouristicActivityWS>) filteredByCategory.get(categoryKey)).add(activity);
 					}
 				}
 			}
 	
-			for(DtTouristicActivity activity : activitiesStated) {
+			for(DtTouristicActivityWS activity : activitiesStated) {
 				String activityImagePath = Functions.saveImage(
 						activity.getImage(),
 						activity.getName(),

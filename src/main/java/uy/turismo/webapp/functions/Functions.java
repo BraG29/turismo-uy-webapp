@@ -51,7 +51,6 @@ public class Functions {
 	
 	public static BufferedImage convertArrayToBI(byte[] imgArray) {
 		BufferedImage image = null;
-
 		try{
 			if( imgArray == null) {
 				throw new NullPointerException("No hay imagen");
@@ -59,15 +58,12 @@ public class Functions {
            	InputStream inptuStream = new ByteArrayInputStream(imgArray);
            	image = ImageIO.read(inptuStream);
 
-
-
 		}catch(Exception e){
 			e.printStackTrace();	
 		}
 
 		return image;
 	}
-
 	public static String convertDateToString(LocalDate d) {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -80,6 +76,7 @@ public class Functions {
 		return dt.format(format);
 
 	}
-
 	
 }
+	
+
