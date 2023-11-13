@@ -13,22 +13,33 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/styles/bootstrap4.5.2.min.css">
-	<link rel="stylesheet" href="assets/styles/main.css">
-	<script src="assets/scripts/jquery3.5.1.min.js"></script>
-	<script src="assets/scripts/bootstrap4.5.2.min.js"></script>
-	<script src="assets/scripts/bootstrap5.2.3.bundle.min.js"></script>
-	<script src="assets/scripts/clock.js" type="text/javascript"></script>
+	
+	 <link rel="stylesheet" href="assets/styles/main.css">
+    <script src="assets/scripts/jquery3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <script src="assets/scripts/clock.js" type="text/javascript"></script>
+    <link rel="icon" href="assets/images/star.ico" type="image/png">
 	<link rel="icon" href="assets/images/star.ico" type="image/png">
-	<title>Turismo.UY</title>
+	<title>Registrar Salida</title>
 </head>
+
+<style>
+	@media (max-width: 700px){
+		.mobile{
+			width: 100% !important;
+		}
+	}
+</style>
 
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp" />
-	<main class="form-signin w-50 m-auto container-fluid">
+	
+	<main class="form-signin w-50 m-auto container-fluid mobile">
+	<h1 class="h3 mb-3 fw-normal pt-3">Registro de salida</h1>
 		<form action="<%= request.getContextPath() %>/registerDeparture" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
 			<div>
-			<br>
 				<div class="input-group">
 				
 	                <label class="input-group-text" for="nameDeparture"> Nombre de la Salida Turística: </label>
@@ -95,7 +106,7 @@
 			<!-- <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear Salida Turística" /> -->
 			
 			<div id="liveAlertPlaceholder"></div>
-			<button type="submit" class="btn btn-primary" id="liveAlertBtn" " >Crear Salida Turística</button>
+			<button type="submit" class="w-100 btn btn-lg btn-primary" id="liveAlertBtn" " >Crear Salida Turística</button>
 
 		</form>
 	</main>

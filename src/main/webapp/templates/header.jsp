@@ -6,7 +6,11 @@
 	Long userId = (Long) session.getAttribute("userId");
 	String userName = (String) session.getAttribute("userName");
 	String userImage = (String) session.getAttribute("userImage");
+	String userDevice = (String) session.getAttribute("userDevice");
 	String contextPath = request.getContextPath();
+	
+	
+	
 %>
 
 <script>
@@ -14,6 +18,7 @@
 	var userName = '<%= userName %>';
 	var userImage = '<%= userImage %>';
 	var contextPath = '<%= contextPath %>';
+	var userDevice = '<%= userDevice %>';
 </script>
 
 <% 
