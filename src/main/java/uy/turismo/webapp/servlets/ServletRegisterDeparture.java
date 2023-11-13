@@ -17,12 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.webapp.ws.DtTourist;
+import uy.turismo.webapp.ws.DtTouristicActivity;
+import uy.turismo.webapp.ws.DtTouristicDeparture;
+import uy.turismo.webapp.ws.ActivityState;
+import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.ControllerService;
 
 @MultipartConfig(location="/tmp", fileSizeThreshold=0, maxFileSize=5242880, maxRequestSize=20971520)
 public class ServletRegisterDeparture extends HttpServlet {
@@ -32,7 +32,10 @@ public class ServletRegisterDeparture extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
+
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
+		
 		List<DtTouristicActivity> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED);
 		
 		request.setAttribute("activitiesStated", activitiesStated);
@@ -61,25 +64,25 @@ public class ServletRegisterDeparture extends HttpServlet {
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
 		BufferedImage image = ImageIO.read(fileContent);
-		
-		IController controller = ControllerFactory.getIController();
+
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
 		DtTouristicActivity activity = controller.getTouristicActivityData(activityId);
 		DtTourist tourist = new DtTourist();
-		List<DtTourist> tourists = new ArrayList<DtTourist>();
+		ArrayList<DtTourist> tourists = new ArrayList<DtTourist>();
 		tourists.add(tourist);
 		
-		DtTouristicDeparture departureData = new DtTouristicDeparture(
-                null,
-				nameDeparture,
-				maxTourists,
-				uploadDate,
-				startingDate,
-				place,
-				image,
-				activity,
-				tourists
-				);
+		DtTouristicDeparture departureData = new DtTouristicDeparture();
+		departureData.setName(nameDeparture);
+		departureData.setMaxTourist(maxTourists);
+		departureData.setUploadDate(uploadDate);
+		departureData.setDepartureDateTime(startingDate);
+		departureData.setPlace(place);
+		departureData.setImage(image);
+		departureData.setTouristicActivity(activity);
+		departureData.setTourists(tourists);
+		
 		try {
 			controller.registerTouristicDeparture(departureData);
 			

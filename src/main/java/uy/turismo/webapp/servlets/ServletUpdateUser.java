@@ -17,11 +17,11 @@ import javax.servlet.http.Part;
 
 import com.mysql.cj.Session;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+import uy.turismo.webapp.ws.DtProvider;
+import uy.turismo.webapp.ws.DtTourist;
+import uy.turismo.webapp.ws.DtUser;
+import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.ControllerService;
 
 /**
  * Servlet implementation class ServletUpdateUser
@@ -45,7 +45,9 @@ public class ServletUpdateUser extends HttpServlet {
 		
 		
 		try {
-			IController controller = ControllerFactory.getIController();
+			
+			ControllerService service = new ControllerService();
+			Controller controller = service.getControllerPort();
 			
 			Long userId = Long.parseLong(request.getParameter("id"));
 			DtUser userData = controller.getUserData(userId);
@@ -92,54 +94,48 @@ public class ServletUpdateUser extends HttpServlet {
 			
 			image = userData.getImage();
 		}
-		
-		DtUser modifiedUser;
-		
-		
+	
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
 		if(userData instanceof DtTourist) {
 		
 			String nationality = request.getParameter("nationality");
 			
-			modifiedUser = new DtTourist(
-					userData.getId(),
-					name,
-					userData.getNickname(),
-					userData.getEmail(),
-					lastName,
-					birthDate,
-					image,
-					nationality,
-					null,
-					userData.getPassword(),
-					null,
-					null,
-					null
-					);
-			
+			DtTourist modifiedTourist = new DtTourist();
+			modifiedTourist.setId(userData.getId());
+			modifiedTourist.setName(name);
+			modifiedTourist.setNickname(userData.getNickname());
+			modifiedTourist.setEmail(userData.getEmail());
+			modifiedTourist.setLastName(lastName);
+			modifiedTourist.setBirthDate(birthDate);
+			modifiedTourist.setImage(image);
+			modifiedTourist.setNationality(nationality);
+			modifiedTourist.setPassword(userData.getPassword());
+
+			controller.updateUser(modifiedTourist);
 			
 			
 		}else {
 			String webSite = request.getParameter("webSite");
 			String description = request.getParameter("description");
 			
-			modifiedUser = new DtProvider(
-					userData.getId(),
-					name,
-					userData.getNickname(),
-					userData.getEmail(),
-					lastName,
-					birthDate,
-					image,
-					webSite,
-					description,
-					null,
-					userData.getPassword()
-					);
+			DtProvider modifiedProvider = new DtProvider();
+			modifiedProvider.setId(userData.getId());
+			modifiedProvider.setName(name);
+			modifiedProvider.setNickname(userData.getNickname());
+			modifiedProvider.setEmail(userData.getEmail());
+			modifiedProvider.setLastName(lastName);
+			modifiedProvider.setBirthDate(birthDate);
+			modifiedProvider.setImage(image);
+			modifiedProvider.setUrl(webSite);
+			modifiedProvider.setDescription(description);
+			modifiedProvider.setPassword(userData.getPassword());
+			
+			controller.updateUser(modifiedProvider);
 		}
+
 		
-		IController controller = ControllerFactory.getIController();
-		controller.updateUser(modifiedUser);
 		
 		response.sendRedirect(request.getContextPath() 
 				+ request.getServletPath() 

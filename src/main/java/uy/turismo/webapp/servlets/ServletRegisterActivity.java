@@ -18,14 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import uy.turismo.servidorcentral.logic.controller.Controller;
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtCategory;
-import uy.turismo.servidorcentral.logic.datatypes.DtDepartment;
-import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.webapp.ws.DtCategory;
+import uy.turismo.webapp.ws.DtDepartment;
+import uy.turismo.webapp.ws.DtProvider;
+import uy.turismo.webapp.ws.DtTouristicActivity;
+import uy.turismo.webapp.ws.ActivityState;
+import uy.turismo.webapp.ws.ControllerService;
+import uy.turismo.webapp.ws.Controller;
 
 /**
  * Servlet implementation class ServletRegisterActivity
@@ -41,8 +40,10 @@ public class ServletRegisterActivity extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
-		IController controller = ControllerFactory.getIController();
 		List<DtCategory> categories = controller.getListCategory();
 		
 		request.setAttribute("categories", categories);
@@ -74,38 +75,45 @@ public class ServletRegisterActivity extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
 		
-		DtProvider provider = new DtProvider( (Long) session.getAttribute("userId"), "", "", null);
-		DtDepartment department = new DtDepartment(Long.parseLong(request.getParameter("department")));
+		Long providerId = (Long) session.getAttribute("userId");
+		DtProvider provider = new DtProvider();
+		provider.setId(providerId);
+		
+		Long departmentId = Long.parseLong(request.getParameter("department"));
+		DtDepartment department = new DtDepartment();
+		department.setId(departmentId);
 		
 		String[] arrayCategories = request.getParameterValues("categories");
-		List<DtCategory> categoriesList = new ArrayList<DtCategory>();
+		ArrayList<DtCategory> categoriesList = new ArrayList<DtCategory>();
 		
 		for(int c = 0; c < arrayCategories.length; c++) {
-			DtCategory category = new DtCategory(Long.parseLong(arrayCategories[c]));
+			Long categoryId = Long.parseLong(arrayCategories[c]);
+			DtCategory category = new DtCategory();
+			category.setId(categoryId);
 			categoriesList.add(category);
-			System.out.println(category.getId());
+//			System.out.println(category.getId());
 		}
 		
 		
 		try {
-			IController controller = ControllerFactory.getIController();
 			
-			DtTouristicActivity DTA = new DtTouristicActivity(id,
-															name,
-															description,
-															duration,
-															cost,
-															city,
-															image,
-															state,
-															uploadDate,
-															provider,
-															department,
-															null,
-															null,
-															categoriesList);
+			ControllerService service = new ControllerService();
+			Controller controller = service.getControllerPort();
+			
+			DtTouristicActivity activityData = new DtTouristicActivity();
+			activityData.setName(name);
+			activityData.setDescription(description);
+			activityData.setDuration(duration);
+			activityData.setCostPerTourist(cost);
+			activityData.setCity(city);
+			activityData.setImage(image);
+			activityData.setState(state);
+			activityData.setUploadDate(uploadDate);
+			activityData.setProvider(provider);
+			activityData.setDepartment(department);
+			activityData.setCategories(categoriesList);
 					
-			controller.registeTouristicActivity(DTA);
+			controller.registeTouristicActivity(activityData);
 			
 			String successType = "Activity";
 			

@@ -1,10 +1,10 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
+<%@page import="uy.turismo.webapp.ws.DtPurchase"%>
 <%@page import="java.util.ArrayList"%>
 <%@page
-	import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+	import="uy.turismo.webapp.ws.DtTouristicBundle"%>
 <%@page import="java.util.List"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+<%@page import="uy.turismo.webapp.ws.DtTourist"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.util.Base64"%>
@@ -12,13 +12,13 @@
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
+<%@page import="uy.turismo.webapp.ws.DtCategory"%>
 <%@page
-	import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+	import="uy.turismo.webapp.ws.DtTouristicDeparture"%>
+<%@page import="uy.turismo.webapp.ws.DtDepartment"%>
 <%@page
-	import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
+	import="uy.turismo.webapp.ws.Controller"%>
+<%@page import="uy.turismo.webapp.ws.ControllerService"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -26,11 +26,12 @@
 <%
 //departureProfile
 
-IController controller = ControllerFactory.getIController();
+ControllerService service = new ControllerService();
+Controller controller = service.getControllerPort();
 
 Long departureId = (Long) request.getAttribute("departureId"); //id que me viene desde el servlet
 
-DtTouristicDeparture departure = controller.getTouristicDepartureData(departureId);
+DtTouristicDepartureWS departure = controller.getTouristicDepartureData(departureId);
 
 String name = departure.getName();
 
@@ -46,7 +47,7 @@ BufferedImage departureImage = departure.getImage();
 
 //Logica para inscripcion
 
-DtTourist touristData = new DtTourist();
+DtTouristWS touristData = new DtTouristWS();
 
 Boolean availableUser = session.getAttribute("userType") != null
 		&& ((String) session.getAttribute("userType")).equalsIgnoreCase("tourist");
@@ -83,39 +84,39 @@ Boolean availableUser = session.getAttribute("userType") != null
 			<h2><%=name%></h2>
 			<%
 			if (availableUser) {
-				Integer touristAmount = departure.getTourists().size();
+								Integer touristAmount = departure.getTourists().size();
 
-				Long userId = (Long) session.getAttribute("userId");
+								Long userId = (Long) session.getAttribute("userId");
 
-				touristData = (DtTourist) controller.getUserData(userId);
+								touristData = (DtTouristWS) controller.getUserData(userId);
 
-				if (touristAmount < maxTourist && !touristData.getDepartures().contains(departure)) {
+								if (touristAmount < maxTourist && !touristData.getDepartures().contains(departure)) {
 
-					List<DtTouristicBundle> touristBundles = touristData.getBundles();
+									List<DtTouristicBundleWS> touristBundles = touristData.getBundles();
 
-					List<DtPurchase> touristPurchases = touristData.getPurchases();
+									List<DtPurchaseWS> touristPurchases = touristData.getPurchases();
 
-					List<DtTouristicBundle> availableBundles = new ArrayList<DtTouristicBundle>();
+									List<DtTouristicBundleWS> availableBundles = new ArrayList<DtTouristicBundleWS>();
 
-					for (int i = 0; i < touristPurchases.size(); i++) {
+									for (int i = 0; i < touristPurchases.size(); i++) {
 
-						DtPurchase purchase = touristPurchases.get(i);
-						DtTouristicBundle bundle = touristBundles.get(i);
-						
-						List<DtTouristicActivity> activitiesInBundle = controller
-								.getTouristicBundleData(
-										bundle.getId()).getActivities();
-		
-						LocalDate actualDate = LocalDate.now();
-						LocalDate expireDate = purchase.getExpireDate();
-		
-						if (actualDate.isBefore(expireDate) && activitiesInBundle.contains(departure.getTouristicActivity())) {
-							availableBundles.add(bundle);
-		
-						}else{
-							touristPurchases.remove(i);
-						}
-					}
+										DtPurchaseWS purchase = touristPurchases.get(i);
+										DtTouristicBundleWS bundle = touristBundles.get(i);
+										
+										List<DtTouristicActivityWS> activitiesInBundle = controller
+												.getTouristicBundleData(
+														bundle.getId()).getActivities();
+								
+										LocalDate actualDate = LocalDate.now();
+										LocalDate expireDate = purchase.getExpireDate();
+								
+										if (actualDate.isBefore(expireDate) && activitiesInBundle.contains(departure.getTouristicActivity())) {
+											availableBundles.add(bundle);
+								
+										}else{
+											touristPurchases.remove(i);
+										}
+									}
 			%>
 			<div class="dropdown">
 				<button class="btn btn-primary dropdown-toggle" type="button"
@@ -126,19 +127,19 @@ Boolean availableUser = session.getAttribute("userType") != null
 							Paquete</span></li>
 					<%
 					for (int i = 0; i < availableBundles.size(); i++) {
-						
+												
 
-						DtPurchase purchase = touristPurchases.get(i);
-						DtTouristicBundle bundle = availableBundles.get(i);
-						
-						String url = 
-								request.getContextPath() + 
-								"/inscription?touristId=" + 
-								touristData.getId() + 
-								"&departureId=" + 
-								departureId + 
-								"&touristAmount=" +
-								purchase.getTouristAmount(); 
+												DtPurchaseWS purchase = touristPurchases.get(i);
+												DtTouristicBundleWS bundle = availableBundles.get(i);
+												
+												String url = 
+														request.getContextPath() + 
+														"/inscription?touristId=" + 
+														touristData.getId() + 
+														"&departureId=" + 
+														departureId + 
+														"&touristAmount=" +
+														purchase.getTouristAmount();
 					%>
 						<li><a class="dropdown-item" href="<%= url %>"><%=bundle.getName()%></a></li>
 					<%}%>
@@ -233,10 +234,6 @@ Boolean availableUser = session.getAttribute("userType") != null
 		}
 
 	</script>
-	
-	
-
-
 </body>
 </html>
 

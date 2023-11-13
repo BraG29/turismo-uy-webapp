@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <%@page import="java.util.List" %>
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle" %>
+<%@page import="uy.turismo.webapp.ws.Controller"%>
+<%@page import="uy.turismo.webapp.ws.ControllerService"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicBundle" %>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream" %>
 <%@ page import="java.util.Base64" %>
@@ -68,32 +68,30 @@
 		<li>
 		
 		<%
-		
-		IController controller = ControllerFactory.getIController();
-		
-		List<DtTouristicBundle> bundles = controller.getListTouristicBundle();
-		
-		
-		for(DtTouristicBundle bundle : bundles){
-		
-			
-			BufferedImage bundleImage = bundle.getImage(); 
-			
-			if(bundleImage != null){
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		        String format = "jpeg"; // Formato predeterminado es JPEG
+				ControllerService service = new ControllerService();
+						Controller controller = service.getControllerPort();
+						
+						List<DtTouristicBundleWS> bundles = controller.getListTouristicBundle();
+						
+						
+						for(DtTouristicBundleWS bundle : bundles){
+						
+					
+					BufferedImage bundleImage = bundle.getImage(); 
+					
+					if(bundleImage != null){
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						        String format = "jpeg"; // Formato predeterminado es JPEG
 
-		        // Determina el formato de la imagen
-		        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
-		            format = "png";
-		        }
+						        // Determina el formato de la imagen
+						        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
+						            format = "png";
+						        }
 
-		        ImageIO.write(bundleImage, format, baos);
-		        byte[] bytes = baos.toByteArray();
-		        String base64Image = Base64.getEncoder().encodeToString(bytes);
-			
-			
-		%>
+						        ImageIO.write(bundleImage, format, baos);
+						        byte[] bytes = baos.toByteArray();
+						        String base64Image = Base64.getEncoder().encodeToString(bytes);
+				%>
 		
 		<li class="bundle-item">
 			<img style="width:25em;  border-radius: 5%;" class="bundle-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">

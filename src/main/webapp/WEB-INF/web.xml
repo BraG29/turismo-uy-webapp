@@ -158,6 +158,12 @@
 		<description></description>
 		<servlet-class>uy.turismo.webapp.servlets.ServletSuccessPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ServletPrueba</servlet-name>
+		<display-name>ServletPrueba</display-name>
+		<description></description>
+		<servlet-class>uy.turismo.webapp.servlets.ServletPrueba</servlet-class>
+	</servlet>
 
   <servlet-mapping>
   	<servlet-name>ServletLogin</servlet-name>
@@ -253,6 +259,10 @@
 	<servlet-mapping>
 		<servlet-name>ServletSuccessPage</servlet-name>
 		<url-pattern>/successPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletPrueba</servlet-name>
+		<url-pattern>/prueba</url-pattern>
 	</servlet-mapping>
 
   <welcome-file-list>

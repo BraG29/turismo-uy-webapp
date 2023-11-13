@@ -1,12 +1,12 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page  import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@page import="uy.turismo.webapp.ws.DtCategory"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicDeparture"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicBundle"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
+<%@page  import="uy.turismo.webapp.ws.DtDepartment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
+DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 %>
 <!DOCTYPE html>
@@ -68,7 +68,9 @@
             
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group custom-list-group">
-	            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
+	            	<%
+	            	for(DtTouristicBundleWS bundle : activityToShow.getBundles()){
+	            	%>
 	            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">
 	            			<li class="list-group-item"><%= bundle.getName() %></li>
 	            		</a>
@@ -83,7 +85,9 @@
                 
 	                <h5 class="card-text">Salidas: </h5>
 	            	<ul class="list-group custom-list-group">
-	            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
+	            	<%
+	            	for(DtTouristicDepartureWS departure : activityToShow.getDepartures()){
+	            	%>
 	            		<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>">
 	            			<li class="list-group-item list-item-pink"><%= departure.getName() %></li>
 	            		</a>
@@ -96,7 +100,9 @@
                 <%if(!activityToShow.getCategories().isEmpty()){ %>
                 <h5 class="card-text">Categorias: </h5>
             	<ul class="list-group custom-list-group">
-            	<%for(DtCategory category : activityToShow.getCategories()){%>
+            	<%
+            	for(DtCategoryWS category : activityToShow.getCategories()){
+            	%>
             		<li class="list-group-item list-item-yellow"><%= category.getName() %></li>
             		<%}%>
             	<%} %>

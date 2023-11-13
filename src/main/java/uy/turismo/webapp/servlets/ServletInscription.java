@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtInscription;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
+import uy.turismo.webapp.ws.DtInscription;
+import uy.turismo.webapp.ws.DtTourist;
+import uy.turismo.webapp.ws.DtTouristicDeparture;
+import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.ControllerService;
 
 
 
@@ -54,8 +54,9 @@ public class ServletInscription extends HttpServlet {
 		Long departureId = Long.parseLong(request.getParameter("departureId"));
 		Integer touristAmount = Integer.parseInt(request.getParameter("touristAmount"));
 		LocalDate inscriptionDate = LocalDate.now();
-		
-		IController controller = ControllerFactory.getIController();
+
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
 		DtTouristicDeparture departureData = controller.getTouristicDepartureData(departureId);
 		
@@ -63,21 +64,16 @@ public class ServletInscription extends HttpServlet {
 			throw new ServletException("Supero la cantidad maximas de turistas para esta salida");
 		}
 		
-		DtTourist touristData = new DtTourist(
-				touristId,
-				null,
-				null,
-				null
-				);
+		DtTourist touristData = new DtTourist();
+		touristData.setId(touristId);
 		
-		DtInscription inscriptionData = new DtInscription(
-				null,
-				inscriptionDate,
-				null,
-				touristAmount,
-				touristData,
-				departureData
-				);
+		DtInscription inscriptionData = new DtInscription();
+		inscriptionData.setInscriptionDate(inscriptionDate);
+		inscriptionData.setTouristAmount(touristAmount);
+		inscriptionData.setTourist(touristData);
+		inscriptionData.setDeparture(departureData);
+		
+		
 		try {
 			controller.registerInscription(inscriptionData);
 			

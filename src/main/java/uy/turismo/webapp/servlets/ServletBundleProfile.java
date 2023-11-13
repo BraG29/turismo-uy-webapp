@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtPurchase;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle;
-import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+import uy.turismo.webapp.ws.controller.DtPurchaseWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtTouristicBundleWS;
+//import uy.turismo.webapp.ws.controller.DtUser;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
 
 /**
  * Servlet implementation class ServletBundleProfile
@@ -52,27 +52,30 @@ public class ServletBundleProfile extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		
-		IController controller = ControllerFactory.getIController();
+
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 
 		Long bundleId = Long.parseLong(request.getParameter("bundleId"));
 		
-		DtTouristicBundle bundle = new DtTouristicBundle(bundleId);
+		DtTouristicBundleWS bundle = new DtTouristicBundleWS();
+		bundle.setId(bundleId);
 		
 		Long touristId = Long.parseLong(request.getParameter("touristId"));
 		
-		DtTourist touristData = new DtTourist();
+		DtTouristWS touristData = new DtTouristWS();
 		try {
-			touristData = (DtTourist) controller.getUserData(touristId);
+			touristData = (DtTouristWS) controller.getUserData(touristId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		List<DtPurchase> listPurchases = touristData.getPurchases();
+		List<DtPurchaseWS> listPurchases = touristData.getPurchases();
 		
 		
-		DtTourist tourist = new DtTourist(touristId, null, null, null);
+		DtTouristWS tourist = new DtTouristWS();
+		tourist.setId(touristId);
 		
 		Long validityDays = Long.parseLong(request.getParameter("validity")); //dias de validez del paquete , tambien lo uso para la compra
 		
@@ -95,11 +98,8 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		LocalDate expiredBundleDate = uploadDate.plusDays(validityDays);
 		
-		// armar DtPurchase
-		if(expiredBundleDate.isBefore(purchaseDate)) {
-			System.out.println("paquete vencido");
-			
-		}
+		// armar DtPurchaseWS
+		
 		//vencimiento del paquete
 		//15/09/2022 
 		//validity
@@ -123,7 +123,14 @@ public class ServletBundleProfile extends HttpServlet {
 		
 		
 		try {
-			DtPurchase purchase = new DtPurchase(null, purchaseDate, touristAmount, price, expireDate, tourist, bundle);
+			DtPurchaseWS purchase = new DtPurchaseWS();
+
+			purchase.setPurchaseDate(purchaseDate);
+			purchase.setTouristAmount(touristAmount);
+			purchase.setTotalCost(price);
+			purchase.setExpireDate(expireDate);
+			purchase.setTourist(tourist);
+			purchase.setBundle(bundle);
 			
 			controller.registerPurchase(purchase);
 			

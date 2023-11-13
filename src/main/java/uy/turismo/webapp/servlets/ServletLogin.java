@@ -16,11 +16,11 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.Session;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtUser;
+import uy.turismo.webapp.ws.DtTourist;
+import uy.turismo.webapp.ws.DtUser;
 import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.ControllerService;
 
 
 public class ServletLogin extends HttpServlet {
@@ -49,11 +49,15 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("loginUserEmailInput");
 		String password = request.getParameter("loginUserPasswordInput");
-		IController cotroller = ControllerFactory.getIController();
+		
+//		IController cotroller = ControllerFactory.getIController();
+		
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
 		DtUser user = null;
 		
-		user = cotroller.checkCredentials(email, password);
+		user = controller.checkCredentials(email, password);
 			
         if (user != null) {
             HttpSession session = request.getSession();

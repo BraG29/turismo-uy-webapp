@@ -1,54 +1,51 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@page import="uy.turismo.webapp.ws.DtDepartment"%>
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
+<%@page import="uy.turismo.webapp.ws.ActivityState"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
+<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
+<%@page import="uy.turismo.webapp.ws.DtCategory"%>
+<%@page import="uy.turismo.webapp.ws.DtProvider"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@page import="java.util.List"%>
 <%
-	String userType = (String) session.getAttribute("userType");
-	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) session.getAttribute("activityStated");
-	List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
+String userType = (String) session.getAttribute("userType");
+	List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) session.getAttribute("activityStated");
+	List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
 
 	Map<Long, String> activityImages = (Map<Long, String>) session.getAttribute("activityImages");
 	
-	List<DtCategory> categories = (List<DtCategory>) session.getAttribute("categories");
+	List<DtCategoryWS> categories = (List<DtCategoryWS>) session.getAttribute("categories");
 	
-	List<DtDepartment> departments = (List<DtDepartment>) session.getAttribute("departments");
+	List<DtDepartmentWS> departments = (List<DtDepartmentWS>) session.getAttribute("departments");
 	
 	String pruebaControl = (String) request.getAttribute("control");
 	if(pruebaControl != null){
 		switch (pruebaControl) {
 		
 		case "department":{
-			Long idDepartment = Long.parseLong(request.getParameter("department"));
-			HashMap<Long, List<DtTouristicActivity>> filteredByDepartment = (HashMap<Long, List<DtTouristicActivity>>) session.getAttribute("filteredByDepartment");
-			activitiesToPrint = filteredByDepartment.get(idDepartment); 
-			break;}
-			
+	Long idDepartment = Long.parseLong(request.getParameter("department"));
+	HashMap<Long, List<DtTouristicActivityWS>> filteredByDepartment = (HashMap<Long, List<DtTouristicActivityWS>>) session.getAttribute("filteredByDepartment");
+	activitiesToPrint = filteredByDepartment.get(idDepartment); 
+	break;}
+	
 		case "category":{
-			Long idCategory = Long.parseLong(request.getParameter("categories"));
-			HashMap<Long, List<DtTouristicActivity>> filteredByCategory = (HashMap<Long, List<DtTouristicActivity>>) session.getAttribute("filteredByCategory");
-			activitiesToPrint = filteredByCategory.get(idCategory); 
-			break;}
-			
+	Long idCategory = Long.parseLong(request.getParameter("categories"));
+	HashMap<Long, List<DtTouristicActivityWS>> filteredByCategory = (HashMap<Long, List<DtTouristicActivityWS>>) session.getAttribute("filteredByCategory");
+	activitiesToPrint = filteredByCategory.get(idCategory); 
+	break;}
+	
 		default:
-			System.out.println("nada");
-			break;
+	System.out.println("nada");
+	break;
 		}
 	}else{
 		
 		activitiesToPrint = activitiesStated;
 	}
-	
-	
-	
 %>
 
 <!DOCTYPE html>
@@ -94,11 +91,11 @@
 							<option value="option2">Departamento</option>
 							<option value="option3">Categoria</option>
 						</select>
-						<% 
-							String redirectTo = (String) request.getAttribute("redirectTo");
+						<%
+						String redirectTo = (String) request.getAttribute("redirectTo");
 						%>
 						
-						<input type="text" id="redirectTo" name="redirectTo" value="<%= redirectTo %>" style="display: none;">
+						<input type="text" id="redirectTo" name="redirectTo" value="<%=redirectTo%>" style="display: none;">
 						
 						
 						
@@ -111,9 +108,13 @@
 					<div class="form-group" id="department" style="display: none;">
 						<label for="selectOptions2">Departamentos:</label>
 						<select class="form-control" id="selectOptions2" name="department">
-					  		<% for(DtDepartment department : departments){%>
-             					<option value=<%=department.getId()%>> <%= department.getName() %></option>
-             				<%}%>
+					  		<%
+					  		for(DtDepartmentWS department : departments){
+					  		%>
+             					<option value=<%=department.getId()%>> <%=department.getName()%></option>
+             				<%
+             				}
+             				%>
 						</select>
 					</div>
 					<!-- Third ComboBox (Initially Hidden) -->
@@ -121,32 +122,44 @@
 					
 						<label for="selectOptions3">Categorias:</label>
 						<select id="selectOptions3" class="form-control" name="categories">
-            				<% for(DtCategory category : categories){%>
-             					<option value=<%=category.getId()%>> <%= category.getName() %></option>
-             				<%}%>
+            				<%
+            				for(DtCategoryWS category : categories){
+            				%>
+             					<option value=<%=category.getId()%>> <%=category.getName()%></option>
+             				<%
+             				}
+             				%>
 						</select>
 						</form>
 						
 					</div>
-					<%if(userType != null){ 
-							switch (redirectTo) { 
-								 case "activity":
-								 	if(userType.equals("provider")){%>
-										<a href="<%= request.getContextPath() %>/registerActivity" method="get">
+					<%
+					if(userType != null){ 
+										switch (redirectTo) { 
+											 case "activity":
+											 	if(userType.equals("provider")){
+					%>
+										<a href="<%=request.getContextPath()%>/registerActivity" method="get">
 											<button class="btn btn-primary" >Dar de alta Actividad</button>
 										</a>
-									<%}
-									break;
-									
-								case "departure":
-									if(userType.equals("provider")){%>
-										<a href="<%= request.getContextPath() %>/registerDeparture" method="get">
+									<%
+									}
+																break;
+																
+															case "departure":
+																if(userType.equals("provider")){
+									%>
+										<a href="<%=request.getContextPath()%>/registerDeparture" method="get">
 											<button class="btn btn-primary" >Dar de alta Salida Turística</button>
 										</a>
-									<%}
-									break;
-							 }%>
-						<% } %>
+									<%
+									}
+																break;
+														 }
+									%>
+						<%
+						}
+						%>
 				</div>
 				
 			</div>
@@ -154,7 +167,9 @@
 			<div class="col-md-9">
 				<div class="row">
 					<!-- Small Boxes -->
-						<% for(DtTouristicActivity activity : activitiesToPrint){%>
+						<%
+						for(DtTouristicActivityWS activity : activitiesToPrint){
+						%>
 							<div class="col-md-3">
 								<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
 									<%if(activity.getImage() != null){ %>

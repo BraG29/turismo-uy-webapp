@@ -1,34 +1,34 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtInscription"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtInscriptionWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
+<%@page import="uy.turismo.webapp.ws.controller.ActivityState"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.stream.Collectors"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%
-DtUser userData = (DtUser) request.getAttribute("userData");
+DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
 String imagePath = (String) request.getAttribute("imagePath");
 
 String fullUserName = String.format("%s %s", userData.getName(), userData.getLastName());
 
 // Formateo de la fecha de tipo: dd/MM/yyyy
-DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM 'de' yyyy");
+/* DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM 'de' yyyy") */;
 
 // Saco la fecha ya formateada como se explico antes
-String birthDateStr = userData.getBirthDate().format(format);
+String birthDateStr = userData.getBirthDate();
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
 %>
@@ -94,25 +94,24 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							Fecha de Nacimiento:
 							<%=birthDateStr%></p>
 						<%
-						if (userData instanceof DtProvider) {
-							DtProvider providerData = (DtProvider) userData;
+						if (userData instanceof DtProviderWS) {
+							DtProviderWS providerData = (DtProviderWS) userData;
 						%>
-						<p class="card-text">
-							Descripción:
-							<%=providerData.getDescription()%></p>
-						<p class="card-text">
-							Sitio Web: <a href="<%=providerData.getUrl()%>"><%=providerData.getUrl()%></a>
-						</p>
+							<p class="card-text">
+								Descripción:
+								<%=providerData.getDescription()%></p>
+							<p class="card-text">
+								Sitio Web: <a href="<%=providerData.getUrl()%>"><%=providerData.getUrl()%></a>
+							</p>
 
 						<%
-
-						List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
-							
-						Map<Long, String> activityImages = (Map<Long, String>) request.getAttribute("activityImages");
+							List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
+												
+							Map<Long, String> activityImages = (Map<Long, String>) request.getAttribute("activityImages");
 						
-						if (providerData.getTouristicActivities() != null) {
-
-								for(DtTouristicActivity activity : providerData.getTouristicActivities()){
+							if (!providerData.getTouristicActivities().isEmpty()) {
+	
+								for(DtTouristicActivityWS activity : providerData.getTouristicActivities()){
 									if( userInSession ){
 										switch(activity.getState()){
 										
@@ -137,7 +136,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 										case ADDED:
 											activityImages.remove(activity.getId());
 										break;
-									}
+										}
 										
 									}
 								}
@@ -147,7 +146,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							<h4 class="card-text">Actividades:</h4>
 							<ul class="list-group custom-list">
 								<%
-								for (DtTouristicActivity activity : activitiesToPrint) {
+								for (DtTouristicActivityWS activity : activitiesToPrint) {
 								%>
 								<li class="list-group-item">
 									<div class="media">
@@ -166,86 +165,90 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 					</div>
 					<%
 					} else {
-						DtTourist toursitData = (DtTourist) userData;
+						DtTouristWS toursitData = (DtTouristWS) userData;
 					%>
 						<p class="card-text">
 							Nacionalidad:
 							<%=toursitData.getNationality()%></p>
 
-					<% 
-						List<DtTouristicDeparture> departuresToPrint = toursitData.getDepartures();
-						List<DtPurchase> purchasesToPrint = toursitData.getPurchases();
-						List<DtInscription> inscriptions = toursitData.getInscriptions();
-						
-						Map<Long, String> departureImages = (Map<Long, String>) request.getAttribute("departureImages");
-						Map<Long, String> bundleImages = (Map<Long, String>) request.getAttribute("bundleImages");
-						
-						
-						if(departuresToPrint != null){
-							%>
-							<div class="container">
-								<h4 class="card-text">Salidas:</h4>
-								<ul class="list-group custom-list">
-								<%
-								for (int i = 0; i < departuresToPrint.size(); i++) {
-									DtInscription inscription = inscriptions.get(i);
-									String inscriptionDateStr = inscription.getInscriptionDate().format(format);
-									DtTouristicDeparture departure = departuresToPrint.get(i);
- 								%>
-									<li class="list-group-item">
-										<div class="media">
-											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
-												class="mr-3" style="width: 100px; border-radius: 1em;"> 
-											<div class="media-body">
-												<a href="<%= request.getContextPath() %>/showDeparture?id=<%= departure.getId() %>"> <b> <%= departure.getName() %> </b> </a>
-												<% if(userInSession){ %>
-													<br>
-													Fecha de inscripción: <%= inscriptionDateStr %> <br>
-													Costo total: <%= inscription.getTotalCost() %> <br>
-													Cantidad de Turistas: <%= inscription.getTouristAmount() %>
-												<% }%>
-											</div>
-										</div>
-									</li>
-								<%
-								}
-								%>
-								</ul>
-							</div>
 					<%
-							}
-							if(userInSession){
-								if(purchasesToPrint != null){
-									%>
-									<div class="container">
-										<h4 class="card-text">Paquetes:</h4>
-										<ul class="list-group custom-list">
-										<%
-										for (DtPurchase purchase : purchasesToPrint) {
-											DtTouristicBundle bundle = purchase.getBundle();
-											String purchaseDateStr = purchase.getPurchaseDate().format(format);
-											String expireDateStr = purchase.getExpireDate().format(format);
-		 								%>
-											<li class="list-group-item">
-												<div class="media">
-													<img src="<%= bundleImages.get(bundle.getId()) %>"
-														class="mr-3" style="width: 100px;border-radius: 1em;"> 
-													<div class="media-body">
-														<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
-															<br>
-															Fecha de compra: <%= purchaseDateStr %> <br>
-															Fecha de vencimiento: <%= expireDateStr %> <br>
-															Costo total: <%= purchase.getTotalCost() %> <br>
-															Cantidad de Turistas: <%= purchase.getTouristAmount() %> <br>
-													</div>
-												</div>
-											</li>
-										<%
-										}
-										%>
-										</ul>
+					List<DtTouristicDepartureWS> departuresToPrint = toursitData.getDepartures();
+					List<DtPurchaseWS> purchasesToPrint = toursitData.getPurchases();
+					List<DtInscriptionWS> inscriptions = toursitData.getInscriptions();
+					
+					Map<Long, String> departureImages = (Map<Long, String>) request.getAttribute("departureImages");
+					Map<Long, String> bundleImages = (Map<Long, String>) request.getAttribute("bundleImages");
+					
+					
+					if(departuresToPrint != null){
+					%>
+						<div class="container">
+							<h4 class="card-text">Salidas:</h4>
+							<ul class="list-group custom-list">
+							<%
+							for (int i = 0; i < departuresToPrint.size(); i++) {
+								DtInscriptionWS inscription = inscriptions.get(i);
+								String inscriptionDateStr = inscription.getInscriptionDate();
+								DtTouristicDepartureWS departure = departuresToPrint.get(i);
+							%>
+								<li class="list-group-item">
+									<div class="media">
+										<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
+											class="mr-3" style="width: 100px; border-radius: 1em;"> 
+										<div class="media-body">
+											<a href="<%=request.getContextPath()%>/showDeparture?id=<%=departure.getId()%>"> <b> <%=departure.getName()%> </b> </a>
+											<%
+											if(userInSession){
+											%>
+												<br>
+												Fecha de inscripción: <%=inscriptionDateStr%> <br>
+												Costo total: <%=inscription.getTotalCost()%> <br>
+												Cantidad de Turistas: <%=inscription.getTouristAmount()%>
+											<%
+											}
+											%>
+										</div>
 									</div>
-								<%
+								</li>
+							<%
+							}
+							%>
+							</ul>
+						</div>
+					<%
+					}
+					if(userInSession){
+						if(purchasesToPrint != null){
+					%>
+						<div class="container">
+							<h4 class="card-text">Paquetes:</h4>
+							<ul class="list-group custom-list">
+							<%
+							for (DtPurchaseWS purchase : purchasesToPrint) {
+								DtTouristicBundleWS bundle = purchase.getBundle();
+								String purchaseDateStr = purchase.getPurchaseDate();
+								String expireDateStr = purchase.getExpireDate();
+							%>
+								<li class="list-group-item">
+									<div class="media">
+										<img src="<%= bundleImages.get(bundle.getId()) %>"
+											class="mr-3" style="width: 100px;border-radius: 1em;"> 
+										<div class="media-body">
+											<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
+												<br>
+												Fecha de compra: <%= purchaseDateStr %> <br>
+												Fecha de vencimiento: <%= expireDateStr %> <br>
+												Costo total: <%= purchase.getTotalCost() %> <br>
+												Cantidad de Turistas: <%= purchase.getTouristAmount() %> <br>
+										</div>
+									</div>
+								</li>
+							<%
+							}
+							%>
+							</ul>
+						</div>
+					<%
 								}
 							}
 						}

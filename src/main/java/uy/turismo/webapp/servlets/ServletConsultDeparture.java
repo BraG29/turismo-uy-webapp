@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
+import uy.turismo.webapp.ws.DtTouristicActivity;
+import uy.turismo.webapp.ws.DtTouristicDeparture;
 import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.Controller;
+import uy.turismo.webapp.ws.ControllerService;
 
 /**
  * Servlet implementation class ServletConsultDeparture
@@ -34,13 +34,15 @@ public class ServletConsultDeparture extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
+
+		ControllerService service = new ControllerService();
+		Controller controller = service.getControllerPort();
 		
 		if(request.getParameter("activityId") != null) {
 			
 			Long activityId = Long.parseLong(request.getParameter("activityId"));
 		
-			List<DtTouristicDeparture> departures = controller.getListTouristicDeparture(activityId);
+			List<DtTouristicDeparture> departures = controller.getDeparturesByActivity(activityId);
 			
 			if(!departures.isEmpty()) {
 				

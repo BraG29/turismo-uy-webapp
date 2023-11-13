@@ -1,16 +1,16 @@
 <%@page import="javax.crypto.ShortBufferException"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
+<%@page import="uy.turismo.webapp.ws.DtTourist"%>
+<%@page import="uy.turismo.webapp.ws.DtProvider"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+<%@page import="uy.turismo.webapp.ws.DtUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <%
-DtUser userData = (DtUser) request.getAttribute("userData");
+DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
 String imagePath = (String) request.getAttribute("imagePath");
 
@@ -26,7 +26,6 @@ if(!userInSession){
 	
 	response.sendRedirect(request.getContextPath() + "/pages/error/invalidAccess.jsp" );
 }
-
 %>
 
 <head>
@@ -85,8 +84,8 @@ if(!userInSession){
 							</div>
 							<br>
 							<%
-							if (userData instanceof DtProvider) {
-								DtProvider providerData = (DtProvider) userData;
+							if (userData instanceof DtProviderWS) {
+													DtProviderWS providerData = (DtProviderWS) userData;
 							%>
 							<div class="input-group">
 								<span class="input-group-addon">Sitio Web</span> <input
@@ -102,7 +101,7 @@ if(!userInSession){
 						</div>
 						<%
 						} else {
-						DtTourist toursitData = (DtTourist) userData;
+										DtTouristWS toursitData = (DtTouristWS) userData;
 						%>
 						<div class="input-group">
 							<span class="input-group-addon">Nacionalidad</span> <select
