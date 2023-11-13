@@ -6,10 +6,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
+
 import uy.turismo.webapp.functions.Functions;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
 
 /**
  * Servlet implementation class ServletShowActivity
@@ -29,9 +30,10 @@ public class ServletShowActivity extends HttpServlet {
 		
 		Long activityId = Long.parseLong(request.getParameter("activityId"));
 		
-		IController controller = ControllerFactory.getIController();
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 		
-		DtTouristicActivity activityToShow = controller.getTouristicActivityData(activityId);
+		DtTouristicActivityWS activityToShow = controller.getTouristicActivityData(activityId);
 		
 		String activityImagePath = Functions.saveImage(
 				activityToShow.getImage(),
