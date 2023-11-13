@@ -1,5 +1,6 @@
 package uy.turismo.webapp.servlets;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -13,18 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.Session;
-
-import uy.turismo.servidorcentral.logic.controller.ControllerFactory;
-import uy.turismo.servidorcentral.logic.controller.IController;
-import uy.turismo.servidorcentral.logic.datatypes.DtProvider;
-import uy.turismo.servidorcentral.logic.datatypes.DtPurchase;
-import uy.turismo.servidorcentral.logic.datatypes.DtTourist;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
-import uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture;
-import uy.turismo.servidorcentral.logic.datatypes.DtUser;
 import uy.turismo.webapp.functions.Functions;
-import uy.turismos.servidorcentral.logic.enums.ActivityState;
+import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtPurchaseWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
+import uy.turismo.webapp.ws.controller.DtTouristicDepartureWS;
+import uy.turismo.webapp.ws.controller.DtUserWS;
+import uy.turismo.webapp.ws.controller.Publisher;
+import uy.turismo.webapp.ws.controller.PublisherService;
 
 /**
  * Servlet implementation class ServletProfile
@@ -44,10 +42,13 @@ public class ServletProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
+//		IController controller = ControllerFactory.getIController();
+		
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 		
 		Long userId = Long.parseLong(request.getParameter("id"));
-		DtUser userData = null;
+		DtUserWS userData = null;
 		
 		try {
 			userData = controller.getUserData(userId);
@@ -56,26 +57,26 @@ public class ServletProfile extends HttpServlet {
 			System.err.println("Error en Profile: " + e.getMessage());
 		}
 		
-		
-
 //        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
+		BufferedImage userImage = Functions.convertArrayToBI(userData.getImage());
 		if(userData != null) {
 			String imagePath = Functions.saveImage(
-					userData.getImage(),
+					userImage,
 					userData.getNickname(),
 					getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 					"user/");
 			
 			
-			if(userData instanceof DtProvider) {
-				DtProvider providerData = (DtProvider) userData;
+			if(userData instanceof DtProviderWS) {
+				DtProviderWS providerData = (DtProviderWS) userData;
 				if(providerData.getTouristicActivities() != null) {
 					
 					Map<Long, String> activityImages = new HashMap<Long, String>();
 					
-					for(DtTouristicActivity activity : providerData.getTouristicActivities()) {
+					for(DtTouristicActivityWS activity : providerData.getTouristicActivities()) {
+						BufferedImage activityImage = Functions.convertArrayToBI(activity.getImage());
 						String activityImagePath = Functions.saveImage(
-								activity.getImage(),
+								activityImage,
 								activity.getName(),
 								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 								"activity/");
@@ -85,14 +86,15 @@ public class ServletProfile extends HttpServlet {
 					request.setAttribute("activityImages", activityImages);
 				}
 			}else {
-				DtTourist touristData = (DtTourist) userData;
+				DtTouristWS touristData = (DtTouristWS) userData;
 				if(touristData.getDepartures() != null) {
 					
 					Map<Long, String> departureImages = new HashMap<Long, String>();
 					
-					for(DtTouristicDeparture departure : touristData.getDepartures()) {
+					for(DtTouristicDepartureWS departure : touristData.getDepartures()) {
+						BufferedImage departureImage = Functions.convertArrayToBI(departure.getImage());
 						String departureImagePath = Functions.saveImage(
-								departure.getImage(),
+								departureImage,
 								departure.getName(),
 								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 								"departure/");
@@ -105,9 +107,10 @@ public class ServletProfile extends HttpServlet {
 					
 					Map<Long, String> bundleImages = new HashMap<Long, String>();
 					
-					for(DtPurchase purchase : touristData.getPurchases()) {
+					for(DtPurchaseWS purchase : touristData.getPurchases()) {
+						BufferedImage bundleImage = Functions.convertArrayToBI(purchase.getBundle().getImage());
 						String bundleImagePath = Functions.saveImage(
-								purchase.getBundle().getImage(),
+								bundleImage,
 								purchase.getBundle().getName(),
 								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 								"bundle/");
@@ -116,8 +119,6 @@ public class ServletProfile extends HttpServlet {
 					
 					request.setAttribute("bundleImages", bundleImages);
 				}
-				
-				
 				
 			}
 			
@@ -134,7 +135,9 @@ public class ServletProfile extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IController controller = ControllerFactory.getIController();
+
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 		
 		String action = request.getParameter("action");
 		Long userFollowed = Long.parseLong(request.getParameter("pageUserId"));

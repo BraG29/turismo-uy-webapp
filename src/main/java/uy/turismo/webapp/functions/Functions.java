@@ -1,8 +1,12 @@
 package uy.turismo.webapp.functions;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -44,5 +48,38 @@ public class Functions {
 		properties.clear();
 		return "assets/images/" + dir + imageFullName;
 	}
+	
+	public static BufferedImage convertArrayToBI(byte[] imgArray) {
+		BufferedImage image = null;
+
+		try{
+			if( imgArray == null) {
+				throw new NullPointerException("No hay imagen");
+			}
+           	InputStream inptuStream = new ByteArrayInputStream(imgArray);
+           	image = ImageIO.read(inptuStream);
+
+
+
+		}catch(Exception e){
+			e.printStackTrace();	
+		}
+
+		return image;
+	}
+
+	public static String convertDateToString(LocalDate d) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		return d.format(format);
+	}
+
+	public static String convertDateTimeToString(LocalDateTime dt) {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+		return dt.format(format);
+
+	}
+
 	
 }

@@ -18,8 +18,9 @@ import jakarta.xml.bind.annotation.XmlType;
  * &lt;complexType name="dtTouristicActivityWS"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{controller}dtBaseEntityWS"&gt;
- *       &lt;sequence&gt;
+ *       &lt;sequence&gt;src/main/resources/
  *         &lt;element name="bundles" type="{controller}dtTouristicBundleWS" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="categories" type="{controller}dtCategoryWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="costPerTourist" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/&gt;
  *         &lt;element name="department" type="{controller}dtDepartmentWS" minOccurs="0"/&gt;
@@ -43,6 +44,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dtTouristicActivityWS", propOrder = {
     "bundles",
+    "categories",
     "city",
     "costPerTourist",
     "department",
@@ -61,6 +63,7 @@ public class DtTouristicActivityWS
 {
 
     protected List<DtTouristicBundleWS> bundles;
+    protected List<DtCategoryWS> categories;
     protected String city;
     protected Double costPerTourist;
     protected DtDepartmentWS department;
@@ -102,6 +105,35 @@ public class DtTouristicActivityWS
             bundles = new ArrayList<DtTouristicBundleWS>();
         }
         return this.bundles;
+    }
+
+    /**
+     * Gets the value of the categories property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the categories property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getCategories().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DtCategoryWS }
+     * 
+     * 
+     */
+    public List<DtCategoryWS> getCategories() {
+        if (categories == null) {
+            categories = new ArrayList<DtCategoryWS>();
+        }
+        return this.categories;
     }
 
     /**
