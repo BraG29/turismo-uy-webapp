@@ -1,8 +1,8 @@
 <%@page import="java.io.ByteArrayInputStream"%>
-<%@page import="uy.turismo.webapp.ws.DtUserWSArray"%>
-<%@page import="uy.turismo.webapp.ws.DtUserWS"%>
-<%@page import="uy.turismo.webapp.ws.Publisher"%>
-<%@page import="uy.turismo.webapp.ws.PublisherService"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWSArray"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

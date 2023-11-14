@@ -20,7 +20,7 @@
 <%
 DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
-java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
+java.util.List<DtUserWS> usrFollowed = (List<DtUserWS>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
 
 //java.util.List<DtTouristicActivity> favActivities =  (List<DtTouristicActivity>) session.getAttribute("favActivities"); consultActivity
 
@@ -76,7 +76,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							
 							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
 							    boolean isFollowing = false;
-							    for (DtUser followedUser : usrFollowed) {
+							    for (DtUserWS followedUser : usrFollowed) {
 							        if (followedUser.getId() == userData.getId()) {
 							            isFollowing = true;
 							            break;
@@ -277,34 +277,34 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 						<div class="container">
 							<h4 class="card-text">Paquetes:</h4>
 							<ul class="list-group custom-list">
-							<%
-							for (DtPurchaseWS purchase : purchasesToPrint) {
-								DtTouristicBundleWS bundle = purchase.getBundle();
-								String purchaseDateStr = purchase.getPurchaseDate();
-								String expireDateStr = purchase.getExpireDate();
-							%>
-								<li class="list-group-item">
-									<div class="media">
-										<img src="<%= bundleImages.get(bundle.getId()) %>"
-											class="mr-3" style="width: 100px;border-radius: 1em;"> 
-										<div class="media-body">
-											<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
-												<br>
-												Fecha de compra: <%= purchaseDateStr %> <br>
-												Fecha de vencimiento: <%= expireDateStr %> <br>
-												Costo total: <%= purchase.getTotalCost() %> <br>
-												Cantidad de Turistas: <%= purchase.getTouristAmount() %> <br>
+								<%
+								for (DtPurchaseWS purchase : purchasesToPrint) {
+									DtTouristicBundleWS bundle = purchase.getBundle();
+									String purchaseDateStr = purchase.getPurchaseDate();
+									String expireDateStr = purchase.getExpireDate();
+								%>
+									<li class="list-group-item">
+										<div class="media">
+											<img src="<%= bundleImages.get(bundle.getId()) %>"
+												class="mr-3" style="width: 100px;border-radius: 1em;"> 
+											<div class="media-body">
+												<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
+													<br>
+													Fecha de compra: <%= purchaseDateStr %> <br>
+													Fecha de vencimiento: <%= expireDateStr %> <br>
+													Costo total: <%= purchase.getTotalCost() %> <br>
+													Cantidad de Turistas: <%= purchase.getTouristAmount() %> <br>
+											</div>
 										</div>
-									</div>
-								</li>
-							<%
-							}
-							%>
+									</li>
+								<%
+								}
+								%>
 							</ul>
 						</div>
 					<%
-								}
 							}
+						}
 					%>
 				</div>
 			</div>
@@ -350,7 +350,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 		 		
 			
 				var content = `Comprobante de Suscripción\n 
-					Nombre:   <%=fullUserName%>\n				                
+					Nombre:   ${<%=fullUserName%>}\n					                
 	                Nombre de la salida: ${departureNameVar} 
 	               	Fecha de salida: ${inscriptionDateVar} `;
 	                var docDefinition = {
