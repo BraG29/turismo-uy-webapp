@@ -1,12 +1,12 @@
-<%@page import="uy.turismo.webapp.ws.DtDepartment"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismo.webapp.ws.ActivityState"%>
+<%@page import="uy.turismo.webapp.ws.controller.ActivityState"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
-<%@page import="uy.turismo.webapp.ws.DtCategory"%>
-<%@page import="uy.turismo.webapp.ws.DtProvider"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
 <%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 

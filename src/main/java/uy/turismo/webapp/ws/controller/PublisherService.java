@@ -17,7 +17,9 @@ import uy.turismo.webapp.functions.Functions;
  * Generated source version: 2.2
  * 
  */
+
 @WebServiceClient(name = "PublisherService", targetNamespace = "controller")
+
 public class PublisherService
     extends Service
 {

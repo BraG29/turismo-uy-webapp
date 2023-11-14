@@ -12,7 +12,7 @@ DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttrib
 	
 	String userType = (String) session.getAttribute("userType");
 	
-	List<DtTouristicActivity> favActivity =  (List<DtTouristicActivity>) session.getAttribute("favActivities");
+	List<DtTouristicActivityWS> favActivity =  (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 	
 	Long id = (Long) session.getAttribute("id");
 	
@@ -82,7 +82,7 @@ DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttrib
             					<% 	
 						if("tourist".equals(userType)){
 						boolean isFavorite = false;
-					    for (DtTouristicActivity activities : favActivity) {
+					    for (DtTouristicActivityWS activities : favActivity) {
 					    	if (activities.getId() == activityToShow.getId()) {
 					        	isFavorite = true;
 					            break;
@@ -100,9 +100,9 @@ DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttrib
 					}%>
             	
             	
-            	<% if (activityToShow.getVideoURL() != null){%>
+            	<% if (activityToShow.getUrlVideo() != null){%>
             	<br>
-            	<iframe width="560" height="315" src="<%=activityToShow.getVideoURL() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            	<iframe width="560" height="315" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              	
              	<% } else{ %>
              	<br>

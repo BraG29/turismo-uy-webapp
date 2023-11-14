@@ -1,10 +1,10 @@
-<%@page import="uy.turismo.webapp.ws.DtTouristicActivity"%>
-<%@page import="uy.turismo.webapp.ws.DtPurchase"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
 <%@page import="java.util.ArrayList"%>
-<%@page
-	import="uy.turismo.webapp.ws.DtTouristicBundle"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
 <%@page import="java.util.List"%>
-<%@page import="uy.turismo.webapp.ws.DtTourist"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.util.Base64"%>
@@ -12,13 +12,13 @@
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="uy.turismo.webapp.ws.DtCategory"%>
-<%@page
-	import="uy.turismo.webapp.ws.DtTouristicDeparture"%>
-<%@page import="uy.turismo.webapp.ws.DtDepartment"%>
-<%@page
-	import="uy.turismo.webapp.ws.Controller"%>
-<%@page import="uy.turismo.webapp.ws.ControllerService"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
+
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -26,8 +26,8 @@
 <%
 //departureProfile
 
-ControllerService service = new ControllerService();
-Controller controller = service.getControllerPort();
+PublisherService service = new PublisherService();
+Publisher controller = service.getPublisherPort();
 
 Long departureId = (Long) request.getAttribute("departureId"); //id que me viene desde el servlet
 
@@ -39,11 +39,13 @@ String place = departure.getPlace();
 
 Integer maxTourist = departure.getMaxTourist();
 
-LocalDate uploadDate = departure.getUploadDate();
+String uploadDateStr = departure.getUploadDate();
+LocalDate uploadDate = LocalDate.parse(uploadDateStr, DateTimeFormatter.ISO_DATE);
 
-LocalDateTime departureDate = departure.getDepartureDateTime();
+String departureDateStr = departure.getDepartureDateTime();
+LocalDateTime departureDateTime = LocalDateTime.parse(departureDateStr, DateTimeFormatter.ISO_DATE_TIME);
 
-BufferedImage departureImage = departure.getImage();
+byte [] departureImage = departure.getImage();
 
 //Logica para inscripcion
 
@@ -108,7 +110,9 @@ Boolean availableUser = session.getAttribute("userType") != null
 														bundle.getId()).getActivities();
 								
 										LocalDate actualDate = LocalDate.now();
-										LocalDate expireDate = purchase.getExpireDate();
+										
+										String expireDateStr = purchase.getExpireDate();
+										LocalDate expireDate = LocalDate.parse(expireDateStr, DateTimeFormatter.ISO_DATE);
 								
 										if (actualDate.isBefore(expireDate) && activitiesInBundle.contains(departure.getTouristicActivity())) {
 											availableBundles.add(bundle);
@@ -161,20 +165,16 @@ Boolean availableUser = session.getAttribute("userType") != null
 			<%
 			if (departureImage != null) {
 
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				String format = "jpeg"; // Formato predeterminado es JPEG
-
-				// Determina el formato de la imagen
-				if (departureImage.getTransparency() == BufferedImage.OPAQUE) {
-					format = "png";
-				}
-
-				ImageIO.write(departureImage, format, baos);
-				byte[] bytes = baos.toByteArray();
-				String base64Image = Base64.getEncoder().encodeToString(bytes);
+				BufferedImage image = Functions.convertArrayToBI(departureImage);
+		        
+		        String imagePath = Functions.saveImage(
+		        		image, 
+	               		departure.getName(), 
+	               		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+	               		"departure/");
 			%>
 			<img class="image"
-				src="data:image/<%=format%>;base64,<%=base64Image%>"
+				src="<%=imagePath%>"
 				alt="Foto de perfil">
 			<%
 			} else {
@@ -192,7 +192,7 @@ Boolean availableUser = session.getAttribute("userType") != null
 				<%=maxTourist%></p>
 			<p class="card-text">
 				Fecha de salida:
-				<%=departureDate%></p>
+				<%=departureDateTime%></p>
 		</div>
 
 	</div>
