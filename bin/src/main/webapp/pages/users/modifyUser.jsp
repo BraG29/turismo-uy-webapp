@@ -1,9 +1,9 @@
 <%@page import="javax.crypto.ShortBufferException"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="uy.turismo.webapp.ws.DtTourist"%>
-<%@page import="uy.turismo.webapp.ws.DtProvider"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
-<%@page import="uy.turismo.webapp.ws.DtUser"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ String imagePath = (String) request.getAttribute("imagePath");
 DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 // Saco la fecha ya formateada como se explico antes
-String birthDateStr = userData.getBirthDate().format(format);
+String birthDateStr = userData.getBirthDate().format(format); //TODO: 
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
 
