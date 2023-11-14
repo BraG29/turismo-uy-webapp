@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.Session;
+
 
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
