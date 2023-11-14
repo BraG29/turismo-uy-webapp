@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.ActivityState;
 import uy.turismo.webapp.ws.controller.DtTouristWS;
 import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
@@ -55,11 +56,16 @@ public class ServletRegisterDeparture extends HttpServlet {
 		DateTimeFormatter formatterLocalDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		LocalDateTime startingDate = LocalDateTime.parse(dateString, formatterLocalDateTime);//DepartureDateTime
 		
+		//Codigo agregado: LT
+		String startingDateStr = Functions.convertDateTimeToString(startingDate);
+		
+		
 		int maxTourists = Integer.parseInt(request.getParameter("maxTourists"));
 		
 		String place = request.getParameter("place");
 		
 		LocalDate uploadDate = LocalDate.now();
+		String uploadDateStr = Functions.convertDateToString(uploadDate);
 		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
@@ -91,9 +97,11 @@ public class ServletRegisterDeparture extends HttpServlet {
 		
 		departureData.setName(nameDeparture);
 		departureData.setMaxTourist(maxTourists);
+		departureData.setUploadDate(uploadDateStr);
+		departureData.setDepartureDateTime(startingDateStr);
 		departureData.setPlace(place);
 		departureData.setTouristicActivity(activity);
-		departureData.setTourist(tourists);
+		//departureData.setTourist(tourists);
 		
 		try {
 			controller.registerTouristicDeparture(departureData);

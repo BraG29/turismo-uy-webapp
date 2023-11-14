@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+
+
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
+<%@page import="uy.turismo.webapp.functions.Functions"%>
+
+
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.util.List"%>
 <%@page import="java.awt.image.BufferedImage"%>
@@ -74,11 +79,12 @@
     </style>
 
     <% 
-    IController controller = ControllerFactory.getIController();
+    PublisherService service = new PublisherService();
+    Publisher controller = service.getPublisherPort();
     
     Long idBundle = (Long) request.getAttribute("idBundle"); //id que me viene desde el servlet
     
-    DtTouristicBundle bundle = controller.getTouristicBundleData(idBundle);
+    DtTouristicBundleWS bundle = controller.getTouristicBundleData(idBundle);
 
     String name = bundle.getName(); 
 	Long userInSession = (Long) session.getAttribute("userId");    
@@ -108,46 +114,34 @@
     
     //perro truco con la fecha
     
-    LocalDate uploadDate = bundle.getUploadDate();
+    String uploadDateStr = bundle.getUploadDate();
     
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
-    String uploadDateStr = uploadDate.format(formatter);
     
     //fin del perro truco con la fecha.  
-    List<DtTouristicActivity> activities = bundle.getActivities(); //hacerle for each para nombres e imagenes
+    List<DtTouristicActivityWS> activities = bundle.getActivities(); //hacerle for each para nombres e imagenes
     
-    List<DtCategory> categories = bundle.getCategories(); //hacerle for each para nombres.
+    List<DtCategoryWS> categories = bundle.getCategories(); //hacerle for each para nombres.
     		
     Double price = bundle.getPrice();
     		
     //procesamiento de imagenes del paquete.		
-    BufferedImage bundleImage = bundle.getImage();
+    byte [] bundleImage = bundle.getImage();
     
         if(bundleImage != null){
         	
-        
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        String format = "jpeg"; // Formato predeterminado es JPEG
-
-        // Determina el formato de la imagen
-        
-        
-        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
-            format = "png";
-        }
-
-        ImageIO.write(bundleImage, format, baos);
-        byte[] bytes = baos.toByteArray();
-        String base64Image = Base64.getEncoder().encodeToString(bytes);
-        
+       	 	BufferedImage image = Functions.convertArrayToBI(bundleImage);
+		        
+	        String imagePath = Functions.saveImage(
+	        		image, 
+               		bundle.getName(), 
+               		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+               		"bundle/");
     %>
 <div class="container">
        
     <div class="divBundle">
        
-	    <img style="width:25em;  border-radius: 5%;" class="imageStyle"  width="250" height="250" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+	    <img style="width:25em;  border-radius: 5%;" class="imageStyle"  width="250" height="250" src="<%= imagePath %>" alt="Foto de perfil">
 	
 	    <p class="card-text"> Descripción: <%=description%></p>
 	    
@@ -174,7 +168,7 @@
 	    
 	    <ul>
 	    <% 
-	    for (DtCategory category: categories){
+	    for (DtCategoryWS category: categories){
 	    %>
 	    	<li>
 	    		<span> <%=category.getName()%>  </span>	
@@ -187,7 +181,7 @@
 
 	    if(userInSession != null && usrType.equals("tourist")){
 	    	
-		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+		DtTouristWS touristData = (DtTouristWS) controller.getUserData(userInSession);
 				    
 	    %>
 	    
@@ -231,22 +225,18 @@
 								<%
 								//for each de actividades.
 								
-								for (DtTouristicActivity activity : activities) {
-									
-									BufferedImage activityImage = activity.getImage();
+								for (DtTouristicActivityWS activity : activities) {
+									byte [] activityImage = activity.getImage();
+
+									if(activityImage != null){
 									//procesar imagenes de la actividad
-									if(activityImage != null){	
-									ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
-								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
-								
-								        // Determina el formato de la imagen
-								        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
-								            activityFormat = "png";
-								        }
-								
-								        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
-								        byte[] activityBytes = activityBaos.toByteArray();
-								        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+									BufferedImage imageActivity = Functions.convertArrayToBI(activityImage);
+		        
+							        String imagePathActivity = Functions.saveImage(
+							        		imageActivity, 
+						               		activity.getName(), 
+						               		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+						               		"activity/");
 									
 									
 								%>
@@ -259,7 +249,7 @@
 											</a>
 											</div>
 											<div class="image">
-												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%= activityFormat %>;base64,<%= base64ActivityImage%>" alt="Foto de perfil">
+												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="<%= imagePathActivity %>" alt="Foto de perfil">
 											</div>
 										
 									</div>
@@ -314,7 +304,7 @@
 	    
 	    <ul>
 	    <% 
-	    for (DtCategory category: categories){
+	    for (DtCategoryWS category: categories){
 	    %>
 	    	<li>
 	    		<span> <%=category.getName()%>  </span>	
@@ -327,7 +317,7 @@
 
 	    if(userInSession != null && usrType.equals("tourist")){
 	    	
-		DtTourist touristData = (DtTourist) controller.getUserData(userInSession);
+		DtTouristWS touristData = (DtTouristWS) controller.getUserData(userInSession);
 				    
 	    %>
 	    
@@ -371,24 +361,19 @@
 								<%
 								//for each de actividades.
 								
-								for (DtTouristicActivity activity : activities) {
+								for (DtTouristicActivityWS activity : activities) {
 									
-									BufferedImage activityImage = activity.getImage();
+									byte [] activityImage = activity.getImage();
+
+									if(activityImage != null){
 									//procesar imagenes de la actividad
-										if(activityImage != null){
-											
-										
-										ByteArrayOutputStream activityBaos = new ByteArrayOutputStream();
-								        String activityFormat = "jpeg"; // Formato predeterminado es JPEG
-								
-								        // Determina el formato de la imagen
-								        if (activityImage.getTransparency() == BufferedImage.OPAQUE) {
-								            activityFormat = "png";
-								        }
-								
-								        ImageIO.write(activity.getImage(), activityFormat, activityBaos);
-								        byte[] activityBytes = activityBaos.toByteArray();
-								        String base64ActivityImage = Base64.getEncoder().encodeToString(activityBytes);
+									BufferedImage imageActivity = Functions.convertArrayToBI(activityImage);
+		        
+							        String imagePathActivity = Functions.saveImage(
+							        		imageActivity, 
+						               		activity.getName(), 
+						               		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+						               		"activity/");
 									
 									
 								%>
@@ -401,7 +386,7 @@
 											</a>
 											</div>
 											<div class="image">
-												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="data:image/<%= activityFormat %>;base64,<%= base64ActivityImage%>" alt="Foto de perfil">
+												<img style="width:25em;  border-radius: 5%; margin-left: 3%;" width="250" height="250" src="<%= imagePathActivity %>" alt="Foto de perfil">
 											</div>
 										
 									</div>

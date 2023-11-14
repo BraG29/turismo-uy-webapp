@@ -45,7 +45,7 @@ public class ServletRegisterActivity extends HttpServlet {
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
 		
-		List<DtCategoryWS> categories = controller.getListCategory();
+		List<DtCategoryWS> categories = controller.getListCategory().getItem();
 		
 		request.setAttribute("categories", categories);
 		request.getRequestDispatcher("pages/activities/registerActivity.jsp")
@@ -80,10 +80,21 @@ public class ServletRegisterActivity extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
 		
-		DtProviderWS provider = new DtProviderWS( (Long) session.getAttribute("userId"), "", "", null);
-		DtDepartmentWS department = new DtDepartmentWS(Long.parseLong(request.getParameter("department")));
+		DtProviderWS provider = new DtProviderWS();
+		//dentro de DtProviderWS:  (Long) session.getAttribute("userId"), "", "", null
+		
+		Long providerId = (Long) session.getAttribute("userId");
+		
+		provider.setId(providerId);
+		
+		
+		DtDepartmentWS department = new DtDepartmentWS();
+		//Dentro de DtDepartmentWs: Long.parseLong(request.getParameter("department"))
+		
+		Long departmentId = Long.parseLong(request.getParameter("department"));
 		
 		String[] arrayCategories = request.getParameterValues("categories");
+		
 		List<DtCategoryWS> categoriesList = new ArrayList<DtCategoryWS>();
 		
 		for(int c = 0; c < arrayCategories.length; c++) {

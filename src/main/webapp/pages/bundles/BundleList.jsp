@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
 
 <%@page import="java.util.List" %>
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle" %>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
+<%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream" %>
 <%@ page import="java.util.Base64" %>
@@ -69,34 +70,32 @@
 		
 		<%
 		
-		IController controller = ControllerFactory.getIController();
+		PublisherService service = new PublisherService();
+		Publisher controller = service.getPublisherPort();
 		
-		List<DtTouristicBundle> bundles = controller.getListTouristicBundle();
+		List<DtTouristicBundleWS> bundles = controller.getListTouristicBundle().getItem();
 		
 		
-		for(DtTouristicBundle bundle : bundles){
+		for(DtTouristicBundleWS bundle : bundles){
 		
 			
-			BufferedImage bundleImage = bundle.getImage(); 
+			byte[] image = bundle.getImage(); 
 			
-			if(bundleImage != null){
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		        String format = "jpeg"; // Formato predeterminado es JPEG
-
-		        // Determina el formato de la imagen
-		        if (bundleImage.getTransparency() == BufferedImage.OPAQUE) {
-		            format = "png";
-		        }
-
-		        ImageIO.write(bundleImage, format, baos);
-		        byte[] bytes = baos.toByteArray();
-		        String base64Image = Base64.getEncoder().encodeToString(bytes);
+			if(image != null){
+				
+					 BufferedImage usrImage = Functions.convertArrayToBI(image);
+			        
+			        String imagePath = Functions.saveImage(
+			        		usrImage, 
+                         	bundle.getName(), 
+                         	getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+                         	"bundle/");
 			
 			
 		%>
 		
 		<li class="bundle-item">
-			<img style="width:25em;  border-radius: 5%;" class="bundle-image" src="data:image/<%= format %>;base64,<%= base64Image %>" alt="Foto de perfil">
+			<img style="width:25em;  border-radius: 5%;" class="bundle-image" src="<%= imagePath %>" alt="Foto de perfil">
 			<div class="bundle-info">
 			<span class="bundle-name"> Nombre:
 				<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>">

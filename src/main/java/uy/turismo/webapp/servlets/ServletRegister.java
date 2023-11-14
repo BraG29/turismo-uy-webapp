@@ -67,27 +67,6 @@ public class ServletRegister extends HttpServlet {
 		
 		String nickname = request.getParameter("nickname"); 
 		
-		System.out.println(nickname);
-		
-		String testNickname = "chino";
-		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		out.println("<response>");
-
-		if(nickname.equals(testNickname)) {
-			out.println("<status>no_disponible</status>");
-		} else {
-			out.println("<status>disponible</status>");
-		}
-
-		out.println("</response>");
-	
-	    
-	
-		
-		
 		String name = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String password = request.getParameter("password");
@@ -112,8 +91,10 @@ public class ServletRegister extends HttpServlet {
 		
 		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		    		InputStream fileContent = filePart.getInputStream();
-		    		BufferedImage image = ImageIO.read(fileContent);
-		    
+		    		BufferedImage requestImage = ImageIO.read(fileContent);
+		    		
+		    		byte[] image = Functions.convertImageToArray(requestImage);
+		    		
 		    		DtProviderWS userData = new DtProviderWS(); 
 		    		userData.setName(name);
 		    		userData.setNickname(nickname);
@@ -136,7 +117,9 @@ public class ServletRegister extends HttpServlet {
 		    		
 		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		    		InputStream fileContent = filePart.getInputStream();
-		    		BufferedImage image = ImageIO.read(fileContent);
+		    		BufferedImage requestImage = ImageIO.read(fileContent);
+		    		
+		    		byte[] image = Functions.convertImageToArray(requestImage);
 		    	
 		    		DtTouristWS userData =  new DtTouristWS();
 		    		userData.setName(name);
@@ -153,9 +136,7 @@ public class ServletRegister extends HttpServlet {
 					request.setAttribute("successType", successType);
 		    		
 		    		request.getRequestDispatcher("/successPage").forward(request, response);
-		    		
-		    			
-		    	}
+	    	}
     	
 		}catch(Exception e) {
 			

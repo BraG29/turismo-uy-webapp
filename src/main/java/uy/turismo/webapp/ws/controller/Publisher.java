@@ -290,8 +290,8 @@ public interface Publisher {
     @WebResult(name = "departmentsList", partName = "departmentsList")
     @Action(input = "controller/Publisher/getListDepartmentRequest", output = "controller/Publisher/getListDepartmentResponse")
     public DtDepartmentWSArray getListDepartment(
-        @WebParam(name = "withActivities?", partName = "withActivities?")
-        boolean withActivities_003f);
+        @WebParam(name = "withActivities", partName = "withActivities")
+        boolean withActivities);
 
     /**
      * 

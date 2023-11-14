@@ -1,19 +1,27 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtInscription"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
+
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
+
+
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtInscriptionWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.ActivityState"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
+
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.stream.Collectors"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+
 <%@page import="java.time.format.DateTimeFormatter"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -283,12 +291,13 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 										</ul>
 									</div>
 								<%
-								}
-							}
-					%>
+									
+									}
+								}%>
+						
 				</div>
 			</div>
-		</div>
+		</div>	
 		
 	</div>
 
@@ -330,7 +339,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 		 		
 			
 				var content = `Comprobante de Suscripción\n 
-					Nombre:   <%=fullUserName%>\n				                
+					Nombre: ${<%=fullUserName%>}\n				                
 	                Nombre de la salida: ${departureNameVar} 
 	               	Fecha de salida: ${inscriptionDateVar} `;
 	                var docDefinition = {
