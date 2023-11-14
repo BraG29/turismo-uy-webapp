@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * &lt;complexType name="dtTouristicActivityWS"&gt;
  *   &lt;complexContent&gt;
  *     &lt;extension base="{controller}dtBaseEntityWS"&gt;
- *       &lt;sequence&gt;src/main/resources/
+ *       &lt;sequence&gt;
  *         &lt;element name="bundles" type="{controller}dtTouristicBundleWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="categories" type="{controller}dtCategoryWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;

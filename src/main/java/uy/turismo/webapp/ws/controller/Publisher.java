@@ -282,7 +282,7 @@ public interface Publisher {
 
     /**
      * 
-     * @param withActivities_003f
+     * @param withActivities
      * @return
      *     returns controller.DtDepartmentWSArray
      */

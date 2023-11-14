@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,6 +51,17 @@ public class Functions {
 		properties.clear();
 		return "assets/images/" + dir + imageFullName;
 	}
+	
+//	public static String getWSDLURL() {
+//		Properties properties = new Properties();
+//		try {
+//			properties.load(new FileInputStream("../../../../../resources/configWebapp.properties"));
+//			return properties.getProperty("webServiceURL");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return "";
+//	}
 	
 	public static BufferedImage convertArrayToBI(byte[] imgArray) {
 		BufferedImage image = null;

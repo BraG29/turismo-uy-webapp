@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 <%@page import="java.util.ArrayList"%>
 
@@ -26,9 +27,9 @@
 	pageEncoding="UTF-8"%>
 
 <%
-DtUser userData = (DtUser) request.getAttribute("userData");
+DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
-java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
+java.util.List<DtUserWS> usrFollowed = (List<DtUserWS>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
 
 //java.util.List<DtTouristicActivity> favActivities =  (List<DtTouristicActivity>) session.getAttribute("favActivities"); consultActivity
 
@@ -84,7 +85,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							
 							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
 							    boolean isFollowing = false;
-							    for (DtUser followedUser : usrFollowed) {
+							    for (DtUserWS followedUser : usrFollowed) {
 							        if (followedUser.getId() == userData.getId()) {
 							            isFollowing = true;
 							            break;
