@@ -53,6 +53,10 @@
         p{
     		line-height: 0.9; /* You can adjust the value as needed for tighter or looser spacing */
 		}
+		
+		@media (max-width: 700px){
+			
+		}
     </style>
     
 </head>
@@ -111,11 +115,10 @@
             	
             	<% if (activityToShow.getUrlVideo() != null){%>
             	<br>
-            	<iframe width="560" height="315" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            	<iframe class="mobile" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              	
              	<% } else{ %>
              	<br>
-             	<span>No hay video chaval</span>
              	<span>No hay video</span>
              	 <img width="560" height="315" src="" class="card-img-top" alt="Video" style="margin: auto;  border-radius: 5%; " >
              	

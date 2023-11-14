@@ -1,5 +1,5 @@
 <%@page import="java.util.Map"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -23,7 +23,7 @@
 <title>Turismo.UY</title>
 </head>
 <%
-	List<DtTouristicDeparture> departures = (List<DtTouristicDeparture>) request.getAttribute("departures");
+	List<DtTouristicDepartureWS> departures = (List<DtTouristicDepartureWS>) request.getAttribute("departures");
 
 	Map<Long, String> departureImages = (Map<Long, String>) request.getAttribute("departureImages");
 %>
@@ -34,7 +34,7 @@
 	<div class="container">
 		<br><h2 class="card-text">Elija una Salida Turística:</h2> <br>
 		<ul class="list-group custom-list">
-		<%for(DtTouristicDeparture departure : departures){ %>
+		<%for(DtTouristicDepartureWS departure : departures){ %>
 			<li class="list-group-item">
 				<div class="media">
 					<img src="<%= departureImages.get(departure.getId()) %>" class="mr-3" style="width: 100px; border-radius: 5%;">

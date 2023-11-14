@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-
 <%@page import="java.util.ArrayList"%>
-
-
 <%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtInscriptionWS"%>
@@ -31,7 +27,7 @@ DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
 java.util.List<DtUserWS> usrFollowed = (List<DtUserWS>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
 
-//java.util.List<DtTouristicActivity> favActivities =  (List<DtTouristicActivity>) session.getAttribute("favActivities"); consultActivity
+//java.util.List<DtTouristicActivityWSWS> favActivities =  (List<DtTouristicActivityWSWS>) session.getAttribute("favActivities"); consultActivity
 
 String imagePath = (String) request.getAttribute("imagePath");
 
@@ -41,7 +37,7 @@ String fullUserName = String.format("%s %s", userData.getName(), userData.getLas
 DateTimeFormatter format = DateTimeFormatter.ofPattern("d MMMM 'de' yyyy");
 
 // Saco la fecha ya formateada como se explico antes
-String birthDateStr = userData.getBirthDate().format(format);
+String birthDateStr = userData.getBirthDate();
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
 
@@ -152,13 +148,13 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 
 						<%
 
-						List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
+						List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
 							
 						Map<Long, String> activityImages = (Map<Long, String>) request.getAttribute("activityImages");
 						
 						if (providerData.getTouristicActivities() != null) {
 
-								for(DtTouristicActivity activity : providerData.getTouristicActivities()){
+								for(DtTouristicActivityWS activity : providerData.getTouristicActivities()){
 									if( userInSession ){
 										switch(activity.getState()){
 										
@@ -193,35 +189,35 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							<h4 class="card-text">Actividades:</h4>
 							<ul class="list-group custom-list">
 								<%
-								for (DtTouristicActivity activity : activitiesToPrint) {
+								for (DtTouristicActivityWS activity : activitiesToPrint) {
 								%>
 								<li class="list-group-item">
 									<div class="media">
-										<img src="<%=activityImages.get(activity.getId())%>"
-
+										<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%>">
+											<img src="<%=activityImages.get(activity.getId())%>"
 											class="mr-3" style="width: 100px; border-radius: 1em;"> 
-											<div class="media-body"><%= activity.getName() %></div>
-										
+											
+											<span class="media-body"><%= activity.getName() %></span>
+										</a>
 									</div>
-								</li>
-								<%
-								}
-								%>
+								</li>								
+								<%}%>
+
 							</ul>
 						</div>
 					</div>
 					<%
 					} else {
-						DtTourist toursitData = (DtTourist) userData;
+						DtTouristWS toursitData = (DtTouristWS) userData;
 					%>
 						<p class="card-text">
 							Nacionalidad:
 							<%=toursitData.getNationality()%></p>
 
 					<% 
-						List<DtTouristicDeparture> departuresToPrint = toursitData.getDepartures();
-						List<DtPurchase> purchasesToPrint = toursitData.getPurchases();
-						List<DtInscription> inscriptions = toursitData.getInscriptions();
+						List<DtTouristicDepartureWS> departuresToPrint = toursitData.getDepartures();
+						List<DtPurchaseWS> purchasesToPrint = toursitData.getPurchases();
+						List<DtInscriptionWS> inscriptions = toursitData.getInscriptions();
 						
 						Map<Long, String> departureImages = (Map<Long, String>) request.getAttribute("departureImages");
 						Map<Long, String> bundleImages = (Map<Long, String>) request.getAttribute("bundleImages");
@@ -234,9 +230,9 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 								<ul class="list-group custom-list">
 								<%
 								for (int i = 0; i < departuresToPrint.size(); i++) {
-									DtInscription inscription = inscriptions.get(i);
-									String inscriptionDateStr = inscription.getInscriptionDate().format(format);
-									DtTouristicDeparture departure = departuresToPrint.get(i);
+									DtInscriptionWS inscription = inscriptions.get(i);
+									String inscriptionDateStr = inscription.getInscriptionDate();
+									DtTouristicDepartureWS departure = departuresToPrint.get(i);
  								%>
 									<li class="list-group-item">
 										<div class="media">
@@ -267,10 +263,10 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 										<h4 class="card-text">Paquetes:</h4>
 										<ul class="list-group custom-list">
 										<%
-										for (DtPurchase purchase : purchasesToPrint) {
-											DtTouristicBundle bundle = purchase.getBundle();
-											String purchaseDateStr = purchase.getPurchaseDate().format(format);
-											String expireDateStr = purchase.getExpireDate().format(format);
+										for (DtPurchaseWS purchase : purchasesToPrint) {
+											DtTouristicBundleWS bundle = purchase.getBundle();
+											String purchaseDateStr = purchase.getPurchaseDate();
+											String expireDateStr = purchase.getExpireDate();
 		 								%>
 											<li class="list-group-item">
 												<div class="media">
@@ -286,15 +282,16 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 													</div>
 												</div>
 											</li>
-										<%
-										}
-										%>
+										
+										<%}%>
+										
 										</ul>
 									</div>
-								<%
+								
 									
-									}
-								}%>
+									<%}%>
+								<%}%>
+								<%}%>
 						
 				</div>
 			</div>
