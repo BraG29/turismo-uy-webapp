@@ -20,6 +20,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="bundles" type="{controller}dtTouristicBundleWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="departures" type="{controller}dtTouristicDepartureWS" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="favActivities" type="{controller}dtTouristicActivityWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="inscriptions" type="{controller}dtInscriptionWS" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="nationality" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="purchases" type="{controller}dtPurchaseWS" maxOccurs="unbounded" minOccurs="0"/&gt;
@@ -35,6 +36,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "dtTouristWS", propOrder = {
     "bundles",
     "departures",
+    "favActivities",
     "inscriptions",
     "nationality",
     "purchases"
@@ -45,6 +47,7 @@ public class DtTouristWS
 
     protected List<DtTouristicBundleWS> bundles;
     protected List<DtTouristicDepartureWS> departures;
+    protected List<DtTouristicActivityWS> favActivities;
     protected List<DtInscriptionWS> inscriptions;
     protected String nationality;
     protected List<DtPurchaseWS> purchases;
@@ -105,6 +108,35 @@ public class DtTouristWS
             departures = new ArrayList<DtTouristicDepartureWS>();
         }
         return this.departures;
+    }
+
+    /**
+     * Gets the value of the favActivities property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the favActivities property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getFavActivities().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DtTouristicActivityWS }
+     * 
+     * 
+     */
+    public List<DtTouristicActivityWS> getFavActivities() {
+        if (favActivities == null) {
+            favActivities = new ArrayList<DtTouristicActivityWS>();
+        }
+        return this.favActivities;
     }
 
     /**
