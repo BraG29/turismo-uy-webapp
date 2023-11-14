@@ -46,7 +46,9 @@ public class ServletConsultDeparture extends HttpServlet {
 			
 			Long activityId = Long.parseLong(request.getParameter("activityId"));
 		
+			//esta lista esta pidiendo un id : LT
 			List<DtTouristicDepartureWS> departures = controller.getListTouristicDeparture(activityId);
+			//List<DtTouristicDepartureWS> departures = controller.getListTouristicDeparture().getItem();
 			
 			if(!departures.isEmpty()) {
 				

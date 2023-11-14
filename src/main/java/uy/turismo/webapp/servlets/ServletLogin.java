@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.DtTouristWS;
@@ -63,7 +64,7 @@ public class ServletLogin extends HttpServlet {
             		"userName", 
             		String.format("%s %s", user.getName(), user.getLastName()));
               
-        	java.util.List<DtUserWS> followed = user.getFollowed();
+        	List<DtUserWS> followed = user.getFollows();
         	session.setAttribute("followed", followed);
         	
             //Genero el input Stream aqui porque no podia hacerlo en la operacion 'seveImage' ya que es 'static'
@@ -82,7 +83,7 @@ public class ServletLogin extends HttpServlet {
             	
             	 DtTouristWS touristUser = (DtTouristWS) user;
             	
-            	java.util.List<DtTouristicActivityWS> activities = touristUser.getFavActivties();
+            	 List<DtTouristicActivityWS> activities = touristUser.getFavActivities();
             	session.setAttribute("favActivities", activities);
             	
             	//cargar actividad.
