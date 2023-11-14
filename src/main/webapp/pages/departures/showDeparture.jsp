@@ -1,9 +1,9 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtPurchase"%>
+
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicBundle"%>
+
 <%@page import="java.util.List"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTourist"%>
+
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream"%>
 <%@ page import="java.util.Base64"%>
@@ -11,11 +11,20 @@
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="java.time.LocalDate"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicDeparture"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
+
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
+
+<%@page import="uy.turismo.webapp.functions.Functions"%>
+
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -23,11 +32,12 @@
 <%
 //departureProfile
 
-IController controller = ControllerFactory.getIController();
+PublisherService service = new PublisherService();
+Publisher controller = service.getPublisherPort();
 
 Long departureId = (Long) request.getAttribute("departureId"); //id que me viene desde el servlet
 
-DtTouristicDeparture departure = controller.getTouristicDepartureData(departureId);
+DtTouristicDepartureWS departure = controller.getTouristicDepartureData(departureId);
 
 String name = departure.getName();
 
@@ -35,15 +45,18 @@ String place = departure.getPlace();
 
 Integer maxTourist = departure.getMaxTourist();
 
-LocalDate uploadDate = departure.getUploadDate();
+String uploadDateStr = departure.getUploadDate();
+LocalDate uploadDate = LocalDate.parse(uploadDateStr, DateTimeFormatter.ISO_DATE);
 
-LocalDateTime departureDate = departure.getDepartureDateTime();
+String departureDateStr = departure.getDepartureDateTime();
+LocalDateTime departureDateTime = LocalDateTime.parse(departureDateStr, DateTimeFormatter.ISO_DATE_TIME);
 
-BufferedImage departureImage = departure.getImage();
+
+byte [] departureImage = departure.getImage();
 
 //Logica para inscripcion
 
-DtTourist touristData = new DtTourist();
+DtTouristWS touristData = new DtTouristWS();
 
 Boolean availableUser = session.getAttribute("userType") != null
 		&& ((String) session.getAttribute("userType")).equalsIgnoreCase("tourist");
@@ -80,27 +93,29 @@ Boolean availableUser = session.getAttribute("userType") != null
 
 				Long userId = (Long) session.getAttribute("userId");
 
-				touristData = (DtTourist) controller.getUserData(userId);
+				touristData = (DtTouristWS) controller.getUserData(userId);
 
 				if (touristAmount < maxTourist && !touristData.getDepartures().contains(departure)) {
 
-					List<DtTouristicBundle> touristBundles = touristData.getBundles();
+					List<DtTouristicBundleWS> touristBundles = touristData.getBundles();
 
-					List<DtPurchase> touristPurchases = touristData.getPurchases();
+					List<DtPurchaseWS> touristPurchases = touristData.getPurchases();
 
-					List<DtTouristicBundle> availableBundles = new ArrayList<DtTouristicBundle>();
+					List<DtTouristicBundleWS> availableBundles = new ArrayList<DtTouristicBundleWS>();
 
 					for (int i = 0; i < touristPurchases.size(); i++) {
 
-						DtPurchase purchase = touristPurchases.get(i);
-						DtTouristicBundle bundle = touristBundles.get(i);
+						DtPurchaseWS purchase = touristPurchases.get(i);
+						DtTouristicBundleWS bundle = touristBundles.get(i);
 						
-						List<DtTouristicActivity> activitiesInBundle = controller
+						List<DtTouristicActivityWS> activitiesInBundle = controller
 								.getTouristicBundleData(
 										bundle.getId()).getActivities();
 		
 						LocalDate actualDate = LocalDate.now();
-						LocalDate expireDate = purchase.getExpireDate();
+						String expireDateStr = purchase.getExpireDate();
+						LocalDate expireDate = LocalDate.parse(expireDateStr, DateTimeFormatter.ISO_DATE);
+
 		
 						if (actualDate.isBefore(expireDate) && activitiesInBundle.contains(departure.getTouristicActivity())) {
 							availableBundles.add(bundle);
@@ -121,8 +136,8 @@ Boolean availableUser = session.getAttribute("userType") != null
 					for (int i = 0; i < availableBundles.size(); i++) {
 						
 
-						DtPurchase purchase = touristPurchases.get(i);
-						DtTouristicBundle bundle = availableBundles.get(i);
+						DtPurchaseWS purchase = touristPurchases.get(i);
+						DtTouristicBundleWS bundle = availableBundles.get(i);
 						
 						String url = 
 								request.getContextPath() + 
@@ -153,20 +168,16 @@ Boolean availableUser = session.getAttribute("userType") != null
 			<%
 			if (departureImage != null) {
 
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				String format = "jpeg"; // Formato predeterminado es JPEG
-
-				// Determina el formato de la imagen
-				if (departureImage.getTransparency() == BufferedImage.OPAQUE) {
-					format = "png";
-				}
-
-				ImageIO.write(departureImage, format, baos);
-				byte[] bytes = baos.toByteArray();
-				String base64Image = Base64.getEncoder().encodeToString(bytes);
+				BufferedImage image = Functions.convertArrayToBI(departureImage);
+		        
+		        String imagePath = Functions.saveImage(
+		        		image, 
+	               		departure.getName(), 
+	               		getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+	               		"departure/");
 			%>
 			<img class="image"
-				src="data:image/<%=format%>;base64,<%=base64Image%>"
+				src="<%=imagePath%>"
 				alt="Foto de perfil">
 			<%
 			} else {
@@ -184,7 +195,7 @@ Boolean availableUser = session.getAttribute("userType") != null
 				<%=maxTourist%></p>
 			<p class="card-text">
 				Fecha de salida:
-				<%=departureDate%></p>
+				<%=departureDateTime%></p>
 		</div>
 
 	</div>

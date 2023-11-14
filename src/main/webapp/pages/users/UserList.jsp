@@ -3,9 +3,11 @@
 
 <%@page import="java.io.InputStream"%>
 <%@page import="java.util.List" %>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtUser"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.ControllerFactory"%>
-<%@page import="uy.turismo.servidorcentral.logic.controller.IController"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtUserWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.Publisher"%>
+<%@page import="uy.turismo.webapp.ws.controller.PublisherService"%>
+<%@page import="uy.turismo.webapp.functions.Functions"%>
+
 <%@page import="java.awt.image.BufferedImage"%>
 <%@ page import="java.io.ByteArrayOutputStream" %>
 <%@ page import="java.util.Base64" %>
@@ -82,31 +84,24 @@
 <h1> Usuarios registrados en la plataforma: </h1>			
 			<% 
 				
-				IController controller = ControllerFactory.getIController();
+			PublisherService service = new PublisherService();
+			Publisher controller = service.getPublisherPort();
+				
+				
 			
+				List<DtUserWS> usersList = controller.getListUser().getItem();
 			
-				List<DtUser> usersList = controller.getListUser();
-			
-				for(DtUser user : usersList){
+				for(DtUserWS user : usersList){
 				
 						
-				BufferedImage userImage = user.getImage(); 
+				byte [] userImage = user.getImage(); 
 				
 					if(userImage != null){
-						/* ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				        String format = "jpeg"; // Formato predeterminado es JPEG
-		
-				        // Determina el formato de la imagen
-				        if (userImage.getTransparency() == BufferedImage.OPAQUE) {
-				            format = "png";
-				        }
-		
-				        ImageIO.write(userImage, format, baos);
-				        byte[] bytes = baos.toByteArray();
-				        String base64Image = Base64.getEncoder().encodeToString(bytes);	 */
+				        
+				        BufferedImage usrImage = Functions.convertArrayToBI(userImage);
 				        
 				        String imagePath = Functions.saveImage(
-                                userImage, 
+				        		usrImage, 
                                 user.getNickname(), 
                                 getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
                                 "user/");
