@@ -17,7 +17,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "PublisherService", targetNamespace = "controller", wsdlLocation = "file:/home/prog-app/eclipse-workspace/servidor-central/src/main/resources/publisher.wsdl")
+@WebServiceClient(name = "PublisherService", targetNamespace = "controller", wsdlLocation = "file:/home/prog-app/Documentos/GitHub/Prog-App-23/src/main/resources/publisher.wsdl")
 public class PublisherService
     extends Service
 {
@@ -30,7 +30,7 @@ public class PublisherService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/prog-app/eclipse-workspace/servidor-central/src/main/resources/publisher.wsdl");
+            url = new URL("file:/home/prog-app/Documentos/GitHub/Prog-App-23/src/main/resources/publisher.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

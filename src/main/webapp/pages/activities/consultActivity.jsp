@@ -1,27 +1,26 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtDepartment"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.functions.Functions"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="uy.turismos.servidorcentral.logic.enums.ActivityState"%>
+<%@page import="uy.turismo.webapp.ws.controller.ActivityState"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@page import="java.util.List"%>
 <%
 
 	String userType = (String) session.getAttribute("userType");
-	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) session.getAttribute("activityStated");
-	List<DtTouristicActivity> activitiesToPrint = new ArrayList<DtTouristicActivity>();
+	List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) session.getAttribute("activityStated");
+	List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
 
 	Map<Long, String> activityImages = (Map<Long, String>) session.getAttribute("activityImages");
 	
-	List<DtCategory> categories = (List<DtCategory>) session.getAttribute("categories");
+	List<DtCategoryWS> categories = (List<DtCategoryWS>) session.getAttribute("categories");
 	
-	List<DtDepartment> departments = (List<DtDepartment>) session.getAttribute("departments");
+	List<DtDepartmentWS> departments = (List<DtDepartmentWS>) session.getAttribute("departments");
 	
 	String pruebaControl = (String) request.getAttribute("control");
 	if(pruebaControl != null){
@@ -29,13 +28,13 @@
 		
 		case "department":{
 			Long idDepartment = Long.parseLong(request.getParameter("department"));
-			HashMap<Long, List<DtTouristicActivity>> filteredByDepartment = (HashMap<Long, List<DtTouristicActivity>>) session.getAttribute("filteredByDepartment");
+			HashMap<Long, List<DtTouristicActivityWS>> filteredByDepartment = (HashMap<Long, List<DtTouristicActivityWS>>) session.getAttribute("filteredByDepartment");
 			activitiesToPrint = filteredByDepartment.get(idDepartment); 
 			break;}
 			
 		case "category":{
 			Long idCategory = Long.parseLong(request.getParameter("categories"));
-			HashMap<Long, List<DtTouristicActivity>> filteredByCategory = (HashMap<Long, List<DtTouristicActivity>>) session.getAttribute("filteredByCategory");
+			HashMap<Long, List<DtTouristicActivityWS>> filteredByCategory = (HashMap<Long, List<DtTouristicActivityWS>>) session.getAttribute("filteredByCategory");
 			activitiesToPrint = filteredByCategory.get(idCategory); 
 			break;}
 			
@@ -116,7 +115,7 @@
 					<div class="form-group" id="department" style="display: none;">
 						<label for="selectOptions2">Departamentos:</label>
 						<select class="form-control" id="selectOptions2" name="department">
-					  		<% for(DtDepartment department : departments){%>
+					  		<% for(DtDepartmentWS department : departments){%>
              					<option value=<%=department.getId()%>> <%= department.getName() %></option>
              				<%}%>
 						</select>
@@ -126,7 +125,7 @@
 					
 						<label for="selectOptions3">Categorias:</label>
 						<select id="selectOptions3" class="form-control" name="categories">
-            				<% for(DtCategory category : categories){%>
+            				<% for(DtCategoryWS category : categories){%>
              					<option value=<%=category.getId()%>> <%= category.getName() %></option>
              				<%}%>
 						</select>
@@ -159,7 +158,7 @@
 			<div class="col-md-9">
 				<div class="row">
 					<!-- Small Boxes -->
-						<% for(DtTouristicActivity activity : activitiesToPrint){%>
+						<% for(DtTouristicActivityWS activity : activitiesToPrint){%>
 							<div class="col-md-3">
 								<div class="card" style="align-items: center; padding: 0.3em; background-color: aliceblue; margin-bottom: 1em;">
 									<%if(activity.getImage() != null){ %>

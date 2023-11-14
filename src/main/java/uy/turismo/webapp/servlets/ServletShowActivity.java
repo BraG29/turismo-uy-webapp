@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
 import uy.turismo.webapp.ws.controller.Publisher;
@@ -32,14 +31,17 @@ public class ServletShowActivity extends HttpServlet {
 		Long activityId = Long.parseLong(request.getParameter("activityId"));
 		
 		PublisherService service = new PublisherService();
-		Publisher controller = service.getPublisherPort();
+
+        Publisher controller = service.getPublisherPort();
 		
 		DtTouristicActivityWS activityToShow = controller.getTouristicActivityData(activityId);
 		
-		BufferedImage activityImage = Functions.convertArrayToBI(activityToShow.getImage());
+		//arreglar con el tema de byte[]
+		BufferedImage imageToShow = Functions.convertArrayToBI(activityToShow.getImage());
+		
 		
 		String activityImagePath = Functions.saveImage(
-				activityImage,
+				imageToShow,
 				activityToShow.getName(),
 				getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
 				"activity/");

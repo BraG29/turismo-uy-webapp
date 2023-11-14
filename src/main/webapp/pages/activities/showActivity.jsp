@@ -1,20 +1,20 @@
-<%@page import="uy.turismo.webapp.ws.controller.uy.turismo.webapp.ws.DtCategoryWS"%>
-<%@page import="uy.turismo.webapp.ws.controller.uy.turismo.webapp.ws.DtTouristicDepartureWS"%>
-<%@page import="uy.turismo.webapp.ws.controller.uy.turismo.webapp.ws.DtTouristicBundleWS"%>
-<%@page import="uy.turismo.webapp.ws.controller.uy.turismo.webapp.ws.DtTouristicActivityWS"%>
-<%@page  import="uy.turismo.webapp.ws.controller.uy.turismo.webapp.ws.DtDepartmentWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
 	
-	DtTouristicActivity activityToShow = (DtTouristicActivity) request.getAttribute("activityToShow");
+	DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 	
 
 	String userType = (String) session.getAttribute("userType");
 	
-	List<DtTouristicActivity> favActivity =  (List<DtTouristicActivity>) session.getAttribute("favActivities");
+	List<DtTouristicActivityWS> favActivity = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 	
 	Long id = (Long) session.getAttribute("id");
 	
@@ -91,7 +91,7 @@
             					<% 	
 						if("tourist".equals(userType)){
 						boolean isFavorite = false;
-					    for (DtTouristicActivity activities : favActivity) {
+					    for (DtTouristicActivityWS activities : favActivity) {
 					    	if (activities.getId() == activityToShow.getId()) {
 					        	isFavorite = true;
 					            break;
@@ -109,9 +109,9 @@
 					}%>
             	
             	
-            	<% if (activityToShow.getVideoURL() != null){%>
+            	<% if (activityToShow.getUrlVideo() != null){%>
             	<br>
-            	<iframe width="560" height="315" src="<%=activityToShow.getVideoURL() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            	<iframe width="560" height="315" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              	
              	<% } else{ %>
              	<br>
@@ -129,7 +129,7 @@
             	<h5 class="card-text">Paquetes: </h5>
             	<ul class="list-group">
             		<%if(userDevice != null ){ %>
-	            		<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
+	            		<%for(DtTouristicBundleWS bundle : activityToShow.getBundles()){%>
 		            		<a href="" class="list-group-item list-group-item-action list-group-item-info">
 		            			 <%= bundle.getName() %>
 		            		</a>
@@ -138,7 +138,7 @@
 		            	<%}%>
             		<%}else{%>
             		
-	            	<%for(DtTouristicBundle bundle : activityToShow.getBundles()){%>
+	            	<%for(DtTouristicBundleWS bundle : activityToShow.getBundles()){%>
 	            		<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%>" class="list-group-item list-group-item-action list-group-item-info">
 	            			 <%= bundle.getName() %>
 	            		</a>
@@ -156,7 +156,7 @@
 	            	<ul class="list-group list-group-numbered">
 	            	
 	            	<%if(userDevice != null ){ %>
-	            		<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
+	            		<%for(DtTouristicDepartureWS departure : activityToShow.getDepartures()){%>
 	            		<a href="" class="list-group-item list-group-item-action list-group-item-danger">
 	            		<%= departure.getName() %>
 	            		</a>
@@ -165,7 +165,7 @@
 	            		<%}%>
 	            	<%}else{ %>
 	            	
-	            	<%for(DtTouristicDeparture departure : activityToShow.getDepartures()){%>
+	            	<%for(DtTouristicDepartureWS departure : activityToShow.getDepartures()){%>
 	            		<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>" class="list-group-item list-group-item-action list-group-item-danger">
 	            		<%= departure.getName() %>
 	            		</a>
@@ -180,7 +180,7 @@
                 <br>
                 <h5 class="card-text">Categorias: </h5>
             	<ul class="list-group">
-            	<%for(DtCategory category : activityToShow.getCategories()){%>
+            	<%for(DtCategoryWS category : activityToShow.getCategories()){%>
             		<li class="list-group-item list-group-item-warning"><%= category.getName() %></li>
             		<%}%>
             	<%}%>
