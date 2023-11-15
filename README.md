@@ -6,7 +6,7 @@ src/main/java/uy.turismo.webapp
 ### Crpeta de vistas, archivos JS y CSS 
 src/main/webapp/
 
-#Instalación tomcat9
+# Instalación tomcat9
 
 `sudo apt update`
 
@@ -29,3 +29,12 @@ Si todo funciona ejecutar los siguientes comandos:
 `sudo ln -s /etc/tomcat9/policy.d/03catalina.policy conf/catalina.policy`
 
 `sudo chmod -R a+rwx /usr/share/tomcat9/conf`
+
+# Configuración de IP del WS en el Cliente
+## Para ejecutar en Enlipse:
+Ir a Run Configurations > Tomcat9 > Enviroment
+Crear una nueva variable de entorno con nombre "wsdlURL" y valor la URL hacia el archivo .wsdl del WS ejemplo: http://192.169.1.3:8181/controller?wsdl
+
+## Para ejecutar en deploy: 
+Abrir una terminal en la carpeta raiz del proyecto y ejecutar el script `defWSDLURL.sh` pasandole como parametro el URL de la siguiente manera:
+`. defWSDLURL.sh http://192.169.1.3:8181/controller?wsdl`
