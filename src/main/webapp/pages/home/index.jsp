@@ -3,7 +3,6 @@
 <html lang="en">
 
 <% 	String userAgent = request.getHeader("user-agent");
-	System.out.println(userAgent);
 	
 	if(userAgent.contains("Mobile")){
 

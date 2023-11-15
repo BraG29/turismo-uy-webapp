@@ -49,7 +49,7 @@ String uploadDateStr = departure.getUploadDate();
 LocalDate uploadDate = LocalDate.parse(uploadDateStr, DateTimeFormatter.ISO_DATE);
 
 String departureDateStr = departure.getDepartureDateTime();
-LocalDateTime departureDateTime = LocalDateTime.parse(departureDateStr, DateTimeFormatter.ISO_DATE_TIME);
+//LocalDateTime departureDateTime = LocalDateTime.parse(departureDateStr, DateTimeFormatter.ISO_DATE_TIME);
 
 
 byte [] departureImage = departure.getImage();
@@ -73,12 +73,14 @@ Boolean availableUser = session.getAttribute("userType") != null
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 .image {
 	width: 25em;
 	border-radius: 5%;
 }
 </style>
+
 </head>
 <body onload="currentTime()">
 	<jsp:include page="../../templates/header.jsp" />
@@ -195,7 +197,7 @@ Boolean availableUser = session.getAttribute("userType") != null
 				<%=maxTourist%></p>
 			<p class="card-text">
 				Fecha de salida:
-				<%=departureDateTime%></p>
+				<%=departureDateStr%></p>
 		</div>
 
 	</div>

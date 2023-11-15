@@ -1,13 +1,12 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtCategory"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtProvider"%>
+<%@page import="uy.turismo.webapp.ws.controller.DtProviderWS"%>
 <%@page import="java.util.List"%>
 
 
 <%
-	List<DtProvider> providers = (List<DtProvider>) request.getAttribute("providers");
-	List<DtCategory> categories = (List<DtCategory>) request.getAttribute("categories");
+	List<DtProviderWS> providers = (List<DtProviderWS>) request.getAttribute("providers");
+	List<DtCategoryWS> categories = (List<DtCategoryWS>) request.getAttribute("categories");
 
 %>
 
@@ -31,14 +30,16 @@
 </head>
 
 <style>
+	body{
+		margin-bottom: 100px;
+	}
+	
 	@media (max-width: 700px){
 		.mobile{
 			width: 100% !important;
 		}
 		
-		body{
-			margin-bottom: 100px;
-		}
+		
 	}
 </style>
 
@@ -127,7 +128,7 @@
 	     <div>
 	     	<span >Seleccione categoría/s:</span>
              <select id="categories" class="form-select" aria-label="Ej: Recorridos" name="categories" multiple required>
-             	<% for(DtCategory category : categories){%>
+             	<% for(DtCategoryWS category : categories){%>
              			<option value=<%=category.getId()%>> <%= category.getName() %></option>
              		<%}%>
 			</select>

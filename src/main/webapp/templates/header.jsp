@@ -14,11 +14,16 @@
 %>
 
 <script>
-	var userId = <%= userId %>;
-	var userName = '<%= userName %>';
-	var userImage = '<%= userImage %>';
-	var contextPath = '<%= contextPath %>';
-	var userDevice = '<%= userDevice %>';
+	let userId = <%= userId %>;
+	let userName = '<%= userName %>';
+	let userImage = '<%= userImage %>';
+	let contextPath = '<%= contextPath %>';
+	let userDevice = '<%= userDevice %>';
+	console.log(userId);
+	console.log(userName);
+	console.log(userImage);
+	console.log(contextPath);
+	console.log(userDevice);
 </script>
 
 <% 

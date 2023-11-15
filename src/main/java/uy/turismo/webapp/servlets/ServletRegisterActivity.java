@@ -77,12 +77,12 @@ public class ServletRegisterActivity extends HttpServlet {
 		ActivityState state = ActivityState.ADDED;
 		
 		String dateString = request.getParameter("uploadDate");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
 		
 		DtProviderWS provider = new DtProviderWS();
 		//dentro de DtProviderWS:  (Long) session.getAttribute("userId"), "", "", null
-		
+
 		Long providerId = (Long) session.getAttribute("userId");
 		
 		provider.setId(providerId);
@@ -92,17 +92,20 @@ public class ServletRegisterActivity extends HttpServlet {
 		//Dentro de DtDepartmentWs: Long.parseLong(request.getParameter("department"))
 		
 		Long departmentId = Long.parseLong(request.getParameter("department"));
+		department.setId(departmentId);
 		
 		String[] arrayCategories = request.getParameterValues("categories");
 		
 		List<DtCategoryWS> categoriesList = new ArrayList<DtCategoryWS>();
 		
 		for(int c = 0; c < arrayCategories.length; c++) {
-			DtCategoryWS category = new DtCategoryWS(Long.parseLong(arrayCategories[c]));
+			DtCategoryWS category = new DtCategoryWS();
+			//este set solia estár en el constructor de arriba.
+			category.setId(Long.parseLong(arrayCategories[c]));
 			categoriesList.add(category);
 		}
 		
-		
+		byte[] imageBI = Functions.convertImageToArray(image);
 		try {
 			PublisherService service = new PublisherService();
 			Publisher controller = service.getPublisherPort();
@@ -126,15 +129,17 @@ public class ServletRegisterActivity extends HttpServlet {
 			DTA.setId(id);
 			DTA.setName(name);
 			DTA.setDescription(description);
+			DTA.setDuration(duration);
 			DTA.setCostPerTourist(cost);
-			DTA.setImage(image);
+			DTA.setCity(city);
+			DTA.setImage(imageBI);
+			DTA.setUrlVideo(urlVideo);
 			DTA.setState(state);
 			DTA.setUploadDate(dateString);
-				
 			DTA.setProvider(provider);
 			DTA.setDepartment(department);
-			//DTA.setCategories();
-			
+			DTA.setVisitsAmount(0);
+			//DTA.set
 			
 			
 					
