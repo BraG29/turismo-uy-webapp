@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -62,8 +64,26 @@ public abstract class DtUserWS
     protected String lastName;
     protected String nickname;
     protected String password;
+    
+    
 
-    /**
+    public DtUserWS(Long id, String name,
+    		String birthDate, String email, List<DtUserWS> followers, List<DtUserWS> follows, byte[] image,
+			String lastName, String nickname, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.email = email;
+		this.followers = followers;
+		this.follows = follows;
+		this.image = image;
+		this.lastName = lastName;
+		this.nickname = nickname;
+		this.password = password;
+	}
+
+	/**
      * Obtiene el valor de la propiedad birthDate.
      * 
      * @return
@@ -71,6 +91,12 @@ public abstract class DtUserWS
      *     {@link String }
      *     
      */
+    
+    public DtUserWS() {
+    	
+    }
+    
+    
     public String getBirthDate() {
         return birthDate;
     }
@@ -95,6 +121,7 @@ public abstract class DtUserWS
      *     {@link String }
      *     
      */
+    
     public String getEmail() {
         return email;
     }
@@ -133,6 +160,7 @@ public abstract class DtUserWS
      * 
      * 
      */
+    
     public List<DtUserWS> getFollowers() {
         if (followers == null) {
             followers = new ArrayList<DtUserWS>();
@@ -162,6 +190,7 @@ public abstract class DtUserWS
      * 
      * 
      */
+    
     public List<DtUserWS> getFollows() {
         if (follows == null) {
             follows = new ArrayList<DtUserWS>();
@@ -176,6 +205,7 @@ public abstract class DtUserWS
      *     possible object is
      *     byte[]
      */
+    
     public byte[] getImage() {
         return image;
     }
@@ -199,6 +229,7 @@ public abstract class DtUserWS
      *     {@link String }
      *     
      */
+    
     public String getLastName() {
         return lastName;
     }
@@ -223,6 +254,7 @@ public abstract class DtUserWS
      *     {@link String }
      *     
      */
+    
     public String getNickname() {
         return nickname;
     }
@@ -247,6 +279,7 @@ public abstract class DtUserWS
      *     {@link String }
      *     
      */
+    
     public String getPassword() {
         return password;
     }

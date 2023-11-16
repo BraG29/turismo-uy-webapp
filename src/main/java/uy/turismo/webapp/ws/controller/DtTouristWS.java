@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -32,7 +34,8 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 @XmlType(name = "dtTouristWS", propOrder = {
     "bundles",
     "departures",
@@ -74,6 +77,38 @@ public class DtTouristWS
      * 
      * 
      */
+    
+    public DtTouristWS() {
+    	super();
+    }
+    
+//    public DtTouristWS(
+//    		Long id,
+//    		String name, 
+//    		String birthDate, 
+//    		String email, 
+//    		List<DtUserWS> followers,
+//    		List<DtUserWS> follows, 
+//    		byte[] image, 
+//    		String lastName, 
+//    		String nickname, 
+//    		String password,
+//    		List<DtTouristicBundleWS> bundles, 
+//    		List<DtTouristicDepartureWS> departures,
+//    		List<DtTouristicActivityWS> favActivities, 
+//    		List<DtInscriptionWS> inscriptions, 
+//    		String nationality,
+//    		List<DtPurchaseWS> purchases) {
+//    	super(id, name, birthDate, email, followers, follows, image, lastName, nickname, password);
+//    	this.bundles = bundles;
+//    	this.departures = departures;
+//    	this.favActivities = favActivities;
+//    	this.inscriptions = inscriptions;
+//    	this.nationality = nationality;
+//    	this.purchases = purchases;
+//    }
+
+    @XmlElement
     public List<DtTouristicBundleWS> getBundles() {
         if (bundles == null) {
             bundles = new ArrayList<DtTouristicBundleWS>();
@@ -81,7 +116,7 @@ public class DtTouristWS
         return this.bundles;
     }
 
-    /**
+	/**
      * Gets the value of the departures property.
      * 
      * <p>
@@ -103,6 +138,8 @@ public class DtTouristWS
      * 
      * 
      */
+
+    @XmlElement
     public List<DtTouristicDepartureWS> getDepartures() {
         if (departures == null) {
             departures = new ArrayList<DtTouristicDepartureWS>();
@@ -132,6 +169,8 @@ public class DtTouristWS
      * 
      * 
      */
+
+    @XmlElement
     public List<DtTouristicActivityWS> getFavActivities() {
         if (favActivities == null) {
             favActivities = new ArrayList<DtTouristicActivityWS>();
@@ -161,6 +200,8 @@ public class DtTouristWS
      * 
      * 
      */
+
+    @XmlElement
     public List<DtInscriptionWS> getInscriptions() {
         if (inscriptions == null) {
             inscriptions = new ArrayList<DtInscriptionWS>();
@@ -176,6 +217,8 @@ public class DtTouristWS
      *     {@link String }
      *     
      */
+
+    @XmlElement
     public String getNationality() {
         return nationality;
     }
@@ -214,6 +257,8 @@ public class DtTouristWS
      * 
      * 
      */
+
+    @XmlElement
     public List<DtPurchaseWS> getPurchases() {
         if (purchases == null) {
             purchases = new ArrayList<DtPurchaseWS>();

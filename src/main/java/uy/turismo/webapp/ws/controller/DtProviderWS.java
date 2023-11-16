@@ -51,11 +51,37 @@ public class DtProviderWS
      *     {@link String }
      *     
      */
+    
+    public DtProviderWS() {
+    	super();
+    }
+    
+    public DtProviderWS(
+    		Long id, 
+    		String name, 
+    		String birthDate, 
+    		String email, 
+    		List<DtUserWS> followers,
+    		List<DtUserWS> follows, 
+    		byte[] image, 
+    		String lastName, 
+    		String nickname, 
+    		String password, 
+    		String description,
+    		List<DtTouristicActivityWS> touristicActivities, 
+    		String url) {
+    	super(id, name, birthDate, email, followers, follows, image, lastName, nickname, password);
+    	this.description = description;
+    	this.touristicActivities = touristicActivities;
+    	this.url = url;
+    }
+    
     public String getDescription() {
         return description;
     }
 
-    /**
+
+	/**
      * Define el valor de la propiedad description.
      * 
      * @param value

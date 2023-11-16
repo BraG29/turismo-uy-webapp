@@ -85,10 +85,10 @@ public class ServletUpdateUser extends HttpServlet {
 		String lastName = request.getParameter("lastName");
 
 		String birthDateStr = request.getParameter("birthDate");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
-		
-		String birthDateSTR = Functions.convertDateToString(birthDate);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//		LocalDate birthDate = LocalDate.parse(birthDateStr, formatter);
+//		
+//		String birthDateSTR = Functions.convertDateToString(birthDate);
 		
 		
 		Part filePart = request.getPart("image");
@@ -97,49 +97,77 @@ public class ServletUpdateUser extends HttpServlet {
 		
 		byte[] image = userData.getImage();
 		
-		if( image != null) {
+		if( requestImage != null) {
 			
 			image = Functions.convertImageToArray(requestImage);
 		}
 		
 		
 		
-		if(userData instanceof DtTouristWS) {
-			
-			
-			
+		if(userData instanceof DtTouristWS) {			
 			String nationality = request.getParameter("nationality");
 			
-			DtTouristWS modifiedUser = new DtTouristWS();
+			DtTouristWS modifiedUser = new DtTouristWS(
+//					userData.getId(),
+//					name,
+//					birthDateStr,
+//					userData.getEmail(),
+//					null,
+//					null,
+//					image,
+//					lastName,
+//					userData.getNickname(),
+//					userData.getPassword(),
+//					null,
+//					null,
+//					null,
+//					null,
+//					nationality,
+//					null
+					);
 			
 			modifiedUser.setId(userData.getId());
 			modifiedUser.setName(name);
 			modifiedUser.setNickname(userData.getNickname());
 			modifiedUser.setEmail(userData.getEmail());
 			modifiedUser.setLastName(lastName);
-			modifiedUser.setBirthDate(birthDateSTR);
+			modifiedUser.setBirthDate(birthDateStr);
 			modifiedUser.setImage(image);
 			modifiedUser.setNationality(nationality);
 			modifiedUser.setPassword(userData.getPassword());
-			
-			
+
+			controller.updateUser(modifiedUser);
 			
 		}else {
 			String webSite = request.getParameter("webSite");
 			String description = request.getParameter("description");
 			
-			DtProviderWS modifiedUser = new DtProviderWS();
+			DtProviderWS modifiedUser = new DtProviderWS(
+					userData.getId(),
+					name,
+					birthDateStr,
+					userData.getEmail(),
+					null,
+					null,
+					image,
+					lastName,
+					userData.getNickname(),
+					userData.getPassword(),
+					description,
+					null,
+					webSite
+					);
 			
-			modifiedUser.setId(userData.getId());
-			modifiedUser.setName(name);
-			modifiedUser.setNickname(userData.getNickname());
-			modifiedUser.setEmail(userData.getEmail());
-			modifiedUser.setLastName(lastName);
-			modifiedUser.setBirthDate(birthDateSTR);
-			modifiedUser.setImage(image);
-			modifiedUser.setUrl(webSite);
-			modifiedUser.setDescription(description);
-			modifiedUser.setPassword(userData.getPassword());
+//			modifiedUser.setId(userData.getId());
+//			modifiedUser.setName(name);
+//			modifiedUser.setNickname(userData.getNickname());
+//			modifiedUser.setEmail(userData.getEmail());
+//			modifiedUser.setLastName(lastName);
+//			modifiedUser.setBirthDate(birthDateStr);
+//			modifiedUser.setImage(image);
+//			modifiedUser.setUrl(webSite);
+//			modifiedUser.setDescription(description);
+//			modifiedUser.setPassword(userData.getPassword());
 			
 			controller.updateUser(modifiedUser);
 		}

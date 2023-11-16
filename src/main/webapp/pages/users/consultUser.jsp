@@ -81,12 +81,14 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 							
 							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
 							    boolean isFollowing = false;
-							    for (DtUserWS followedUser : usrFollowed) {
-							        if (followedUser.getId() == userData.getId()) {
-							            isFollowing = true;
-							            break;
-							        }
-							    }
+								if(usrFollowed != null && !usrFollowed.isEmpty()){
+								    for (DtUserWS followedUser : usrFollowed) {
+								        if (followedUser.getId() == userData.getId()) {
+								            isFollowing = true;
+								            break;
+								        }
+								    }
+								}
 
 							
 								if (isFollowing) { %>

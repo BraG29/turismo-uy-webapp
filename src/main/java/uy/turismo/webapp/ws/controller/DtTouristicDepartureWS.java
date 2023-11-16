@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -49,13 +50,20 @@ public class DtTouristicDepartureWS
     extends DtBaseEntityWS
 {
 
+	@XmlElement
     protected String departureDateTime;
+	@XmlElement
     protected byte[] image;
+	@XmlElement
     protected Integer maxTourist;
+	@XmlElement
     protected String place;
+	@XmlElement
     protected DtTouristicActivityWS touristicActivity;
     protected List<DtTouristWS> tourists;
+	@XmlElement
     protected String uploadDate;
+	@XmlElement
     protected Integer visitsAmount;
 
     /**

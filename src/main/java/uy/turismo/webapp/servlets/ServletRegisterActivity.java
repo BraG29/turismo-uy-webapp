@@ -72,7 +72,7 @@ public class ServletRegisterActivity extends HttpServlet {
 		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
-		BufferedImage image = ImageIO.read(fileContent);
+		BufferedImage imageRequest = ImageIO.read(fileContent);
 		
 		ActivityState state = ActivityState.ADDED;
 		
@@ -105,7 +105,7 @@ public class ServletRegisterActivity extends HttpServlet {
 			categoriesList.add(category);
 		}
 		
-		byte[] imageBI = Functions.convertImageToArray(image);
+		byte[] image = Functions.convertImageToArray(imageRequest);
 		try {
 			PublisherService service = new PublisherService();
 			Publisher controller = service.getPublisherPort();
@@ -132,17 +132,16 @@ public class ServletRegisterActivity extends HttpServlet {
 			DTA.setDuration(duration);
 			DTA.setCostPerTourist(cost);
 			DTA.setCity(city);
-			DTA.setImage(imageBI);
+			DTA.setImage(image);
 			DTA.setUrlVideo(urlVideo);
 			DTA.setState(state);
 			DTA.setUploadDate(dateString);
 			DTA.setProvider(provider);
+			DTA.setCategories(categoriesList);
 			DTA.setDepartment(department);
 			DTA.setVisitsAmount(0);
 			//DTA.set
-			
-			
-					
+				
 			controller.registeTouristicActivity(DTA);
 			
 			String successType = "Activity";

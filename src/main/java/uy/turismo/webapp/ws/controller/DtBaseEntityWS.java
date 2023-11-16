@@ -3,6 +3,8 @@ package uy.turismo.webapp.ws.controller;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -27,6 +29,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "dtBaseEntityWS", propOrder = {
     "id",
@@ -44,7 +47,9 @@ import jakarta.xml.bind.annotation.XmlType;
 })
 public abstract class DtBaseEntityWS {
 
+	@XmlElement
     protected Long id;
+	@XmlElement
     protected String name;
 
     /**
@@ -55,11 +60,19 @@ public abstract class DtBaseEntityWS {
      *     {@link Long }
      *     
      */
+//    
+//    public DtBaseEntityWS(Long id, String name) {
+//    	super();
+//    	this.id = id;
+//    	this.name = name;
+//    }
+    
     public Long getId() {
         return id;
     }
 
-    /**
+
+	/**
      * Define el valor de la propiedad id.
      * 
      * @param value

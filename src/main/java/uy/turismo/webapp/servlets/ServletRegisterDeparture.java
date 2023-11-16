@@ -53,11 +53,11 @@ public class ServletRegisterDeparture extends HttpServlet {
 		String nameDeparture = request.getParameter("nameDeparture");
 		
 		String dateString = request.getParameter("startingDate");
-		DateTimeFormatter formatterLocalDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-		LocalDateTime startingDate = LocalDateTime.parse(dateString, formatterLocalDateTime);//DepartureDateTime
-		
-		//Codigo agregado: LT
-		String startingDateStr = Functions.convertDateTimeToString(startingDate);
+//		DateTimeFormatter formatterLocalDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+//		LocalDateTime startingDate = LocalDateTime.parse(dateString, formatterLocalDateTime);//DepartureDateTime
+//		
+//		//Codigo agregado: LT
+//		String startingDateStr = Functions.convertDateTimeToString(startingDate);
 		
 		
 		int maxTourists = Integer.parseInt(request.getParameter("maxTourists"));
@@ -69,7 +69,14 @@ public class ServletRegisterDeparture extends HttpServlet {
 		
 		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
 		InputStream fileContent = filePart.getInputStream();
-		BufferedImage image = ImageIO.read(fileContent);
+		BufferedImage imageRequest = ImageIO.read(fileContent);
+		
+		byte[] image = null;
+
+		if(imageRequest != null) {
+			image = Functions.convertImageToArray(imageRequest);
+		}
+		
 		
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
@@ -98,14 +105,14 @@ public class ServletRegisterDeparture extends HttpServlet {
 		departureData.setName(nameDeparture);
 		departureData.setMaxTourist(maxTourists);
 		departureData.setUploadDate(uploadDateStr);
-		departureData.setDepartureDateTime(startingDateStr);
+		departureData.setDepartureDateTime(dateString);
 		departureData.setPlace(place);
+		departureData.setImage(image);
 		departureData.setTouristicActivity(activity);
 		//departureData.setTourist(tourists);
 		
 		try {
 			controller.registerTouristicDeparture(departureData);
-			
 			
 			String successType = "Departure";
 				

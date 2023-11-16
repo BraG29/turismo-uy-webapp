@@ -117,7 +117,7 @@
 	function selectActivity(){
 			//document.addEventListener("DOMContentLoaded", function () {
 				
-				console.log("entre al SelectActivity");
+			console.log("entre al SelectActivity");
 				
 			var departmentCombobox = document.getElementById("departmentCombobox");
 			var activitiesCombobox = document.getElementById("activitiesCombobox");

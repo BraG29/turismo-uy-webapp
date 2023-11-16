@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 
@@ -62,20 +63,30 @@ public class DtTouristicActivityWS
     extends DtBaseEntityWS
 {
 
+	
     protected List<DtTouristicBundleWS> bundles;
+	
     protected List<DtCategoryWS> categories;
+	
     protected String city;
+	
     protected Double costPerTourist;
+	
     protected DtDepartmentWS department;
+	
     protected List<DtTouristicDepartureWS> departures;
+	
     protected String description;
+	
     protected Double duration;
     protected byte[] image;
     protected DtProviderWS provider;
     @XmlSchemaType(name = "string")
     protected ActivityState state;
     protected String uploadDate;
+	
     protected String urlVideo;
+	
     protected Integer visitsAmount;
 
     /**
@@ -135,7 +146,11 @@ public class DtTouristicActivityWS
         }
         return this.categories;
     }
-
+    
+    public void setCategories(List<DtCategoryWS> categories){
+    	this.categories = categories;
+    }
+ 
     /**
      * Obtiene el valor de la propiedad city.
      * 

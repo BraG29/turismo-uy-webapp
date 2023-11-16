@@ -131,6 +131,8 @@ public class ServletRegister extends HttpServlet {
 		    		userData.setNationality(country);
 		    		userData.setPassword(password);
 		    		
+		    		controller.registerUser(userData);
+		    		
 		    		String successType = "User";
 					
 					request.setAttribute("successType", successType);
