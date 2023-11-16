@@ -112,11 +112,6 @@ public class ServletConsultActivity extends HttpServlet {
 			}
 			
 			HttpSession session = request.getSession();
-//			Long userId = (Long) session.getAttribute("userId");
-//			
-//			if(userId != null) {
-//				
-//			}
 			
 			session.removeAttribute("activityStated");
 			session.removeAttribute("activityImages");

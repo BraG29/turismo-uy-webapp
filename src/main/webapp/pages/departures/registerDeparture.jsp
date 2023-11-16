@@ -1,9 +1,8 @@
-<%@page import="uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity"%>
-<%@page import="org.hibernate.internal.build.AllowSysOut" %>
+<%@page import="uy.turismo.webapp.ws.controller.DtTouristicActivityWS"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.List" %>
 <% 
-	List<DtTouristicActivity> activitiesStated = (List<DtTouristicActivity>) request.getAttribute("activitiesStated");
+	List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) request.getAttribute("activitiesStated");
 
 %>
 <!DOCTYPE html>
@@ -21,7 +20,6 @@
     
     <script src="assets/scripts/clock.js" type="text/javascript"></script>
     <link rel="icon" href="assets/images/star.ico" type="image/png">
-	<link rel="icon" href="assets/images/star.ico" type="image/png">
 	<title>Registrar Salida</title>
 </head>
 
@@ -103,7 +101,6 @@
 			<input type="file" accept="image/*" id="imagen" name="image">
 			<br>
 			<br>
-			<!-- <input class="w-100 btn btn-lg btn-primary" type="submit" value="Crear Salida Turística" /> -->
 			
 			<div id="liveAlertPlaceholder"></div>
 			<button type="submit" class="w-100 btn btn-lg btn-primary" id="liveAlertBtn" " >Crear Salida Turística</button>
@@ -131,7 +128,7 @@
 				var selectedDepartment = departmentCombobox.value;
 				var activitiesFound = false;
 				
-				<% for(DtTouristicActivity activity : activitiesStated) { %>
+				<% for(DtTouristicActivityWS activity : activitiesStated) { %>
 					// Check if the activity's department matches the selected department
 					console.log("entre al for");
 					if ("<%= activity.getDepartment().getId() %>" === selectedDepartment) {

@@ -7,7 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-	
 	DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 	
@@ -17,13 +16,8 @@
 	List<DtTouristicActivityWS> favActivity = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 	
 	Long id = (Long) session.getAttribute("id");
-	
 
-	//java.util.List<DtUser> usrFollowed = (List<DtUser>) session.getAttribute("followed");
-	
-	
 	String userAgent = request.getHeader("user-agent");
-	System.out.println(userAgent);
 	
 	if(userAgent.contains("Mobile")){
 
@@ -188,6 +182,35 @@
             		<%}%>
             	<%}%>
                 </ul>
+                <br>
+                
+                <%if(userType != null){
+                	
+	            	if(userType.equalsIgnoreCase("provider")){
+	                	
+	                	List<DtTouristicActivityWS> providerActivities = (List<DtTouristicActivityWS>) request.getAttribute("providerActivities");
+	                	               
+	                	if(providerActivities != null){
+	                		
+	                		boolean isFinishable = false;
+	                		for(DtTouristicActivityWS activityToFinish : providerActivities){ 
+	                			
+	                			if(activityToFinish.getId() == activityToShow.getId()) {
+	                				
+	                				isFinishable = true;
+								    break;
+								 }
+	                		}
+	                		if(isFinishable){%>
+	                			<form method="post" onsubmit="return validateFinish()">
+		                			<button type="submit" style="background-color: crimson; border-color: red;" class="w-100 btn btn-lg btn-primary" id="finishHIM" >
+							       		Finalizar Actividad
+								    </button>
+	                			</form>
+	                		<%}
+	               		}
+	               	}
+	            }%>
             </div>
         </div>
         <br>
@@ -198,4 +221,11 @@
     </div>
 <jsp:include page="../../templates/footer.jsp" />
 </body>
+<script type="text/javascript">
+
+	function validateFinish(){
+		alert("Actividad Finalizada con éxito.");
+		return true;
+	}
+</script>
 </html>
