@@ -1,3 +1,4 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
@@ -76,7 +77,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 				<div class="card">
 					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil" style="border-radius: 3em;">
 					<div class="card-body">
-						<h5 class="card-title" style="line-height: 2em"><%=fullUserName%> 	
+						<h5 class="card-title" style="line-height: 2em"><%=fullUserName%> </h5>
 							<%
 							
 							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
@@ -90,23 +91,30 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 								    }
 								}
 
-							
 								if (isFollowing) { %>
-									<br>
+									<form action="<%= request.getContextPath() %>/profile" onsubmit="return unFollow()" accept-charset="UTF-8" method="post">
+										<input type="hidden" id="action" name="action" value="unFollow">
+										<input type="hidden" id="pageUserId" name="pageUserId" value="<%= userData.getId()%>"> 
+										<input type="hidden" id="sessionUserId" name="sessionUserId" value="<%=(Long) session.getAttribute("userId")%>">
+									    <button type="submit" class="btn btn-primary">
+									        Dejar de seguir
+									    </button>
+									</form>
 									
-								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" class="btn btn-primary" id="unFollowButton">
-								        Dejar de seguir
-								    </button>
 							<% } else { %>
-								    <br>
-								    <button data-session-userid="<%= (Long) session.getAttribute("userId") %>" data-page-userid="<%= userData.getId() %>" class="btn btn-primary" id="followButton">
+								    <form action="<%= request.getContextPath() %>/profile" onsubmit="return follow()" accept-charset="UTF-8" method="post">   
+								    <input type="hidden" id="action" name="action" value="follow">
+								    <input type="hidden" id="pageUserId" name="pageUserId" value="<%=userData.getId()%>"> 
+									<input type="hidden" id="sessionUserId" name="sessionUserId" value="<%=(Long) session.getAttribute("userId")%>">								    
+								    <button type="submit" class="btn btn-primary">
 								        Seguir
 								    </button>
+								    </form>
 								<% } 
 							
 							 } %>
 						
-						</h5>
+						
 						<p class="card-text">
 							Correo Electrónico:
 							<%=userData.getEmail()%></p>
@@ -308,29 +316,16 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 	
  		<script type="text/javascript">
  		
-	 		$(document).ready(function() {
-	 		    $('#followButton, #unFollowButton').on('click', function() {
-	 		        var pageUserId = $(this).data('page-userid');
-	 		       var sessionUserId = $(this).data('session-userid');
-	 		        var buttonText = $(this).text();
-	 		        var action = 'follow'; // Acción predeterminada
-	
-	 		        if (buttonText === 'Dejar de seguir') {
-	 		            action = 'unfollow';
-	 		        }
-	
-	 		        // Realiza la solicitud AJAX al servlet según la acción y el ID del usuario de la página
-	 		        $.post('profile', { action: action, sessionUserId: sessionUserId, pageUserId: pageUserId }, function(data) {
-	 		            // La solicitud se completó exitosamente
-	 		            if (action === 'follow') {
-	 		                $(this).text('Dejar de seguir');
-	 		            } else if (action === 'unfollow') {
-	 		                $(this).text('Seguir');
-	 		            }
-	 		        });
-	 		    });
-	 		});
- 	
+ 			function follow(){
+ 				alert("Siguiendo espere un momento...");
+ 				return true;
+ 			}
+ 			
+ 			function unFollow(){
+ 				alert("Dejando de seguir espere un momento...");
+ 				return true;
+ 			} 
+
  		
 	         function pdf() {
 		 		var departureNameVar = document.getElementById("departureName").value;
