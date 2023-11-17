@@ -48,6 +48,11 @@ public class ServletProfile extends HttpServlet {
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
 		
+		//para obtener los seguidos del usuario.
+		
+		
+		
+		
 		Long userId = Long.parseLong(request.getParameter("id"));
 		DtUserWS userData = null;
 		
@@ -146,14 +151,29 @@ public class ServletProfile extends HttpServlet {
 		Publisher controller = service.getPublisherPort();
 		
 		String action = request.getParameter("action");
-		Long userFollowed = Long.parseLong(request.getParameter("pageUserId"));
-		Long userFollower = Long.parseLong(request.getParameter("sessionUserId"));
+		String userFollowedStr = request.getParameter("pageUserId");
+		String userFollowerStr = request.getParameter("sessionUserId");
+		
+		Long userFollowed = Long.parseLong(userFollowedStr);
+		Long userFollower = Long.parseLong(userFollowerStr);
 		
 		if("follow".equals(action)) {
 			controller.followUser(userFollower, userFollowed);
-		}else if ("unfollow".equals(action)) {
-			controller.unFollowUser(userFollower, userFollowed);
+			HttpSession session = request.getSession();
+			
+			List<DtUserWS> updatedFollowedList = controller.getUserData(userFollower).getFollows();
+			session.setAttribute("followed", updatedFollowedList);
+	
 		}
+		
+		if ("unFollow".equals(action)) {
+			controller.unFollowUser(userFollower, userFollowed);
+			HttpSession session = request.getSession();		
+			List<DtUserWS> updatedFollowedList = controller.getUserData(userFollower).getFollows();
+			session.setAttribute("followed", updatedFollowedList);
+		}
+		
+		response.sendRedirect(request.getContextPath() + "/profile?id="+userFollowed);
 	}
 
 }
