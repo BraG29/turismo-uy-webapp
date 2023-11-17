@@ -81,9 +81,9 @@ public class ServletLogin extends HttpServlet {
             
             if(user instanceof DtTouristWS) {
             	
-            	 DtTouristWS touristUser = (DtTouristWS) user;
-            	
-            	 List<DtTouristicActivityWS> activities = touristUser.getFavActivities();
+            	DtTouristWS touristUser = (DtTouristWS) user;
+            	//TODO creo que se puede optimizar la sesión para que guarde una lista de ids de actividades favoritas en vez de lista de shortDT.
+            	List<DtTouristicActivityWS> activities = touristUser.getFavActivities();
             	session.setAttribute("favActivities", activities);
             	
             	//cargar actividad.

@@ -7,6 +7,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+	
 	DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 	
@@ -15,6 +16,7 @@
 	
 	List<DtTouristicActivityWS> favActivity = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 	
+	//este long id no sirve de nada?
 	Long id = (Long) session.getAttribute("id");
 
 	String userAgent = request.getHeader("user-agent");
@@ -86,24 +88,34 @@
             </div>
             <div  class="col-md-4">
             
-            					<% 	
+            		<%
 						if("tourist".equals(userType)){
-						boolean isFavorite = false;
-					    for (DtTouristicActivityWS activities : favActivity) {
-					    	if (activities.getId() == activityToShow.getId()) {
-					        	isFavorite = true;
-					            break;
-					        }
-					    }
-						if (isFavorite) { %>
-						    <button  style="margin-left: 15%;" class="btn btn-primary" id="unMarkFavorite">
-					       	Desmarcar actividad como favorita 
-						    </button>
-					<% 	} else { %>
-						 	<button style="margin-left: 15%;" class="btn btn-primary" id="markFavorite">
-					        Marcar actividad como favorita
-						    </button>
-					<% 	} 
+							boolean isFavorite = false;
+						    for (DtTouristicActivityWS activities : favActivity) {
+						    	if (activities.getId() == activityToShow.getId()) {
+						        	isFavorite = true;
+						            break;
+						        }
+					    	}
+							if (isFavorite) { %>
+							
+								<form method="post" onsubmit="return validateUnFavourite()" >
+									<input type="hidden" id="actionType" name="actionType" value="UnFavourite">
+								    <button  type="submit" class="w-100 btn btn-lg btn-primary" id="unMarkFavorite">
+							       		Desmarcar actividad como favorita 
+								    </button>
+							    </form>
+							    <br>
+						<%} else {%>
+						
+								<form method="post" onsubmit="return validateFavourite()">
+									<input type="hidden" id="actionType" name="actionType" value="Favourite">
+								 	<button  type="submit" class="w-100 btn btn-lg btn-primary" id="markFavorite">
+							        	Marcar actividad como favorita
+								    </button>
+							    </form>
+							    <br>
+						<%} 
 					}%>
             	
             	
@@ -144,9 +156,8 @@
 	                	<%} %>
 	            	<%}%>
 	            <%} %>
-	                </ul>
-	                
-                
+	            
+	                </ul> 
                 <%if(!activityToShow.getDepartures().isEmpty()){ %>
                 <br>
 	                <h5 class="card-text">Salidas: </h5>
@@ -202,7 +213,8 @@
 								 }
 	                		}
 	                		if(isFinishable){%>
-	                			<form method="post" onsubmit="return validateFinish()">
+	                			<form method="post" onclick="validateFinish()">
+	                				<input type="hidden" id="actionType" name="actionType" value="Finish">
 		                			<button type="submit" style="background-color: crimson; border-color: red;" class="w-100 btn btn-lg btn-primary" id="finishHIM" >
 							       		Finalizar Actividad
 								    </button>
@@ -221,11 +233,23 @@
     </div>
 <jsp:include page="../../templates/footer.jsp" />
 </body>
+
 <script type="text/javascript">
 
 	function validateFinish(){
 		alert("Actividad Finalizada con éxito.");
 		return true;
 	}
+	
+	function validateFavourite(){
+		alert("Actividad favoriteada con éxito.");
+		return true;
+	}
+	
+	function validateUnFavourite(){
+		alert("Actividad desfavoriteada con éxito.");
+		return true;
+	}
+	
 </script>
 </html>

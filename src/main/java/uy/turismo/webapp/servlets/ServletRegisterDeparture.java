@@ -35,7 +35,7 @@ public class ServletRegisterDeparture extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
-		
+		//TODO conseguir las actividades ACEPTADAS del PROVEDOR en el que estoy parado.
 		
 		List<DtTouristicActivityWS> activitiesStated = controller.getListActivityStated(ActivityState.ACCEPTED).getItem();
 		

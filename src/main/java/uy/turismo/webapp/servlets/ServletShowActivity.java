@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.ActivityState;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
+import uy.turismo.webapp.ws.controller.DtTouristWS;
 import uy.turismo.webapp.ws.controller.DtTouristicActivityWS;
 import uy.turismo.webapp.ws.controller.Publisher;
 import uy.turismo.webapp.ws.controller.PublisherService;
@@ -80,16 +81,68 @@ public class ServletShowActivity extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String actionType =request.getParameter("actionType");
+		
 		PublisherService service = new PublisherService();
 
         Publisher controller = service.getPublisherPort();
-        
-        Long activityId = Long.parseLong(request.getParameter("activityId"));
-        ActivityState state = ActivityState.FINISHED;
-        
-        controller.changeActivityState(activityId, state);
 		
-		response.sendRedirect(request.getContextPath() + "/consultActivity?redirectTo=activity");
+		switch (actionType) {
+		
+			case "Favourite":{
+				
+				HttpSession session = request.getSession();
+				
+				Long userId = (Long) session.getAttribute("userId");
+				Long activityId = Long.parseLong(request.getParameter("activityId"));
+				
+				controller.markFavoriteActivty(userId,activityId);
+				
+				List<DtTouristicActivityWS> favActivities = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
+				
+				DtTouristicActivityWS activitytoFav = new DtTouristicActivityWS();
+				activitytoFav.setId(activityId);
+				favActivities.add(activitytoFav);
+				session.removeAttribute("favActivities");
+				session.setAttribute( "favActivities",favActivities);
+				
+				response.sendRedirect(request.getContextPath() + "/showActivity?activityId="+ activityId);
+				break;}
+				
+			case "UnFavourite":{
+				//TODO esta implementacion es una reverenda pija, tarda más que el doble de marcar actividad favorita
+				//se llama innecesariamente a la BDD para pedir la lista de actividades del turista
+				HttpSession session = request.getSession();
+				
+				Long userId = (Long) session.getAttribute("userId");
+				Long activityId = Long.parseLong(request.getParameter("activityId"));
+				
+				controller.unMarkFavoriteActivity(userId,activityId);
+			
+				DtTouristWS tourist = (DtTouristWS) controller.getUserData(userId);
+				List<DtTouristicActivityWS> favActivities =  tourist.getFavActivities();
+				
+				session.setAttribute("favActivities",favActivities);
+				
+				response.sendRedirect(request.getContextPath() + "/showActivity?activityId="+ activityId);
+				
+				break;}
+				
+			case "Finish":{
+				
+		        
+		        Long activityId = Long.parseLong(request.getParameter("activityId"));
+		        ActivityState state = ActivityState.FINISHED;
+		        
+		        controller.changeActivityState(activityId, state);
+				
+				response.sendRedirect(request.getContextPath() + "/consultActivity?redirectTo=activity");
+				break;}
+	
+			default:
+				
+				break;
+		}
 	}
 
 }

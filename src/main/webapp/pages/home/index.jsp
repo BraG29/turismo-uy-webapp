@@ -138,7 +138,7 @@
 			<div class="cuadrado" >
 			<h4><b> Equipo de desarrollo:</b></h4>
 			<ul style=" text-align: left;">
-				<li class="mobile">  Braian Granero </li>
+				<li>  Braian Granero </li>
 				
 				<li>  Eugenio Perdomo </li>
 				
