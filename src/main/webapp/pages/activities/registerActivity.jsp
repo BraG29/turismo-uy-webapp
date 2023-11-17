@@ -75,14 +75,14 @@
 	        
 	    </div>
 	    <br>
-	    
+	    <!-- Descomentar si y solo si la fecha en la actividad debería ser elegida a mano.
 	     <div class="input-group">
 	     	<span class="input-group-text">Fecha de creación:</span>
 	        <input id="uploadDate" type="date" class="form-control" value="2023-10-10" placeholder="Ej: 10/10/2023" name="uploadDate" required>
 	        
 	    </div>
 	    <br>
-	    
+	     -->
 	    <div>
              <span> Seleccione el departamento de la actividad:</span>
              <select id="department" class="form-select" aria-label="Default select example" name="department" required>

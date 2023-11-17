@@ -76,9 +76,11 @@ public class ServletRegisterActivity extends HttpServlet {
 		
 		ActivityState state = ActivityState.ADDED;
 		
-		String dateString = request.getParameter("uploadDate");
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//		LocalDate uploadDate = LocalDate.parse(dateString, formatter);
+		//Descomentar si se necesita que la actividad se seleccione a mano
+		//String dateString = request.getParameter("uploadDate");
+		
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		//LocalDate uploadDate = LocalDate.parse(LocalDate.now().toString(), formatter);
 		
 		DtProviderWS provider = new DtProviderWS();
 		//dentro de DtProviderWS:  (Long) session.getAttribute("userId"), "", "", null
@@ -135,7 +137,7 @@ public class ServletRegisterActivity extends HttpServlet {
 			DTA.setImage(image);
 			DTA.setUrlVideo(urlVideo);
 			DTA.setState(state);
-			DTA.setUploadDate(dateString);
+			DTA.setUploadDate(LocalDate.now().toString());
 			DTA.setProvider(provider);
 			DTA.setCategories(categoriesList);
 			DTA.setDepartment(department);
