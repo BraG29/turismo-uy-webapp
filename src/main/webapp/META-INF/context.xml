@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+    <!-- ...otras configuraciones ... -->
+    <Environment name="wsdlURL" value="http://192.168.1.9:8181/controller?wsdl" type="java.lang.String"/>
+    <!-- ...otras configuraciones ... -->
+</Context>
