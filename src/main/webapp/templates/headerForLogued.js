@@ -16,9 +16,10 @@ if(userDevice == "mobile"){
   <div class="media">
         <div class="media-body">
             <div class="mt-0 mb-1">
-                <img class="ml-3" src="${userImage}" alt="Usuario Generico"
-                    width="48px">
-                <a href="${contextPath}/profile?id=${userId}"> <span> ${userName} </span> </a>
+            	<a href="${contextPath}/profile?id=${userId}" style="font-size: 1.25em; text-decoration: none;">
+	                <img class="ml-3" src="${userImage}" alt="Usuario Generico" style="height: 64px; width: 64px; border-radius: 5em; box-shadow: 0 10px 16px 0 rgba(244, 244, 244, 0.2),0px 0px 12px 0 rgba(0, 0, 0, 0.90) !important; margin-right: 0.5em ">
+	                 <span> ${userName} </span> 
+                 </a>
             </div>
         </div>
     </div>
@@ -70,9 +71,10 @@ if(userDevice == "mobile"){
   <div class="media">
         <div class="media-body">
             <div class="mt-0 mb-1">
-                <img class="ml-3" src="${userImage}" alt="Usuario Generico"
-                    width="48px">
-                <a href="${contextPath}/profile?id=${userId}"> <span> ${userName} </span> </a>
+	            <a href="${contextPath}/profile?id=${userId}" style="text-decoration: none; display: flex;">
+	            	<img class="ml-3" src="${userImage}" alt="Usuario Generico" style="height: 64px; width: 64px; border-radius: 5em; box-shadow: 0 10px 16px 0 rgba(244, 244, 244, 0.2),0px 0px 12px 0 rgba(0, 0, 0, 0.90) !important; margin-right: 0.5em;">
+	                <span style="font-size: 1.25rem; margin: auto;"> ${userName} </span> 
+                </a>
             </div>
         </div>
     </div>

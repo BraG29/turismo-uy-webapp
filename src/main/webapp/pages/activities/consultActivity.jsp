@@ -105,7 +105,7 @@
 						<input type="text" id="redirectTo" name="redirectTo" value="<%= redirectTo %>" style="display: none;">
 						
 						
-						
+						<br>
 						<button type="submit" class="btn btn-primary">Buscar actividad</button>
 					
 				</div>
@@ -136,17 +136,21 @@
 							switch (redirectTo) { 
 								 case "activity":
 								 	if(userType.equals("provider")){%>
+								 	<br>
 										<a href="<%= request.getContextPath() %>/registerActivity" method="get">
 											<button class="btn btn-primary" >Dar de alta Actividad</button>
 										</a>
+										<br>
 									<%}
 									break;
 									
 								case "departure":
 									if(userType.equals("provider")){%>
+									<br>
 										<a href="<%= request.getContextPath() %>/registerDeparture" method="get">
 											<button class="btn btn-primary" >Dar de alta Salida Turística</button>
 										</a>
+										<br>
 									<%}
 									break;
 							 }%>

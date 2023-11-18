@@ -98,7 +98,7 @@
 						        }
 					    	}
 							if (isFavorite) { %>
-							
+								<br>
 								<form method="post" onsubmit="return validateUnFavourite()" >
 									<input type="hidden" id="actionType" name="actionType" value="UnFavourite">
 								    <button  type="submit" class="w-100 btn btn-lg btn-primary" id="unMarkFavorite">
@@ -107,7 +107,7 @@
 							    </form>
 							    <br>
 						<%} else {%>
-						
+								<br>
 								<form method="post" onsubmit="return validateFavourite()">
 									<input type="hidden" id="actionType" name="actionType" value="Favourite">
 								 	<button  type="submit" class="w-100 btn btn-lg btn-primary" id="markFavorite">
@@ -121,7 +121,7 @@
             	
             	<% if (activityToShow.getUrlVideo() != null){%>
             	<br>
-            	<iframe class="mobile" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            	<iframe class="mobile" style="display: block; margin: auto;" src="<%=activityToShow.getUrlVideo() %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
              	
              	<% } else{ %>
              	<br>
