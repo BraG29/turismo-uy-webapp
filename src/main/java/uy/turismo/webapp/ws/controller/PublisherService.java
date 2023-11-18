@@ -1,8 +1,12 @@
 
 package uy.turismo.webapp.ws.controller;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.xml.namespace.QName;
 import jakarta.xml.ws.Service;
 import jakarta.xml.ws.WebEndpoint;
@@ -31,8 +35,24 @@ public class PublisherService
     static {
         URL url = null;
         WebServiceException e = null;
+        String wsdlURL = "";
         try {
-        	String wsdlURL = System.getenv("wsdlURL");
+        	try {
+        		Context initCtx = new InitialContext();
+        		Context envCtx = (Context) initCtx.lookup("java:comp/env");
+        		wsdlURL = (String) envCtx.lookup("wsdlURL");
+//            	System.out.println("URL del WSDL: " + wsdlURL);
+				
+			} catch (Exception e2) {
+				System.out.println("Error en el context: " + e2.getMessage());
+			}
+        	
+//        	String wsdlURL = "";
+//			try {
+//				wsdlURL = Functions.getWSDLURL();
+//			} catch (IOException e1) {
+//				System.out.println(e1.getMessage());
+//			}
             url = new URL(wsdlURL);
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);

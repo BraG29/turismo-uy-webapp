@@ -66,7 +66,10 @@ public class ServletInscription extends HttpServlet {
 		
 		DtTouristicDepartureWS departureData = controller.getTouristicDepartureData(departureId);
 		
-		if(departureData.getMaxTourist() <= touristAmount + departureData.getTourists().size()) {
+		if(departureData.getTourists() == null && departureData.getMaxTourist() <= touristAmount) {
+			throw new ServletException("Supero la cantidad maximas de turistas para esta salida");
+			
+		}else if(departureData.getMaxTourist() <= touristAmount + departureData.getTourists().size()) {
 			throw new ServletException("Supero la cantidad maximas de turistas para esta salida");
 		}
 		
@@ -75,10 +78,10 @@ public class ServletInscription extends HttpServlet {
 		//null,inscriptionDate,null,touristAmount,touristData,departureData
 		DtInscriptionWS inscriptionData = new DtInscriptionWS();
 			
-			inscriptionData.setInscriptionDate(inscriptionDateStr);
-			inscriptionData.setTouristAmount(touristAmount);
-			inscriptionData.setTourist(touristData);
-			inscriptionData.setTouristicDeparture(departureData);
+		inscriptionData.setInscriptionDate(inscriptionDateStr);
+		inscriptionData.setTouristAmount(touristAmount);
+		inscriptionData.setTourist(touristData);
+		inscriptionData.setTouristicDeparture(departureData);
 		
 		try {
 			controller.registerInscription(inscriptionData);
@@ -86,7 +89,8 @@ public class ServletInscription extends HttpServlet {
 			//redireccionar a successPage y ver como es el tema del pdf
 			
 		} catch (Exception e) {
-			System.out.println("No se ha podido dar de alta la Inscripcion");
+			System.out.println("Error al inscribirse: " + e.getMessage());
+			throw new ServletException("No se ha podido dar de alta la Inscripcion");
 		}
 		
 		request.getRequestDispatcher("/showDeparture?id=" + departureId)

@@ -64,15 +64,18 @@ Boolean availableUser = session.getAttribute("userType") != null
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="assets/styles/main.css">
-<script src="assets/scripts/jquery3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script src="assets/scripts/clock.js" type="text/javascript"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="assets/styles/main.css">
+    <script src="assets/scripts/jquery3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <script src="assets/scripts/clock.js" type="text/javascript"></script>
+ 	<link rel="icon" href="assets/images/star.ico" type="image/png">
 
-<link rel="icon" href="assets/images/star.ico" type="image/png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
 <style>
 .image {
@@ -100,16 +103,13 @@ Boolean availableUser = session.getAttribute("userType") != null
 				if (touristAmount < maxTourist && !touristData.getDepartures().contains(departure)) {
 
 					List<DtTouristicBundleWS> touristBundles = touristData.getBundles();
-
 					List<DtPurchaseWS> touristPurchases = touristData.getPurchases();
-
 					List<DtTouristicBundleWS> availableBundles = new ArrayList<DtTouristicBundleWS>();
 
 					for (int i = 0; i < touristPurchases.size(); i++) {
 
 						DtPurchaseWS purchase = touristPurchases.get(i);
 						DtTouristicBundleWS bundle = touristBundles.get(i);
-						
 						List<DtTouristicActivityWS> activitiesInBundle = controller
 								.getTouristicBundleData(
 										bundle.getId()).getActivities();
@@ -127,10 +127,11 @@ Boolean availableUser = session.getAttribute("userType") != null
 						}
 					}
 			%>
-			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button"
-					id="dropdownMenuButton" data-bs-toggle="dropdown"
-					aria-expanded="false">Inscripcion</button>
+			<div class="btn-group">
+			  	<button type="button" class="btn btn-primary">Inscripcion</button>
+			  	<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+			    	<span class="visually-hidden">Toggle Dropdown</span>
+	  			</button>
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<li><span class="dropdown-header">Inscripcion por
 							Paquete</span></li>
@@ -165,6 +166,12 @@ Boolean availableUser = session.getAttribute("userType") != null
 			}
 			%>
 		</div>
+		
+		<script
+	      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	      crossorigin="anonymous">
+		</script>
 
 		<div class="card-body">
 			<%

@@ -52,15 +52,14 @@ public class Functions {
 		return "assets/images/" + dir + imageFullName;
 	}
 	
-//	public static String getWSDLURL() {
+//	public static String getWSDLURL() throws IOException {
 //		Properties properties = new Properties();
 //		try {
-//			properties.load(new FileInputStream("../../../../../resources/configWebapp.properties"));
-//			return properties.getProperty("webServiceURL");
+//			properties.load(new FileInputStream("configWebapp.properties"));
+//			return properties.getProperty("wsdlURL");
 //		} catch (IOException e) {
-//			e.printStackTrace();
+//			throw e;
 //		}
-//		return "";
 //	}
 	
 	public static BufferedImage convertArrayToBI(byte[] imgArray) {
