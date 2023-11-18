@@ -118,9 +118,19 @@ public class ServletShowActivity extends HttpServlet {
 				Long activityId = Long.parseLong(request.getParameter("activityId"));
 				
 				controller.unMarkFavoriteActivity(userId,activityId);
-			
-				DtTouristWS tourist = (DtTouristWS) controller.getUserData(userId);
-				List<DtTouristicActivityWS> favActivities =  tourist.getFavActivities();
+				
+				DtTouristicActivityWS activityToRemove = new DtTouristicActivityWS();
+				activityToRemove.setId(activityId);
+
+				List<DtTouristicActivityWS> favActivities = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
+				
+				favActivities.remove(activityToRemove);
+				
+//				for (DtTouristicActivityWS activity : favActivities) {
+//					if(activity.equals(controller)) {
+//						
+//					}
+//				}
 				
 				session.setAttribute("favActivities",favActivities);
 				

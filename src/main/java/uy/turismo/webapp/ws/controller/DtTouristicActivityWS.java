@@ -8,6 +8,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
+import uy.turismo.servidorcentral.logic.datatypes.DtTouristicActivity;
 
 
 /**
@@ -441,5 +442,20 @@ public class DtTouristicActivityWS
     public void setVisitsAmount(Integer value) {
         this.visitsAmount = value;
     }
+    
+    
+    @Override
+	public boolean equals(Object obj) {
+
+		if (!(obj instanceof DtTouristicActivityWS)) {
+			return false;
+		}
+
+		if (this.id == ((DtTouristicActivityWS) obj).getId()) {
+			return true;
+		}
+
+		return false;
+	}
 
 }

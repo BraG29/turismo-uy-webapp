@@ -1,4 +1,3 @@
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
