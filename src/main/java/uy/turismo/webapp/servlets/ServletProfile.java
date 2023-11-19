@@ -82,13 +82,16 @@ public class ServletProfile extends HttpServlet {
 					for(DtTouristicActivityWS activity : providerData.getTouristicActivities()) {
 						
 						BufferedImage activityImage = Functions.convertArrayToBI(activity.getImage());
+						
+						if(activityImage != null) {
+							String activityImagePath = Functions.saveImage(
+									activityImage,
+									activity.getName(),
+									getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+									"activity/");
+							activityImages.put(activity.getId(), activityImagePath);							
+						}
 
-						String activityImagePath = Functions.saveImage(
-								activityImage,
-								activity.getName(),
-								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-								"activity/");
-						activityImages.put(activity.getId(), activityImagePath);
 					}
 					
 					request.setAttribute("activityImages", activityImages);
@@ -102,13 +105,16 @@ public class ServletProfile extends HttpServlet {
 					for(DtTouristicDepartureWS departure : touristData.getDepartures()) {
 
 						BufferedImage departureImage = Functions.convertArrayToBI(departure.getImage());
+						
+						if(departureImage != null) {
+							String departureImagePath = Functions.saveImage(
+									departureImage,
+									departure.getName(),
+									getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+									"departure/");
+							departureImages.put(departure.getId(), departureImagePath);
+						}
 
-						String departureImagePath = Functions.saveImage(
-								departureImage,
-								departure.getName(),
-								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-								"departure/");
-						departureImages.put(departure.getId(), departureImagePath);
 					}
 					
 					request.setAttribute("departureImages", departureImages);
@@ -120,12 +126,17 @@ public class ServletProfile extends HttpServlet {
 					for(DtPurchaseWS purchase : touristData.getPurchases()) {
 						BufferedImage bundleImage = Functions.convertArrayToBI(purchase.getBundle().getImage());
 
-						String bundleImagePath = Functions.saveImage(
-								bundleImage,
-								purchase.getBundle().getName(),
-								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-								"bundle/");
-						bundleImages.put(purchase.getBundle().getId(), bundleImagePath);
+						if(bundleImage != null) {
+							String bundleImagePath = Functions.saveImage(
+									bundleImage,
+									purchase.getBundle().getName(),
+									getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+									"bundle/");
+							
+							bundleImages.put(purchase.getBundle().getId(), bundleImagePath);
+							
+						}
+						
 					}
 					
 					request.setAttribute("bundleImages", bundleImages);

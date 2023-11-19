@@ -240,8 +240,13 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 								<li class="list-group-item">
 									<div class="media" style="align-items: baseline; justify-content: space-between;">
 										<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%>">
+										<% if(activityImages.containsKey(activity.getId())){ %>
 											<img src="<%=activityImages.get(activity.getId())%>"
 											class="mr-3" style="width: 100px; border-radius: 1em;"> 
+										<% }else{ %>
+											<img src="assets/images/noImage.jpg"
+											class="mr-3" style="width: 100px; border-radius: 1em;"> 
+										<%} %>
 											
 											<span class="media-body"><%= activity.getName() %></span>
 										</a>
@@ -304,8 +309,14 @@ Long userInSessionId = (Long) session.getAttribute("userId");
  								%>
 									<li class="list-group-item">
 										<div class="media">
+											<% if(departureImages.containsKey(departuresToPrint.get(i).getId())){ %>
 											<img src="<%=departureImages.get(departuresToPrint.get(i).getId())%>"
 												class="mr-3" style="width: 100px; border-radius: 1em;"> 
+											<%} else{ %>
+											<img src="assets/images/noImage.jpg"
+												class="mr-3" style="width: 100px; border-radius: 1em;">
+											
+											<%} %>
 											<div class="media-body">
 												<a href="<%= request.getContextPath() %>/showDeparture?id=<%= departure.getId() %>"> <b> <%= departure.getName() %> </b> </a>
 												<% if(userInSession){ %>
@@ -350,8 +361,13 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 		 								%>
 											<li class="list-group-item">
 												<div class="media">
+												<% if(bundleImages.containsKey(bundle.getId())){ %>
 													<img src="<%= bundleImages.get(bundle.getId()) %>"
-														class="mr-3" style="width: 100px;border-radius: 1em;"> 
+														class="mr-3" style="width: 100px;border-radius: 1em;">
+												<% }else{ %> 
+													<img src="assets/images/noImage.jpg"
+														class="mr-3" style="width: 100px;border-radius: 1em;">
+												<% } %>
 													<div class="media-body">
 														<a href="<%= request.getContextPath() %>/bundleProfile?id=<%= bundle.getId() %>"> <b> <%= bundle.getName() %> </b> </a>
 															<br>

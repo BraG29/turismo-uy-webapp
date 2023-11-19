@@ -51,7 +51,8 @@ if(!userInSession){
 	
 
 	<div class="container mt-5">
-		<form method="post" action="<%= request.getContextPath() %>/updateuser" enctype="multipart/form-data" accept-charset="UTF-8">
+		<form method="post" action="<%= request.getContextPath() %>/updateuser" 
+		enctype="multipart/form-data" accept-charset="UTF-8">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="card">

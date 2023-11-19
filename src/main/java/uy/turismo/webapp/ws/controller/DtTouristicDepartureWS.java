@@ -49,21 +49,13 @@ import jakarta.xml.bind.annotation.XmlType;
 public class DtTouristicDepartureWS
     extends DtBaseEntityWS
 {
-
-	@XmlElement
     protected String departureDateTime;
-	@XmlElement
     protected byte[] image;
-	@XmlElement
     protected Integer maxTourist;
-	@XmlElement
     protected String place;
-	@XmlElement
     protected DtTouristicActivityWS touristicActivity;
     protected List<DtTouristWS> tourists;
-	@XmlElement
     protected String uploadDate;
-	@XmlElement
     protected Integer visitsAmount;
 
     /**
@@ -212,8 +204,12 @@ public class DtTouristicDepartureWS
         }
         return this.tourists;
     }
+    
+    public void setTourists(List<DtTouristWS> tourists) {
+		this.tourists = tourists;
+	}
 
-    /**
+	/**
      * Obtiene el valor de la propiedad uploadDate.
      * 
      * @return
@@ -262,7 +258,8 @@ public class DtTouristicDepartureWS
     }
     
 	@Override
-	 public boolean equals(Object obj) {
+//	@XmlElement(required = false)
+	public boolean equals(Object obj) {
 		 
 		 if(!(obj instanceof DtTouristicDepartureWS)) {
 			 return false;
@@ -273,6 +270,6 @@ public class DtTouristicDepartureWS
 		 }
 		 
 		 return false;
-	 }
+	}
 
 }

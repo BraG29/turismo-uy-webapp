@@ -37,7 +37,11 @@
 		<%for(DtTouristicDepartureWS departure : departures){ %>
 			<li class="list-group-item">
 				<div class="media">
+					<% if(departureImages.containsKey(departure.getId())){ %>
 					<img src="<%= departureImages.get(departure.getId()) %>" class="mr-3" style="width: 100px; border-radius: 5%;">
+					<%}else{ %>
+					<img src="assets/images/noImage.jpg" class="mr-3" style="width: 100px; border-radius: 5%;">
+					<%} %>
 					<div class="media-body">
                     	<a href="<%= request.getContextPath() %>/showDeparture?id=<%=departure.getId()%>"> <b> <%= departure.getName() %> </b></a>
 					</div>
