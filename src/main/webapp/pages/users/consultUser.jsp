@@ -1,4 +1,3 @@
-<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtDepartmentWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtPurchaseWS"%>
@@ -42,6 +41,8 @@ String birthDateStr = userData.getBirthDate();
 
 Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId();
 
+Long userInSessionId = (Long) session.getAttribute("userId");
+
 %>
 
 
@@ -61,6 +62,39 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 <script src="assets/scripts/clock.js" type="text/javascript"></script>
 <link rel="icon" href="assets/images/star.ico" type="image/png">
 
+<script type="text/javascript">
+		
+	function pdf() {
+	    // Tu función pdf aquí
+	    var departureNameVar = document.getElementById("departureName").value;
+	    var touristAmountVar = document.getElementById("touristAmount").value;
+	    var inscriptionDateVar = document.getElementById("inscriptionDate").value;
+	    var fullUserNameVar = document.getElementById("fullUserName").value;
+	
+	    var content = `Comprobante de Suscripción\n 
+	                    Nombre: ${fullUserNameVar}\n
+	                    Nombre de la salida: ${departureNameVar}\n
+	                    Fecha de salida: ${inscriptionDateVar}\n
+	                    Cantidad de turistas: ${touristAmountVar}`;
+	
+	    var docDefinition = {
+	        content: [
+	            { text: content }
+	        ],
+	        defaultStyle: {}
+	    };
+	
+	    pdfMake.createPdf(docDefinition).print();
+	}
+	
+	
+	document.addEventListener("DOMContentLoaded", function () {
+	    
+	    document.getElementById("generatePDF").addEventListener("click", pdf);
+	});
+	
+</script>
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
@@ -79,9 +113,13 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 					<div class="card-body">
 						<h5 class="card-title" style="line-height: 2em"><%=fullUserName%> </h5>
 							<%
+							System.out.println(userInSessionId);
 							
-							if (!userInSession) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
-							    boolean isFollowing = false;
+							if (userInSessionId != null && !userInSession ) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
+								
+								System.out.println(userInSessionId);
+							
+								boolean isFollowing = false;
 								if(usrFollowed != null && !usrFollowed.isEmpty()){
 								    for (DtUserWS followedUser : usrFollowed) {
 								        if (followedUser.getId() == userData.getId()) {
@@ -255,6 +293,18 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 													Fecha de inscripción: <%= inscriptionDateStr %> <br>
 													Costo total: <%= inscription.getTotalCost() %> <br>
 													Cantidad de Turistas: <%= inscription.getTouristAmount() %>
+													
+													<span id="hiddenData" style="display: none;">
+														<input type ="hidden" id="fullUserName" value="<%=fullUserName%>">
+														<input type ="hidden" id="departureName" value="<%=departure.getName()%>">
+														<input type ="hidden" id="touristAmount" value="<%=inscription.getTouristAmount()%>">
+														<input type ="hidden" id="inscriptionDate" value="<%=inscriptionDateStr%>">
+													</span>
+													
+													<br>
+										  			<button class="btn btn-primary" onclick="pdf()" id="generatePDF" >Generar comprobante de suscripción </button>
+													
+													
 												<% }%>
 											</div>
 										</div>
@@ -314,40 +364,7 @@ Boolean userInSession = (Long) session.getAttribute("userId") == userData.getId(
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 	
- 		<script type="text/javascript">
- 		
- 			function follow(){
- 				alert("Siguiendo espere un momento...");
- 				return true;
- 			}
- 			
- 			function unFollow(){
- 				alert("Dejando de seguir espere un momento...");
- 				return true;
- 			} 
-
- 		
-	         function pdf() {
-		 		var departureNameVar = document.getElementById("departureName").value;
-		 		var touristAmountVar = document.getElementById("touristAmount").value;
-		 		var inscriptionDateVar = document.getElementById("inscriptionDate").value;
-		 		
-			
-				var content = `Comprobante de Suscripción\n 
-					Nombre: ${<%=fullUserName%>}\n				                
-	                Nombre de la salida: ${departureNameVar} 
-	               	Fecha de salida: ${inscriptionDateVar} `;
-	                var docDefinition = {
-	                    content: [
-	                        {text:content}
-	                    ],
-	                    defaultStyle: {
-	                    }
-	                };
-	                
-	                pdfMake.createPdf(docDefinition).print();
-	            }
-	     </script>
+ 	
 
 	<jsp:include page="../../templates/footer.jsp" />
  <hr>
