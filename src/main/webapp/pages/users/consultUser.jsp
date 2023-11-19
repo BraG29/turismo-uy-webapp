@@ -206,14 +206,12 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 									if( userInSession ){
 										switch(activity.getState()){
 										
+										case FINISHED:
 										case ACCEPTED:
 										case REJECTED:
+										case ADDED:
 											activitiesToPrint.add(activity);
 											break;
-											
-										case ADDED:
-											activityImages.remove(activity.getId());
-										break;
 										}
 										
 									}else{
@@ -240,13 +238,35 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 								for (DtTouristicActivityWS activity : activitiesToPrint) {
 								%>
 								<li class="list-group-item">
-									<div class="media">
+									<div class="media" style="align-items: baseline; justify-content: space-between;">
 										<a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%>">
 											<img src="<%=activityImages.get(activity.getId())%>"
 											class="mr-3" style="width: 100px; border-radius: 1em;"> 
 											
 											<span class="media-body"><%= activity.getName() %></span>
 										</a>
+										<% switch(activity.getState()){
+										
+										case FINISHED:%>
+											<span style="font-weight: bold;">FINALIZADA</span>
+											
+										<%break;
+										case ACCEPTED:%>
+											<span style="color: green; font-weight: bold;">ACEPTADA</span>
+											
+										<%break;
+										case REJECTED:%>
+										
+											<span style="color: red; font-weight: bold;">RECHAZADA</span>
+											
+										<%break;
+										case ADDED:%>
+										
+											<span style="color: yellow; font-weight: bold;">AÑADIDA</span>
+											
+										<%break;
+										}%>
+											
 									</div>
 								</li>								
 								<%}%>
