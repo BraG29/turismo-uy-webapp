@@ -58,13 +58,16 @@ public class ServletConsultDeparture extends HttpServlet {
 					
 					BufferedImage departureImage = Functions.convertArrayToBI(departure.getImage());
 					
-					String departureImagePath = Functions.saveImage(
-							departureImage,
-							departure.getName(),
-							getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
-							"departure/");
+					if(departureImage != null) {
+						String departureImagePath = Functions.saveImage(
+								departureImage,
+								departure.getName(),
+								getClass().getClassLoader().getResourceAsStream("configWebapp.properties"),
+								"departure/");
+						
+						departureImages.put(departure.getId(), departureImagePath);
+					}
 					
-					departureImages.put(departure.getId(), departureImagePath);
 				}
 				
 				request.setAttribute("departureImages", departureImages);

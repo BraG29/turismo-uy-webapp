@@ -1,4 +1,3 @@
-
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="java.util.ArrayList"%>
 
@@ -191,7 +190,9 @@ Boolean availableUser = session.getAttribute("userType") != null
 			<%
 			} else {
 			%>
-			<p>No se encontró la imagen.</p>
+			<img class="image"
+				src="assets/images/noImage.jpg"
+				alt="Foto de perfil">
 
 			<%
 			}
@@ -231,10 +232,11 @@ Boolean availableUser = session.getAttribute("userType") != null
 			        if (response.status === 200) {
 			            return response.text();
 			        }
-			        throw new Error("Supero la cantidad maximas de turistas para esta salida");
+			        throw new Error("Se ha superado la cantidad maxima de turistas");
 			    })
 			    .then(function (data) {
 			        alert("Se ha Inscripto correctamente");
+			        location.reload();
 			        //console.log(data);
 			    })
 			    .catch(function (error) {

@@ -72,7 +72,7 @@ public class Functions {
            	image = ImageIO.read(inptuStream);
 
 		}catch(Exception e){
-			e.printStackTrace();	
+			System.out.println(e.getMessage());	
 		}
 
 		return image;

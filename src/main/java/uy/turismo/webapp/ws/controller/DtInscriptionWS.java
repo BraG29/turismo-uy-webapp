@@ -18,9 +18,9 @@ import jakarta.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="inscriptionDate" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="totalCost" type="{http://www.w3.org/2001/XMLSchema}double" minOccurs="0"/&gt;
- *         &lt;element name="tourist" type="{controller}dtTouristWS" minOccurs="0"/&gt;
  *         &lt;element name="touristAmount" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="touristicDeparture" type="{controller}dtTouristicDepartureWS" minOccurs="0"/&gt;
+ *         &lt;element name="tourist" type="{controller}dtTouristWS" minOccurs="0"/&gt;
+ *         &lt;element name="departure" type="{controller}dtTouristicDepartureWS" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/extension&gt;
  *   &lt;/complexContent&gt;
@@ -33,9 +33,9 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "dtInscriptionWS", propOrder = {
     "inscriptionDate",
     "totalCost",
-    "tourist",
     "touristAmount",
-    "touristicDeparture"
+    "tourist",
+    "departure"
 })
 public class DtInscriptionWS
     extends DtBaseEntityWS
@@ -43,9 +43,9 @@ public class DtInscriptionWS
 
     protected String inscriptionDate;
     protected Double totalCost;
-    protected DtTouristWS tourist;
     protected Integer touristAmount;
-    protected DtTouristicDepartureWS touristicDeparture;
+    protected DtTouristWS tourist;
+    protected DtTouristicDepartureWS departure;
 
     /**
      * Obtiene el valor de la propiedad inscriptionDate.
@@ -96,30 +96,6 @@ public class DtInscriptionWS
     }
 
     /**
-     * Obtiene el valor de la propiedad tourist.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DtTouristWS }
-     *     
-     */
-    public DtTouristWS getTourist() {
-        return tourist;
-    }
-
-    /**
-     * Define el valor de la propiedad tourist.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DtTouristWS }
-     *     
-     */
-    public void setTourist(DtTouristWS value) {
-        this.tourist = value;
-    }
-
-    /**
      * Obtiene el valor de la propiedad touristAmount.
      * 
      * @return
@@ -144,27 +120,51 @@ public class DtInscriptionWS
     }
 
     /**
-     * Obtiene el valor de la propiedad touristicDeparture.
+     * Obtiene el valor de la propiedad tourist.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DtTouristWS }
+     *     
+     */
+    public DtTouristWS getTourist() {
+        return tourist;
+    }
+
+    /**
+     * Define el valor de la propiedad tourist.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DtTouristWS }
+     *     
+     */
+    public void setTourist(DtTouristWS value) {
+        this.tourist = value;
+    }
+
+    /**
+     * Obtiene el valor de la propiedad departure.
      * 
      * @return
      *     possible object is
      *     {@link DtTouristicDepartureWS }
      *     
      */
-    public DtTouristicDepartureWS getTouristicDeparture() {
-        return touristicDeparture;
+    public DtTouristicDepartureWS getDeparture() {
+        return departure;
     }
 
     /**
-     * Define el valor de la propiedad touristicDeparture.
+     * Define el valor de la propiedad departure.
      * 
      * @param value
      *     allowed object is
      *     {@link DtTouristicDepartureWS }
      *     
      */
-    public void setTouristicDeparture(DtTouristicDepartureWS value) {
-        this.touristicDeparture = value;
+    public void setDeparture(DtTouristicDepartureWS value) {
+        this.departure = value;
     }
 
 }
