@@ -102,7 +102,7 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	function showFollowsAndFollowers(){
 		var list = document.getElementById("followsAndFollowers");
 		 if (list.style.display === "none") {
-             list.style.display = "block";
+             list.style.display = "flex";
          } else {
              list.style.display = "none";
          }
@@ -123,6 +123,7 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	<div class="container mt-5">
 		<div class="row">
 			<div class="col-md-4">
+			
 				<div class="card">
 					<img src="<%=imagePath%>" class="card-img-top" alt="Foto de perfil" style="border-radius: 3em;">
 					<div class="card-body">
@@ -179,11 +180,13 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 					<% if(userInSession){ 
 						session.setAttribute("imagePath", imagePath);
 					%>
+					 <br>
 		                <a  href="<%= request.getContextPath() %>/updateuser?id=<%= userData.getId() %>">
-		                    <button class="btn btn-info">
+		                    <button class="btn btn-primary btn-lg">
 		                        &nbsp;Modificar Perfil&nbsp;
 		                    </button>
 		                </a>
+		             <br>
 					<%} %>
 				
 				</div>
@@ -412,59 +415,66 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 						
 				</div>
 							<br>
-							<button style="width: 200px; height: 40px;" class="btn btn-info" onclick="showFollowsAndFollowers()"> 
+							<button class="btn btn-primary btn-lg" onclick="showFollowsAndFollowers()"> 
 		                    &nbsp;Seguidores/Seguidos&nbsp;
 		                    </button>
-		               		
-		               	<div id="followsAndFollowers" style="display: none;">	
-		               		<div>
-		               		<h3> Usuarios seguidos:</h3>
-		               		<%
-		               		if(userProfileFollows == null){
-		               			userProfileFollows = new ArrayList<DtUserWS>();
-		               		}
-		               		
-		               		for (DtUserWS profileFollows: userProfileFollows){
-		               		%>
-		               			<ul>
-			               			<li>
-			           					Nombre de usuario:
-			           					<a href="<%=request.getContextPath()%>/profile?id=<%=profileFollows.getId()%>">
-			           					 <%=profileFollows.getNickname()%> </a>
-			           					 
-			           					<h6> Email: <%=profileFollows.getEmail()%></h6>
-			           					
-			               			</li>
-		               			</ul>
-		               		<% }%>
-		               		</div>
-		               		
-		               		<div>
-		               		<h3> Seguidores:</h3>
-		               		<%
-		               		if(userProfileFollowers == null){
-		               			userProfileFollowers = new ArrayList<DtUserWS>();
-		               		}
-		               		
-		               		for (DtUserWS profileFollowers: userProfileFollowers){%>
-		               			<ul>
-			               			<li>
-			               				Nombre de usuario: 
-			           					<a href="<%=request.getContextPath()%>/profile?id=<%=profileFollowers.getId()%>">
-			           					<%=profileFollowers.getNickname()%> </a>
-			           					
-			           					<h6> Email: <%=profileFollowers.getEmail()%></h6>
-			           					
-			               			</li>
-		               			</ul>
+
+								<hr>
+								<div class="container-fluid">
+			               			<div class="row" style="display: none; padding: 0;" id="followsAndFollowers">
+			               			
+				               		<%
+				               		if(userProfileFollows == null){
+				               			userProfileFollows = new ArrayList<DtUserWS>();
+				               		}
+				               	 	
+				               		for (DtUserWS profileFollows: userProfileFollows){%>
+					               		<div class="card border-info mb-3" style=" max-width: max-content; margin-right:1em; padding: 0;"  >	
+						               	<div class="card-header bg-primary text-light" style="font-size: 1.25rem;">Seguidos:</div>
+					               			<div class="card-body text-dark">
+			               		
+					               				<a class="card-text" href="<%=request.getContextPath()%>/profile?id=<%=profileFollows.getId()%>">
+					           					
+					           						<h5 class="card-title"><%=profileFollows.getNickname()%></h5>
+					           					 </a>
+					           					 
+					           					<p class="card-text"> Email: <%=profileFollows.getEmail()%></p>
+						           					
+						               			</div>
+											</div>
+			               		<% }%>
+
+				               		<%if(userProfileFollowers == null){
+				               			userProfileFollowers = new ArrayList<DtUserWS>();
+				               		}
+				               		
+				               		for (DtUserWS profileFollowers: userProfileFollowers){%>
+				               			
+				               			<div class="card border-success mb-3" style=" max-width: max-content; margin-right:1em; padding: 0;"  >	
+							               	<div class="card-header bg-success text-light" style="font-size: 1.25rem;">Seguidores:</div>
+						               			<div class="card-body text-dark">
+				               		
+						               				<a class="card-text" href="<%=request.getContextPath()%>/profile?id=<%=profileFollowers.getId()%>">
+						           					
+						           						<h5 class="card-title"><%=profileFollowers.getNickname()%></h5>
+						           					 </a>
+						           					 
+						           					<p class="card-text"> Email: <%=profileFollowers.getEmail()%></p>
+							           					
+							               			</div>
+												</div>
+		               			
+		               			
+		               			
+		               			
+		               			
+		             
 		               		<% }%>
 
 		               		</div>		               		
-						</div>
+					</div>
 			</div>
-		</div>	
-		
-	</div>
+		</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
@@ -472,8 +482,7 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 	
  	
-
-	<jsp:include page="../../templates/footer.jsp" />
+<jsp:include page="../../templates/footer.jsp" />
  <hr>
  <br>
  <br>

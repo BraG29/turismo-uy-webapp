@@ -63,8 +63,12 @@
 					<button class="btn btn-primary">Volver a Registrar Salida</button>
 				</a>
 			<%break;
-		
-		} %>
+			case "FinishedActivity":%>
+			<a href="<%= request.getContextPath() %>/registerDeparture">
+					<button class="btn btn-primary">Volver a Registrar Salida</button>
+			</a>
+			<%break;
+		}%>
           
         </div>
       </div>

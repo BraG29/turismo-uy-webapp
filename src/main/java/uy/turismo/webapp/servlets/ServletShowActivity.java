@@ -124,7 +124,20 @@ public class ServletShowActivity extends HttpServlet {
 		        Long activityId = Long.parseLong(request.getParameter("activityId"));
 		        ActivityState state = ActivityState.FINISHED;
 		        
-		        controller.changeActivityState(activityId, state);
+		        try {
+		        	controller.changeActivityState(activityId, state);
+				} catch (Exception e) {
+
+					String errorType = "FinishedActivity";
+					
+					request.setAttribute("errorType", errorType);
+					
+					request.setAttribute("error", e.getLocalizedMessage());
+					
+					request.getRequestDispatcher("/errorPage")
+					.forward(request, response);
+				}
+		        
 				
 				response.sendRedirect(request.getContextPath() + "/consultActivity?redirectTo=activity");
 				break;}

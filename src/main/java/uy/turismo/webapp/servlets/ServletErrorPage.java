@@ -76,7 +76,15 @@ public class ServletErrorPage extends HttpServlet {
 					
 					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
 				break;
-			
+				
+				case "FinishedActivity":
+					
+					request.setAttribute("errorType", errorType);
+
+					request.setAttribute("error", error);
+					
+					request.getRequestDispatcher("templates/ErrorPage.jsp").forward(request, response);
+				break;
 			}
 		
 		

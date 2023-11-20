@@ -46,6 +46,12 @@
 		font-size: 1em;
 		box-shadow: 0 10px 16px 0 rgba(244, 244, 244, 0.2),0 6px 20px 0 rgba(89, 88, 88, 0.31) !important;
 		border-radius: 0.5em;
+		border: 2px solid #dbdada;
+	  }
+	  
+	  a{
+	  	text-decoration: none;
+		font-weight: bold;
 	  }
 	  
 	@media (max-width: 700px){
@@ -64,11 +70,17 @@
 			box-shadow: 0 10px 16px 0 rgba(244, 244, 244, 0.2),0 6px 20px 0 rgba(89, 88, 88, 0.31) !important;
 			border-radius: 0.5em;
 			margin: 3em;
+			border: 2px solid #dbdada;
 		}
 		
 		body{
 			margin-bottom: 100px;
 		}
+		
+		a{
+		  	text-decoration: none;
+			font-weight: bold;
+	  }
 	}
 	
 	
@@ -91,7 +103,7 @@
     	
 		<jsp:include page="../../templates/header.jsp" />   
 		
-		 <h1  style=" text-align: center;">  <em> <b style="text-shadow: 0.15em 0.15em 0.24em ;"> Laboratorio de programación de aplicaciones. Tarea 2  </b> </em> </h1>
+		 <h1  style=" text-align: center;">  <em> <b style="text-shadow: 0.15em 0.15em 0.24em ;"> Turismo.UY </b> </em> </h1>
 		
 		<br>
 		 
