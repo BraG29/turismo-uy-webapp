@@ -1,3 +1,4 @@
+<%@page import="uy.turismo.webapp.ws.controller.ActivityState"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtCategoryWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtTouristicDepartureWS"%>
 <%@page import="uy.turismo.webapp.ws.controller.DtTouristicBundleWS"%>
@@ -11,13 +12,14 @@
 	DtTouristicActivityWS activityToShow = (DtTouristicActivityWS) request.getAttribute("activityToShow");
 	String activityImagePath = (String) request.getAttribute("activityImagePath");
 	
+	Long userId = (Long) session.getAttribute("userId");
 
 	String userType = (String) session.getAttribute("userType");
 	
 	List<DtTouristicActivityWS> favActivity = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 	
 	//este long id no sirve de nada?
-	Long id = (Long) session.getAttribute("id");
+	//Long id = (Long) session.getAttribute("id");
 
 	String userAgent = request.getHeader("user-agent");
 	
@@ -195,34 +197,22 @@
                 </ul>
                 <br>
                 
-                <%if(userType != null){
+                <%if(activityToShow.getState().equals(ActivityState.ACCEPTED)){
                 	
-	            	if(userType.equalsIgnoreCase("provider")){
-	                	
-	                	List<DtTouristicActivityWS> providerActivities = (List<DtTouristicActivityWS>) request.getAttribute("providerActivities");
-	                	               
-	                	if(providerActivities != null){
-	                		
-	                		boolean isFinishable = false;
-	                		for(DtTouristicActivityWS activityToFinish : providerActivities){ 
-	                			
-	                			if(activityToFinish.getId() == activityToShow.getId()) {
-	                				
-	                				isFinishable = true;
-								    break;
-								 }
-	                		}
-	                		if(isFinishable){%>
-	                			<form method="post" onclick="validateFinish()">
-	                				<input type="hidden" id="actionType" name="actionType" value="Finish">
-		                			<button type="submit" style="background-color: crimson; border-color: red;" class="w-100 btn btn-lg btn-primary" id="finishHIM" >
-							       		Finalizar Actividad
-								    </button>
-	                			</form>
-	                		<%}
-	               		}
-	               	}
-	            }%>
+                	List<DtTouristicDepartureWS> departures = activityToShow.getDepartures();
+                	//si el provedor de la actividad es el mismo que el usuario en sesion
+                	if(userId == activityToShow.getProvider().getId()){%>
+                	
+               			<form method="post" onclick="validateFinish()">
+               				<input type="hidden" id="actionType" name="actionType" value="Finish">
+                			<button type="submit" style="background-color: crimson; border-color: red;" class="w-100 btn btn-lg btn-primary" id="finishHIM">
+					       		Finalizar Actividad
+						    </button>
+               			</form>
+               		<%}
+               	}%>
+	           
+				
             </div>
         </div>
         <br>

@@ -13,6 +13,7 @@
 <%
 
 	String userType = (String) session.getAttribute("userType");
+	
 	List<DtTouristicActivityWS> activitiesStated = (List<DtTouristicActivityWS>) session.getAttribute("activityStated");
 	List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
 
@@ -184,6 +185,22 @@
 										</a>
 										<%} %>
 										<p class="card-text"> <%= activity.getDescription() %></p>
+										
+										<%if("tourist".equals(userType)){
+											
+											List<DtTouristicActivityWS> favActivities = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
+											boolean isFavorite = false;
+											
+											for (DtTouristicActivityWS favActivity : favActivities) {
+										    	if (favActivity.getId() == activity.getId()) {
+										        	isFavorite = true;
+										            break;
+										    	}
+											}	
+										    if(isFavorite){%>
+										    	<img id="FavouriteImage" src="assets/images/star.ico" style="height: 24px; margin: auto" alt="No hay imagen disponible">
+											<%}
+										}%>
 									</div>
 								</div>
 							</div>

@@ -257,17 +257,17 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 											
 										<%break;
 										case ACCEPTED:%>
-											<span style="color: green; font-weight: bold;">ACEPTADA</span>
+											<span class="text-success" style=" font-weight: bold;">ACEPTADA</span>
 											
 										<%break;
 										case REJECTED:%>
 										
-											<span style="color: red; font-weight: bold;">RECHAZADA</span>
+											<span class="text-danger" style=" font-weight: bold;">RECHAZADA</span>
 											
 										<%break;
 										case ADDED:%>
 										
-											<span style="color: yellow; font-weight: bold;">AÑADIDA</span>
+											<span class="text-warning" style="font-weight: bold;">AÑADIDA</span>
 											
 										<%break;
 										}%>
