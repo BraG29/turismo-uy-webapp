@@ -1,12 +1,62 @@
 if(userDevice == "mobile"){
 	console.log("estoy en header guest mobile");
 	document.write(`
+	<style>
+	@keyframes jello {
+		11.1% {
+			transform: none
+		}
+		22.2% {
+			transform: skewX(-12.5deg) skewY(-12.5deg)
+		}
+		33.3% {
+			transform: skewX(6.25deg) skewY(6.25deg)
+		}
+		44.4% {
+			transform: skewX(-3.125deg) skewY(-3.125deg)
+		}
+		55.5% {
+			transform: skewX(1.5625deg) skewY(1.5625deg)
+		}
+		66.6% {
+			transform: skewX(-0.78125deg) skewY(-0.78125deg)
+		}
+		77.7% {
+			transform: skewX(0.390625deg) skewY(0.390625deg)
+		}
+		88.8% {
+			transform: skewX(-0.1953125deg) skewY(-0.1953125deg)
+		}
+		100% {
+			transform: none
+		}
+		}
+
+		.jello_logo {
+		animation: jello 2.5s infinite;
+		transform-origin: center;
+		animation-delay: 1s;
+		}
+
+		.center_logo {
+		display: inline-block;
+		}
+
+		.jello_logo {
+		animation: jello 2.5s infinite;
+		transform-origin: center;
+		}
+
+		.center_logo {
+		display: inline-block;
+		}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mobile">
 	<ul class="nav justify-content-left" >
 		 <li class="nav-item" > 
 			 <div class="nav nav-item justify-content-left" style="margin: auto;  margin-left: 1em; margin-right: 1em;">
 					<a href="${contextPath}">
-				       	<img class="ml-auto" src="assets/images/logoTurismoUY.png" alt="Usuario Generico" width="150px">
+				       	<img class="ml-auto center_logo jello_logo" src="assets/images/logoTurismoUY.png"  width="150px">
 				    </a>
 			  	</div>
 			</li>
@@ -56,12 +106,62 @@ if(userDevice == "mobile"){
 }else{
 	console.log("estoy en header guest normal");
 	document.write(`
+	<style>
+	@keyframes jello {
+		11.1% {
+			transform: none
+		}
+		22.2% {
+			transform: skewX(-12.5deg) skewY(-12.5deg)
+		}
+		33.3% {
+			transform: skewX(6.25deg) skewY(6.25deg)
+		}
+		44.4% {
+			transform: skewX(-3.125deg) skewY(-3.125deg)
+		}
+		55.5% {
+			transform: skewX(1.5625deg) skewY(1.5625deg)
+		}
+		66.6% {
+			transform: skewX(-0.78125deg) skewY(-0.78125deg)
+		}
+		77.7% {
+			transform: skewX(0.390625deg) skewY(0.390625deg)
+		}
+		88.8% {
+			transform: skewX(-0.1953125deg) skewY(-0.1953125deg)
+		}
+		100% {
+			transform: none
+		}
+		}
+
+		.jello_logo {
+		animation: jello 2.5s infinite;
+		transform-origin: center;
+		animation-delay: 1s;
+		}
+
+		.center_logo {
+		display: inline-block;
+		}
+
+		.jello_logo {
+		animation: jello 2.5s infinite;
+		transform-origin: center;
+		}
+
+		.center_logo {
+		display: inline-block;
+		}
+</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mobile">
 	<ul class="nav justify-content-center">
 		 <li class="nav-item" > 
 			 <div class="nav nav-item justify-content-center" style="margin: auto;  margin-left: 1em; margin-right: 1em;">
 					<a href="${contextPath}">
-				       	<img class="ml-auto" src="assets/images/logoTurismoUY.png" alt="Usuario Generico" width="150px">
+				       	<img class="ml-auto center_logo jello_logo" src="assets/images/logoTurismoUY.png"  width="150px">
 				    </a>
 			  	</div>
 			</li>

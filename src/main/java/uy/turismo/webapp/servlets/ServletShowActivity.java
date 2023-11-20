@@ -45,19 +45,7 @@ public class ServletShowActivity extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		String userType = (String) session.getAttribute("userType");
-		
-		if(userType != null) {
-			if(userType.equalsIgnoreCase("provider")) {
-				
-				Long providerId = (Long) session.getAttribute("userId");
-				DtProviderWS providerData = (DtProviderWS) controller.getUserData(providerId);
-				List<DtTouristicActivityWS> providerActivities = providerData.getTouristicActivities();
-				request.setAttribute("providerActivities", providerActivities);
-			}
-		}
-		
-		
-		
+			
 		
 		//arreglar con el tema de byte[]
 		BufferedImage imageToShow = Functions.convertArrayToBI(activityToShow.getImage());
@@ -110,8 +98,7 @@ public class ServletShowActivity extends HttpServlet {
 				break;}
 				
 			case "UnFavourite":{
-				//TODO esta implementacion es una reverenda pija, tarda más que el doble de marcar actividad favorita
-				//se llama innecesariamente a la BDD para pedir la lista de actividades del turista
+
 				HttpSession session = request.getSession();
 				
 				Long userId = (Long) session.getAttribute("userId");
@@ -125,13 +112,6 @@ public class ServletShowActivity extends HttpServlet {
 				List<DtTouristicActivityWS> favActivities = (List<DtTouristicActivityWS>) session.getAttribute("favActivities");
 				
 				favActivities.remove(activityToRemove);
-				
-//				for (DtTouristicActivityWS activity : favActivities) {
-//					if(activity.equals(controller)) {
-//						
-//					}
-//				}
-				
 				session.setAttribute("favActivities",favActivities);
 				
 				response.sendRedirect(request.getContextPath() + "/showActivity?activityId="+ activityId);
