@@ -25,9 +25,13 @@
 <%
 DtUserWS userData = (DtUserWS) request.getAttribute("userData");
 
-java.util.List<DtUserWS> usrFollowed = (List<DtUserWS>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
+List<DtUserWS> usrFollowed = (List<DtUserWS>) session.getAttribute("followed"); //lista de seguidos del usuario en sesion.
 
-//java.util.List<DtTouristicActivityWSWS> favActivities =  (List<DtTouristicActivityWSWS>) session.getAttribute("favActivities"); consultActivity
+//seguidores y seguidos del perfil.
+
+List<DtUserWS> userProfileFollows = userData.getFollows();
+
+List<DtUserWS> userProfileFollowers = userData.getFollowers();
 
 String imagePath = (String) request.getAttribute("imagePath");
 
@@ -70,11 +74,13 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	    var touristAmountVar = document.getElementById("touristAmount").value;
 	    var inscriptionDateVar = document.getElementById("inscriptionDate").value;
 	    var fullUserNameVar = document.getElementById("fullUserName").value;
-	
+	    var departureDateTimeVar = document.getElementById("departureDateTime").value;
+	    
 	    var content = `Comprobante de Suscripción\n 
 	                    Nombre: ${fullUserNameVar}\n
 	                    Nombre de la salida: ${departureNameVar}\n
-	                    Fecha de salida: ${inscriptionDateVar}\n
+	                    Fecha de inscripción: ${inscriptionDateVar}\n
+	                    Fecha de salida: ${departureDateTimeVar}\n
 	                    Cantidad de turistas: ${touristAmountVar}`;
 	
 	    var docDefinition = {
@@ -92,6 +98,15 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	    
 	    document.getElementById("generatePDF").addEventListener("click", pdf);
 	});
+	
+	function showFollowsAndFollowers(){
+		var list = document.getElementById("followsAndFollowers");
+		 if (list.style.display === "none") {
+             list.style.display = "block";
+         } else {
+             list.style.display = "none";
+         }
+	}
 	
 </script>
 
@@ -113,11 +128,9 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 					<div class="card-body">
 						<h5 class="card-title" style="line-height: 2em"><%=fullUserName%> </h5>
 							<%
-							System.out.println(userInSessionId);
+							
 							
 							if (userInSessionId != null && !userInSession ) { // Aparece el botón si el usuario en la sesión no es el mismo del perfil.
-								
-								System.out.println(userInSessionId);
 							
 								boolean isFollowing = false;
 								if(usrFollowed != null && !usrFollowed.isEmpty()){
@@ -128,7 +141,9 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 								        }
 								    }
 								}
-
+									
+							 	 
+								
 								if (isFollowing) { %>
 									<form action="<%= request.getContextPath() %>/profile" onsubmit="return unFollow()" accept-charset="UTF-8" method="post">
 										<input type="hidden" id="action" name="action" value="unFollow">
@@ -138,7 +153,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 									        Dejar de seguir
 									    </button>
 									</form>
-									
 							<% } else { %>
 								    <form action="<%= request.getContextPath() %>/profile" onsubmit="return follow()" accept-charset="UTF-8" method="post">   
 								    <input type="hidden" id="action" name="action" value="follow">
@@ -149,7 +163,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 								    </button>
 								    </form>
 								<% } 
-							
 							 } %>
 						
 						
@@ -183,8 +196,13 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 						<p class="card-text">
 							Fecha de Nacimiento:
 							<%=birthDateStr%></p> 
+
+		                   
+		               		
+		               	
+
 						<%
-						if (userData instanceof DtProviderWS) {
+		                if (userData instanceof DtProviderWS) {
 							DtProviderWS providerData = (DtProviderWS) userData;
 						%>
 						<p class="card-text">
@@ -193,7 +211,8 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 						<p class="card-text">
 							Sitio Web: <a href="<%=providerData.getUrl()%>"><%=providerData.getUrl()%></a>
 						</p>
-
+							
+							
 						<%
 
 						List<DtTouristicActivityWS> activitiesToPrint = new ArrayList<DtTouristicActivityWS>();
@@ -330,6 +349,7 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 														<input type ="hidden" id="departureName" value="<%=departure.getName()%>">
 														<input type ="hidden" id="touristAmount" value="<%=inscription.getTouristAmount()%>">
 														<input type ="hidden" id="inscriptionDate" value="<%=inscriptionDateStr%>">
+														<input type ="hidden" id="departureDateTime" value="<%=departuresToPrint.get(i).getDepartureDateTime()%>">
 													</span>
 													
 													<br>
@@ -388,8 +408,59 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 									<%}%>
 								<%}%>
 								<%}%>
+								
 						
 				</div>
+							<br>
+							<button style="width: 200px; height: 40px;" class="btn btn-info" onclick="showFollowsAndFollowers()"> 
+		                    &nbsp;Seguidores/Seguidos&nbsp;
+		                    </button>
+		               		
+		               	<div id="followsAndFollowers" style="display: none;">	
+		               		<div>
+		               		<h3> Usuarios seguidos:</h3>
+		               		<%
+		               		if(userProfileFollows == null){
+		               			userProfileFollows = new ArrayList<DtUserWS>();
+		               		}
+		               		
+		               		for (DtUserWS profileFollows: userProfileFollows){
+		               		%>
+		               			<ul>
+			               			<li>
+			           					Nombre de usuario:
+			           					<a href="<%=request.getContextPath()%>/profile?id=<%=profileFollows.getId()%>">
+			           					 <%=profileFollows.getNickname()%> </a>
+			           					 
+			           					<h6> Email: <%=profileFollows.getEmail()%></h6>
+			           					
+			               			</li>
+		               			</ul>
+		               		<% }%>
+		               		</div>
+		               		
+		               		<div>
+		               		<h3> Seguidores:</h3>
+		               		<%
+		               		if(userProfileFollowers == null){
+		               			userProfileFollowers = new ArrayList<DtUserWS>();
+		               		}
+		               		
+		               		for (DtUserWS profileFollowers: userProfileFollowers){%>
+		               			<ul>
+			               			<li>
+			               				Nombre de usuario: 
+			           					<a href="<%=request.getContextPath()%>/profile?id=<%=profileFollowers.getId()%>">
+			           					<%=profileFollowers.getNickname()%> </a>
+			           					
+			           					<h6> Email: <%=profileFollowers.getEmail()%></h6>
+			           					
+			               			</li>
+		               			</ul>
+		               		<% }%>
+
+		               		</div>		               		
+						</div>
 			</div>
 		</div>	
 		
