@@ -80,7 +80,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	                    Nombre: ${fullUserNameVar}\n
 	                    Nombre de la salida: ${departureNameVar}\n
 	                    Fecha de inscripción: ${inscriptionDateVar}\n
-	                    Fecha de salida: ${departureDateTimeVar}\n
 	                    Cantidad de turistas: ${touristAmountVar}`;
 	
 	    var docDefinition = {
@@ -352,7 +351,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 														<input type ="hidden" id="departureName" value="<%=departure.getName()%>">
 														<input type ="hidden" id="touristAmount" value="<%=inscription.getTouristAmount()%>">
 														<input type ="hidden" id="inscriptionDate" value="<%=inscriptionDateStr%>">
-														<input type ="hidden" id="departureDateTime" value="<%=departuresToPrint.get(i).getDepartureDateTime()%>">
 													</span>
 													
 													<br>
