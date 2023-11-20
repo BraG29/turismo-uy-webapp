@@ -116,7 +116,10 @@ if(userDevice == "mobile"){
                     </button>
                 </a>
             </li>
-       
+       		
+       		<li class="nav-item">
+        		<iframe src="templates/SearchBar.jsp" height="38"> </iframe>
+            </li>
        
       </ul>
     </div>
