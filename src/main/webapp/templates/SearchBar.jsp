@@ -38,6 +38,6 @@
 		// Realiza la solicitud GET.
 		console.log("prueba de que estoy llegando a SearchBar");
 		console.log(url);
-		fetch(url);
+		window.top.location.href = url;
 	}
 </script>

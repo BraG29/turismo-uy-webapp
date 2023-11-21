@@ -12,33 +12,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<%
-	PublisherService service = new PublisherService();
-	Publisher controller = service.getPublisherPort();
-	
-	String searchText = (String) request.getAttribute("searchText");
-		
-	List<DtBaseEntityWS> results = controller.filterByString(searchText).getItem();
-	
-	List<DtTouristicActivityWS> activities = new ArrayList<DtTouristicActivityWS>();
-	List<DtTouristicBundleWS> bundles = new ArrayList<DtTouristicBundleWS>();
-	
-	
-	for(DtBaseEntityWS result : results){
-		if(result instanceof DtTouristicActivityWS){
-			activities.add((DtTouristicActivityWS) result);
-		}
-		if(result instanceof DtTouristicBundleWS){
-			bundles.add((DtTouristicBundleWS) result);
-			
-		}
-	}
-	
-	System.out.println();
-	
-
-%>
 	<!-- Add Bootstrap CSS link -->
 	<link rel="stylesheet" href="assets/styles/main.css">
 	<script src="assets/scripts/jquery3.5.1.min.js"></script>
@@ -90,9 +63,32 @@
 
 </head>
 
+<%
+	PublisherService service = new PublisherService();
+	Publisher controller = service.getPublisherPort();
+	
+	String searchText = (String) request.getAttribute("searchText");
+		
+	List<DtBaseEntityWS> results = controller.filterByString(searchText).getItem();
+	
+	List<DtTouristicActivityWS> activities = new ArrayList<DtTouristicActivityWS>();
+	List<DtTouristicBundleWS> bundles = new ArrayList<DtTouristicBundleWS>();
+	
+	
+	for(DtBaseEntityWS result : results){
+		if(result instanceof DtTouristicActivityWS){
+			activities.add((DtTouristicActivityWS) result);
+		}
+		if(result instanceof DtTouristicBundleWS){
+			bundles.add((DtTouristicBundleWS) result);
+			
+		}
+	}
+	
+%>
 
 
-<body onload="currentTime()">
+<body style="height: 100%; width: 100%">
 
 <jsp:include page="../../templates/header.jsp" />
 

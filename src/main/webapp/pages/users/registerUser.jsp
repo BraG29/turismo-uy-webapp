@@ -405,17 +405,6 @@
 				      }
 				    });
 				  });
-			
-		
-				
-			
-			
-			
-			
-			
-			
-			
-			
 			function showFields() {
 				var userType = document.getElementById("userType").value;
 				var providerDataVar = document.getElementById("providerData");

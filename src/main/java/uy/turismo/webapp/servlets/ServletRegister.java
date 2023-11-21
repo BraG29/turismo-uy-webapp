@@ -7,8 +7,10 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.management.BadAttributeValueExpException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +22,7 @@ import javax.servlet.http.Part;
 import uy.turismo.webapp.functions.Functions;
 import uy.turismo.webapp.ws.controller.DtProviderWS;
 import uy.turismo.webapp.ws.controller.DtTouristWS;
+import uy.turismo.webapp.ws.controller.DtUserWS;
 import uy.turismo.webapp.ws.controller.Publisher;
 import uy.turismo.webapp.ws.controller.PublisherService;
 
@@ -57,6 +60,7 @@ public class ServletRegister extends HttpServlet {
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
 		
+		
 		String email = request.getParameter("email"); //llega bien	
 
 		request.setCharacterEncoding("UTF-8");
@@ -87,59 +91,70 @@ public class ServletRegister extends HttpServlet {
 		
 		
 		try {
-		    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
-		
-		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
-		    		InputStream fileContent = filePart.getInputStream();
-		    		BufferedImage requestImage = ImageIO.read(fileContent);
-		    		
-		    		byte[] image = Functions.convertImageToArray(requestImage);
-		    		
-		    		DtProviderWS userData = new DtProviderWS(); 
-		    		userData.setName(name);
-		    		userData.setNickname(nickname);
-		    		userData.setEmail(email);
-		    		userData.setLastName(lastName);
-		    		userData.setBirthDate(birthDateSTR);
-		    		userData.setImage(image);
-		    		userData.setUrl(web);
-		    		userData.setDescription(description);
-		    		userData.setPassword(password);
-		    		
-		    		controller.registerUser(userData);
-		    		
-		    		String successType = "User";
-					
-					request.setAttribute("successType", successType);
-		    		
-		    		request.getRequestDispatcher("/successPage").forward(request, response);
-		    	}else {
-		    		
-		    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
-		    		InputStream fileContent = filePart.getInputStream();
-		    		BufferedImage requestImage = ImageIO.read(fileContent);
-		    		
-		    		byte[] image = Functions.convertImageToArray(requestImage);
-		    	
-		    		DtTouristWS userData =  new DtTouristWS();
-		    		userData.setName(name);
-		    		userData.setNickname(nickname);
-		    		userData.setEmail(email);
-		    		userData.setLastName(lastName);
-		    		userData.setBirthDate(birthDateSTR);
-		    		userData.setImage(image);
-		    		userData.setNationality(country);
-		    		userData.setPassword(password);
-		    		
-		    		controller.registerUser(userData);
-		    		
-		    		String successType = "User";
-					
-					request.setAttribute("successType", successType);
-		    		
-		    		request.getRequestDispatcher("/successPage").forward(request, response);
+			
+
+			List<DtUserWS> userList = controller.getListUser().getItem();
+			
+			for(DtUserWS user : userList) {
+				if(user.getNickname().equalsIgnoreCase(nickname)
+						|| user.getEmail().equalsIgnoreCase(email)) {
+					throw new Exception("El nickname o el correo ya existen");
+				}
+			}
+			
+	    	if( request.getParameter("userType").equalsIgnoreCase("provider") ){
+	
+	    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+	    		InputStream fileContent = filePart.getInputStream();
+	    		BufferedImage requestImage = ImageIO.read(fileContent);
+	    		
+	    		byte[] image = Functions.convertImageToArray(requestImage);
+	    		
+	    		DtProviderWS userData = new DtProviderWS(); 
+	    		userData.setName(name);
+	    		userData.setNickname(nickname);
+	    		userData.setEmail(email);
+	    		userData.setLastName(lastName);
+	    		userData.setBirthDate(birthDateSTR);
+	    		userData.setImage(image);
+	    		userData.setUrl(web);
+	    		userData.setDescription(description);
+	    		userData.setPassword(password);
+	    		
+	    		controller.registerUser(userData);
+	    		
+	    		String successType = "User";
+				
+				request.setAttribute("successType", successType);
+	    		
+	    		request.getRequestDispatcher("/successPage").forward(request, response);
+	    	}else {
+	    		
+	    		Part filePart = request.getPart("image"); // "image" debe coincidir con el atributo name del campo en tu formulario
+	    		InputStream fileContent = filePart.getInputStream();
+	    		BufferedImage requestImage = ImageIO.read(fileContent);
+	    		
+	    		byte[] image = Functions.convertImageToArray(requestImage);
+	    	
+	    		DtTouristWS userData =  new DtTouristWS();
+	    		userData.setName(name);
+	    		userData.setNickname(nickname);
+	    		userData.setEmail(email);
+	    		userData.setLastName(lastName);
+	    		userData.setBirthDate(birthDateSTR);
+	    		userData.setImage(image);
+	    		userData.setNationality(country);
+	    		userData.setPassword(password);
+	    		
+	    		controller.registerUser(userData);
+	    		
+	    		String successType = "User";
+				
+				request.setAttribute("successType", successType);
+	    		
+	    		request.getRequestDispatcher("/successPage").forward(request, response);
 	    	}
-    	
+  
 		}catch(Exception e) {
 			
 			String errorType = "User";
