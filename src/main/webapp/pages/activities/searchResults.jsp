@@ -156,6 +156,10 @@
         .sea-lo-que-sea {
 
         }
+        
+        body{
+        	margin-bottom: 100px;
+        }
     </style>
 
 </head>
@@ -163,6 +167,7 @@
 <jsp:include page="../../templates/header.jsp" />
 
 <main class="container-fluid">
+<										
     <h2> Resultado de: "<%=searchText%>"</h2>
 
     <div style="width: 25%;">
@@ -210,7 +215,10 @@
                 </div>
                 <img class="card-img-top" src="<%= activityImages.get(activity.getId()) %>" alt="Card image cap">
                 <div class="card-body text-dark">
-                    <h5 class="card-title"><%= activity.getName() %></h5>
+                
+                	 <a href="<%= request.getContextPath() %>/showActivity?activityId=<%= activity.getId()%> ">                
+                    	<h5 class="card-title"><%= activity.getName() %></h5>
+                    </a>
                     <p class="card-text"> <%= activity.getDescription() %></p>
                     <p class="card-text"> <%= activity.getUploadDate() %></p>
                     <p class="card-department" data-department-id="<%= activity.getDepartment().getId() %>"></p>
@@ -230,9 +238,14 @@
                  data-category-ids="<%= categoryIds %>">
                 <div class="card-header bg-success text-light" style="width: 100%; text-align: center;">Paquete Turístico
                 </div>
-                <img class="card-img-top" src="<%= bundleImages.get(bundle.getId()) %>" alt="Card image cap">
+
+                	<img class="card-img-top" src="<%= bundleImages.get(bundle.getId()) %>" alt="Card image cap">
+
                 <div class="card-body text-dark">
-                    <h5 class="card-title"><%= bundle.getName() %></h5>
+                
+                 	<a href="<%= request.getContextPath() %>/bundleProfile?id=<%=bundle.getId()%> ">                
+                    	<h5 class="card-title"><%= bundle.getName() %></h5>
+                    </a>
                     <p class="card-text"> <%= bundle.getUploadDate() %></p>
                     <p class="card-categories" data-category-ids="<%= categoryIds %>"></p>
                     <p class="card-date" data-date="<%= bundle.getUploadDate() %>"></p>
