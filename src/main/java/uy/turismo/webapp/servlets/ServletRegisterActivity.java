@@ -112,6 +112,20 @@ public class ServletRegisterActivity extends HttpServlet {
 			PublisherService service = new PublisherService();
 			Publisher controller = service.getPublisherPort();
 			
+			List<DtDepartmentWS> departments = controller.getListDepartment(true).getItem();
+			List<DtTouristicActivityWS> activities = new ArrayList<DtTouristicActivityWS>();
+			for(DtDepartmentWS d : departments) {
+				if(d.getActivities() != null) {
+					activities.addAll(d.getActivities());
+				}
+			}
+			
+			for(DtTouristicActivityWS a : activities) {
+				if(a.getName().equalsIgnoreCase(name)) {
+					throw new Exception("Ya existe una Actividad con ese Nombre");
+				}
+			}
+			
 			DtTouristicActivityWS DTA = new DtTouristicActivityWS();
 			/*id,
 			name,
