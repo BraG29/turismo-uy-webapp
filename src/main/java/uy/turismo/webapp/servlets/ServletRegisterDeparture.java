@@ -80,38 +80,32 @@ public class ServletRegisterDeparture extends HttpServlet {
 		
 		PublisherService service = new PublisherService();
 		Publisher controller = service.getPublisherPort();
-		
-		
-		DtTouristicActivityWS activity = controller.getTouristicActivityData(activityId);
-		DtTouristWS tourist = new DtTouristWS();
-		List<DtTouristWS> tourists = new ArrayList<DtTouristWS>();
-		tourists.add(tourist);
-		
-		DtTouristicDepartureWS departureData = new DtTouristicDepartureWS(
-               
-				);
-		/*
-		 *  null,
-				nameDeparture,
-				maxTourists,
-				uploadDate,
-				startingDate,
-				place,
-				image,
-				activity,
-				tourists
-		 * */
-		
-		departureData.setName(nameDeparture);
-		departureData.setMaxTourist(maxTourists);
-		departureData.setUploadDate(uploadDateStr);
-		departureData.setDepartureDateTime(dateString);
-		departureData.setPlace(place);
-		departureData.setImage(image);
-		departureData.setTouristicActivity(activity);
-		//departureData.setTourist(tourists);
-		
 		try {
+			List<DtTouristicDepartureWS> departures = controller.getListTouristicDeparture().getItem();
+			
+			for(DtTouristicDepartureWS d : departures) {
+				if(d.getName().equalsIgnoreCase(nameDeparture)) {
+					throw new Exception("Ya existe una Salida con ese Nombre");
+				}
+			}
+			
+			DtTouristicActivityWS activity = controller.getTouristicActivityData(activityId);
+			DtTouristWS tourist = new DtTouristWS();
+			List<DtTouristWS> tourists = new ArrayList<DtTouristWS>();
+			tourists.add(tourist);
+			
+			DtTouristicDepartureWS departureData = new DtTouristicDepartureWS();
+	             
+			
+			departureData.setName(nameDeparture);
+			departureData.setMaxTourist(maxTourists);
+			departureData.setUploadDate(uploadDateStr);
+			departureData.setDepartureDateTime(dateString);
+			departureData.setPlace(place);
+			departureData.setImage(image);
+			departureData.setTouristicActivity(activity);
+		
+		
 			controller.registerTouristicDeparture(departureData);
 			
 			String successType = "Departure";

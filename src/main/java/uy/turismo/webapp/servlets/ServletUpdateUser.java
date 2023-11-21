@@ -97,7 +97,14 @@ public class ServletUpdateUser extends HttpServlet {
 		
 		byte[] image = userData.getImage();
 		
-		if( requestImage != null) {
+		if( requestImage != null ) {
+			InputStream inputStream = getClass().getClassLoader().getResourceAsStream("configWebapp.properties");
+            String imageStr = Functions.saveImage(
+            		requestImage, 
+            		userData.getNickname(), 
+            		inputStream, 
+            		"user/");
+            session.setAttribute("userImage", imageStr);
 			
 			image = Functions.convertImageToArray(requestImage);
 		}
@@ -135,6 +142,11 @@ public class ServletUpdateUser extends HttpServlet {
 			modifiedUser.setImage(image);
 			modifiedUser.setNationality(nationality);
 			modifiedUser.setPassword(userData.getPassword());
+			
+
+            session.setAttribute(
+            		"userName", 
+            		String.format("%s %s", modifiedUser.getName(), modifiedUser.getLastName()));
 
 			controller.updateUser(modifiedUser);
 			
@@ -142,32 +154,23 @@ public class ServletUpdateUser extends HttpServlet {
 			String webSite = request.getParameter("webSite");
 			String description = request.getParameter("description");
 			
-			DtProviderWS modifiedUser = new DtProviderWS(
-					userData.getId(),
-					name,
-					birthDateStr,
-					userData.getEmail(),
-					null,
-					null,
-					image,
-					lastName,
-					userData.getNickname(),
-					userData.getPassword(),
-					description,
-					null,
-					webSite
-					);
+			DtProviderWS modifiedUser = new DtProviderWS();
 			
-//			modifiedUser.setId(userData.getId());
-//			modifiedUser.setName(name);
-//			modifiedUser.setNickname(userData.getNickname());
-//			modifiedUser.setEmail(userData.getEmail());
-//			modifiedUser.setLastName(lastName);
-//			modifiedUser.setBirthDate(birthDateStr);
-//			modifiedUser.setImage(image);
-//			modifiedUser.setUrl(webSite);
-//			modifiedUser.setDescription(description);
-//			modifiedUser.setPassword(userData.getPassword());
+			modifiedUser.setId(userData.getId());
+			modifiedUser.setName(name);
+			modifiedUser.setNickname(userData.getNickname());
+			modifiedUser.setEmail(userData.getEmail());
+			modifiedUser.setLastName(lastName);
+			modifiedUser.setBirthDate(birthDateStr);
+			modifiedUser.setImage(image);
+			modifiedUser.setUrl(webSite);
+			modifiedUser.setDescription(description);
+			modifiedUser.setPassword(userData.getPassword());
+			
+
+            session.setAttribute(
+            		"userName", 
+            		String.format("%s %s", modifiedUser.getName(), modifiedUser.getLastName()));
 			
 			controller.updateUser(modifiedUser);
 		}

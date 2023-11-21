@@ -160,7 +160,6 @@
 
 </head>
 
-<body onload="currentTime()">
 <jsp:include page="../../templates/header.jsp" />
 
 <main class="container-fluid">

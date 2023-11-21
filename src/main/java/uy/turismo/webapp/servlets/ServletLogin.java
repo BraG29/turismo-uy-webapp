@@ -57,7 +57,7 @@ public class ServletLogin extends HttpServlet {
 		
 		user = controller.checkCredentials(email, password);
 			
-        if (user != null) {
+        if (user.getId() != null) {
             HttpSession session = request.getSession();
             session.setAttribute("userId", user.getId());
             session.setAttribute(
