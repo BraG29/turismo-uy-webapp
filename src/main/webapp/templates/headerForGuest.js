@@ -216,16 +216,9 @@ if(userDevice == "mobile"){
                 </a>
             </li>
         
-        	<li class="nav-item">
+        	<li class="nav-item">  
 
-				<div class="input-group nav-link" style="display: flex;">
-				  <input id="searchText" name"searchText" type="text" class="form-control" placeholder="Buscar Actividad o Paquete" aria-label="Recipient's username" aria-describedby="basic-addon2">
-				  <div class="input-group-append">
-				    <button class="btn btn-outline-success" type="button">Buscar</button>
-				  </div>
-				</div>   
-
-        		<iframe src="templates/SearchBar.jsp" height="38"> </iframe>
+        		<iframe class="input-group nav-link" id="filterFrame" style="display: flex; height: 3.40rem;" src="templates/SearchBar.jsp" > </iframe>
 
             </li>
         

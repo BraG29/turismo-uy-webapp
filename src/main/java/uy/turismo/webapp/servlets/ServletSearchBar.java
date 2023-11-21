@@ -27,11 +27,12 @@ public class ServletSearchBar extends HttpServlet {
 		String searchText = request.getParameter("searchText");
 		request.setAttribute("searchText", searchText);
 		
+		
 		request.getRequestDispatcher("pages/activities/searchResults.jsp")
 			.forward(request, response);
 		
 		
-//		System.out.println(searchText);
+	System.out.println(searchText);
 	}
 
 	/**

@@ -29,7 +29,7 @@
 <script>
 	function search(){
 		var searchText = document.getElementById("searchText").value;
-		var contextPath = '<%= request.getContextPath() %>';
+		var contextPath = "<%=request.getContextPath()%>"
 		
 		// Construye la URL con los parámetros.
 		var url = 
@@ -38,6 +38,6 @@
 		// Realiza la solicitud GET.
 		console.log("prueba de que estoy llegando a SearchBar");
 		console.log(url);
-		fetch(url);
+		window.top.location.href = url;
 	}
 </script>
