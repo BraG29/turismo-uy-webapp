@@ -74,7 +74,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 	    var touristAmountVar = document.getElementById("touristAmount").value;
 	    var inscriptionDateVar = document.getElementById("inscriptionDate").value;
 	    var fullUserNameVar = document.getElementById("fullUserName").value;
-	    var departureDateTimeVar = document.getElementById("departureDateTime").value;
 	    
 	    var content = `Comprobante de Suscripción\n 
 	                    Nombre: ${fullUserNameVar}\n
