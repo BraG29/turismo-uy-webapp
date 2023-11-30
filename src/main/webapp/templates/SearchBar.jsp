@@ -29,7 +29,7 @@
 <script>
 	function search(){
 		var searchText = document.getElementById("searchText").value;
-		var contextPath = '<%= request.getContextPath() %>';
+		var contextPath = "<%=request.getContextPath()%>"
 		
 		// Construye la URL con los parámetros.
 		var url = 

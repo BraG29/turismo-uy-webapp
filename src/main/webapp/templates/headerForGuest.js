@@ -216,9 +216,9 @@ if(userDevice == "mobile"){
                 </a>
             </li>
         
-        	<li class="nav-item">
+        	<li class="nav-item">  
 
-        		<iframe src="templates/SearchBar.jsp" height="38"> </iframe>
+        		<iframe class="input-group nav-link" id="filterFrame" style="display: flex; height: 3.40rem;" src="templates/SearchBar.jsp" > </iframe>
 
             </li>
         

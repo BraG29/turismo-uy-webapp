@@ -460,12 +460,6 @@ Long userInSessionId = (Long) session.getAttribute("userId");
 							           					
 							               			</div>
 												</div>
-		               			
-		               			
-		               			
-		               			
-		               			
-		             
 		               		<% }%>
 
 		               		</div>		               		

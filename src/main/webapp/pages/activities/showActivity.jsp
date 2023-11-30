@@ -227,7 +227,6 @@
 <script type="text/javascript">
 
 	function validateFinish(){
-		alert("Actividad Finalizada con éxito.");
 		return true;
 	}
 	

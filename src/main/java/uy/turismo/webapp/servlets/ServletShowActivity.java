@@ -132,7 +132,7 @@ public class ServletShowActivity extends HttpServlet {
 					
 					request.setAttribute("errorType", errorType);
 					
-					request.setAttribute("error", e.getLocalizedMessage());
+					request.setAttribute("error", "No se puede dar de baja la actividad porque aun tiene Salidas vigentes");
 					
 					request.getRequestDispatcher("/errorPage")
 					.forward(request, response);
