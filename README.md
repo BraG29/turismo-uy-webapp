@@ -34,7 +34,3 @@ Si todo funciona ejecutar los siguientes comandos:
 ## Para ejecutar en Enlipse:
 Ir a Run Configurations > Tomcat9 > Enviroment
 Crear una nueva variable de entorno con nombre "wsdlURL" y valor la URL hacia el archivo .wsdl del WS ejemplo: http://192.169.1.3:8181/controller?wsdl
-
-## Para ejecutar en deploy: 
-Abrir una terminal en la carpeta raiz del proyecto y ejecutar el script `defWSDLURL.sh` pasandole como parametro el URL de la siguiente manera:
-`. defWSDLURL.sh http://192.169.1.3:8181/controller?wsdl`
